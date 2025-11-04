@@ -1,0 +1,27 @@
+{
+  "name": "project_mypet",
+  "version": "1.0.0",
+  "description": "**MyPet** - це навчальний проєкт, створений у стилі класичних ігор-тамагочі. Гравець обирає улюбленця та доглядає за ним: годує, грає, лікує, прибирає і стежить за його станом. Мета гри - підтримувати тваринку щасливою, здоровою та ситою.",
+  "main": "backend/server.js",
+  "type": "module",
+  "scripts": {
+    "start:backend": "node backend/server.js",
+    "start:frontend": "cd frontend && live-server",
+    "install": "npm i -g live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ylmmwina/project_mypet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ylmmwina/project_mypet/issues"
+  },
+  "homepage": "https://github.com/ylmmwina/project_mypet#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  }
+}
