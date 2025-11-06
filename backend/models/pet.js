@@ -32,4 +32,52 @@ export default class Pet {
             energy: this.energy
         };
     }
+
+    feed() {
+        //зменшує голод та покращує здоров'я
+        this.hunger -= 15;
+        if (this.hunger < 0) this.hunger = 0;
+
+        this.health += 5;
+        if (this.health > 100) this.health = 100;
+    }
+
+    play() {
+        //збільшує щастя, але тваринка втомлюється і стає голодною
+        this.happiness += 20;
+        if (this.happiness > 100) this.happiness = 100;
+
+        this.energy -= 10;
+        if (this.energy < 0) this.energy = 0;
+
+        this.hunger += 10;
+        if (this.hunger > 100) this.hunger = 100;
+    }
+
+    sleep() {
+        //відновлює енергію, але збільшує голод
+        this.energy += 30;
+        if (this.energy > 100) this.energy = 100;
+
+        this.hunger += 15;
+        if (this.hunger > 100) this.hunger = 100;
+    }
+
+    heal() {
+        //відновлює здоров'я, але коштує енергії або щастя
+        this.health += 25;
+        if (this.health > 100) this.health = 100;
+
+        this.happiness -= 10;
+        if (this.happiness < 0) this.happiness = 0;
+    }
+
+    clean() {
+        //покращує щастя та здоров'я
+        this.happiness += 5;
+        if (this.happiness > 100) this.happiness = 100;
+
+        this.health += 5;
+        if (this.health > 100) this.health = 100;
+    }
 }
