@@ -1,5 +1,5 @@
 export default class Pet {
-    constructor(name, type, age, health, hunger, happiness, energy) {
+    constructor(name, type, age, health, hunger, happiness, energy,cleanliness) {
         this.name = name;
         this.type = type;
         this.age = age;
@@ -7,6 +7,7 @@ export default class Pet {
         this.hunger = hunger;
         this.happiness = happiness;
         this.energy = energy;
+        this.cleanliness = cleanliness;
     }
 
     static fromJSON(json) {
@@ -17,7 +18,8 @@ export default class Pet {
             json.health,
             json.hunger,
             json.happiness,
-            json.energy
+            json.energy,
+            json.cleanliness
         );
     }
 
@@ -29,7 +31,8 @@ export default class Pet {
             health: this.health,
             hunger: this.hunger,
             happiness: this.happiness,
-            energy: this.energy
+            energy: this.energy,
+            cleanliness: this.cleanliness
         };
     }
 
@@ -73,45 +76,50 @@ export default class Pet {
     }
 
     clean() {
-        //покращує щастя та здоров'я
-        this.happiness += 5;
-        if (this.happiness > 100) this.happiness = 100;
+        // Прибирання повністю скидає бруд
+        this.cleanliness = 0;
 
-        this.health += 5;
-        if (this.health > 100) this.health = 100;
+        // і трохи піднімає настрій
+        this.happiness += 10;
+        if (this.happiness > 100) this.happiness = 100;
     }
 
     live() {
-        // --- 1. Стандартне погіршення (завжди відбувається) ---
+        //Стандартне погіршення (Голод і Щастя)
         this.hunger += 1;
         if (this.hunger > 100) this.hunger = 100;
 
         this.happiness -= 1;
         if (this.happiness < 0) this.happiness = 0;
 
-        // --- 2. Нова логіка: шкода здоров'ю від голоду ---
+        //Логіка бруду
+        this.cleanliness += 1; // Улюбленець потроху брудниться
+        if (this.cleanliness > 100) this.cleanliness = 100;
+
+        // Шкода здоров'ю (від голоду, суму АБО бруду)
         let healthDamage = 0;
 
-        if (this.hunger >= 80) {
-            healthDamage = 1; // Улюбленець дуже голодний, -1 здоров'я
-        }
-        if (this.hunger >= 95) {
-            healthDamage = 3; // Улюбленець на межі, -3 здоров'я
-        }
-        if (this.hunger === 100) {
-            healthDamage = 5; // Критичний голод, -5 здоров'я!
+        // Прогресивна шкода від голоду (з твоєї ідеї)
+        if (this.hunger >= 80) healthDamage = 1;
+        if (this.hunger >= 95) healthDamage = 3;
+        if (this.hunger === 100) healthDamage = 5;
+
+        // Шкода від суму (якщо не голодний)
+        if (healthDamage === 0 && this.happiness === 0) {
+            healthDamage = 1;
         }
 
-        // Застосовуємо шкоду від голоду
+        // Шкода від бруду (додається до іншої шкоди!)
+        if (this.cleanliness === 100) {
+            healthDamage += 1; // Бруд додатково шкодить здоров'ю
+        }
+
+        // Застосовуємо загальну шкоду
         if (healthDamage > 0) {
             this.health -= healthDamage;
         }
-        // Якщо не голодний, але дуже сумний, теж втрачає здоров'я
-        else if (this.happiness === 0) {
-            this.health -= 1;
-        }
 
-        // Переконуємось, що здоров'я не падає нижче 0
+        //переконуємось, що здоров'я не падає нижче 0
         if (this.health < 0) this.health = 0;
     }
 }
