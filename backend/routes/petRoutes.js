@@ -22,12 +22,18 @@ export default function registerPetRoutes(app) {
             const pet = Storage.loadPet();
             if (!pet) throw new Error("Pet not found. Create one first.");
 
+            if (pet.health === 0 && action !== "feed" && action !== "heal") {
+                // Якщо здоров'я 0 І це НЕ годування/лікування,
+                // блокуємо дію
+                throw new Error("Pet is too sick to do that! Try feeding or healing it.");
+            }
+
             pet[action]();
 
             Storage.savePet(pet);
             res.send(pet.toJSON());
         } catch (error) {
-            res.status(400).send({ error: error.message });
+            res.status(400).send({ error: message });
         }
     };
 

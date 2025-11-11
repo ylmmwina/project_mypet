@@ -80,4 +80,38 @@ export default class Pet {
         this.health += 5;
         if (this.health > 100) this.health = 100;
     }
+
+    live() {
+        // --- 1. Стандартне погіршення (завжди відбувається) ---
+        this.hunger += 1;
+        if (this.hunger > 100) this.hunger = 100;
+
+        this.happiness -= 1;
+        if (this.happiness < 0) this.happiness = 0;
+
+        // --- 2. Нова логіка: шкода здоров'ю від голоду ---
+        let healthDamage = 0;
+
+        if (this.hunger >= 80) {
+            healthDamage = 1; // Улюбленець дуже голодний, -1 здоров'я
+        }
+        if (this.hunger >= 95) {
+            healthDamage = 3; // Улюбленець на межі, -3 здоров'я
+        }
+        if (this.hunger === 100) {
+            healthDamage = 5; // Критичний голод, -5 здоров'я!
+        }
+
+        // Застосовуємо шкоду від голоду
+        if (healthDamage > 0) {
+            this.health -= healthDamage;
+        }
+        // Якщо не голодний, але дуже сумний, теж втрачає здоров'я
+        else if (this.happiness === 0) {
+            this.health -= 1;
+        }
+
+        // Переконуємось, що здоров'я не падає нижче 0
+        if (this.health < 0) this.health = 0;
+    }
 }
