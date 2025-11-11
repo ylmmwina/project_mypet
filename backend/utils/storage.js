@@ -23,7 +23,6 @@ export default class Storage {
 
     static savePet(pet) {
         if (pet.type !== "cat" && pet.type !== "dog" && pet.type !== "rabbit") throw Error("Invalid pet type");
-        if (!pet.health) throw Error("Pet is dead");
         Storage.saveJSONtoFile(this.dirPath + "/" + this.petFileName, pet.toJSON());
     }
     
