@@ -1,5 +1,5 @@
 export default class Pet {
-    constructor(name, type, age, health, hunger, happiness, energy, cleanliness, id = null) {
+    constructor(name, type, age, health, hunger, happiness, energy, cleanliness, id = null, ownerId = null) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -9,6 +9,7 @@ export default class Pet {
         this.happiness = happiness;
         this.energy = energy;
         this.cleanliness = cleanliness;
+        this.ownerId = ownerId
     }
 
     static fromJSON(json) {
@@ -22,7 +23,8 @@ export default class Pet {
             json.happiness,
             json.energy,
             json.cleanliness,
-            json.id // 👈 4. Взято з 'json'
+            json.id, // 👈 4. Взято з 'json'
+            json.ownerId
         );
     }
 
@@ -36,7 +38,8 @@ export default class Pet {
             hunger: this.hunger,
             happiness: this.happiness,
             energy: this.energy,
-            cleanliness: this.cleanliness
+            cleanliness: this.cleanliness,
+            ownerId: this.ownerId
         };
     }
 
