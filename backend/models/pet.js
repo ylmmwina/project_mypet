@@ -1,5 +1,6 @@
 export default class Pet {
-    constructor(name, type, age, health, hunger, happiness, energy,cleanliness) {
+    constructor(name, type, age, health, hunger, happiness, energy, cleanliness, id = null, ownerId = null) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.age = age;
@@ -8,9 +9,11 @@ export default class Pet {
         this.happiness = happiness;
         this.energy = energy;
         this.cleanliness = cleanliness;
+        this.ownerId = ownerId
     }
 
     static fromJSON(json) {
+        //Тепер ми передаємо 'json.id' в конструктор
         return new Pet(
             json.name,
             json.type,
@@ -19,12 +22,15 @@ export default class Pet {
             json.hunger,
             json.happiness,
             json.energy,
-            json.cleanliness
+            json.cleanliness,
+            json.id, // 👈 4. Взято з 'json'
+            json.ownerId
         );
     }
 
     toJSON() {
         return {
+            id: this.id, // 👈 5. Додано 'id'
             name: this.name,
             type: this.type,
             age: this.age,
@@ -32,94 +38,70 @@ export default class Pet {
             hunger: this.hunger,
             happiness: this.happiness,
             energy: this.energy,
-            cleanliness: this.cleanliness
+            cleanliness: this.cleanliness,
+            ownerId: this.ownerId
         };
     }
 
-    feed() {
-        //зменшує голод та покращує здоров'я
-        this.hunger -= 15;
-        if (this.hunger < 0) this.hunger = 0;
-
-        this.health += 5;
-        if (this.health > 100) this.health = 100;
-    }
-
-    play() {
-        //збільшує щастя, але тваринка втомлюється і стає голодною
-        this.happiness += 20;
-        if (this.happiness > 100) this.happiness = 100;
-
-        this.energy -= 10;
-        if (this.energy < 0) this.energy = 0;
-
-        this.hunger += 10;
-        if (this.hunger > 100) this.hunger = 100;
-    }
-
-    sleep() {
-        //відновлює енергію, але збільшує голод
-        this.energy += 30;
-        if (this.energy > 100) this.energy = 100;
-
-        this.hunger += 15;
-        if (this.hunger > 100) this.hunger = 100;
-    }
-
-    heal() {
-        //відновлює здоров'я, але коштує енергії або щастя
-        this.health += 25;
-        if (this.health > 100) this.health = 100;
-
-        this.happiness -= 10;
-        if (this.happiness < 0) this.happiness = 0;
-    }
-
-    clean() {
-        // Прибирання повністю скидає бруд
-        this.cleanliness = 0;
-
-        // і трохи піднімає настрій
-        this.happiness += 10;
-        if (this.happiness > 100) this.happiness = 100;
-    }
-
     live() {
-        //Стандартне погіршення (Голод і Щастя)
+        // Стандартне погіршення
         this.hunger += 1;
         if (this.hunger > 100) this.hunger = 100;
 
         this.happiness -= 1;
         if (this.happiness < 0) this.happiness = 0;
 
-        //Логіка бруду
-        this.cleanliness += 1; // Улюбленець потроху брудниться
+        // Логіка бруду
+        this.cleanliness += 1;
         if (this.cleanliness > 100) this.cleanliness = 100;
 
-        // Шкода здоров'ю (від голоду, суму АБО бруду)
+        // Шкода здоров'ю
         let healthDamage = 0;
-
-        // Прогресивна шкода від голоду (з твоєї ідеї)
         if (this.hunger >= 80) healthDamage = 1;
         if (this.hunger >= 95) healthDamage = 3;
         if (this.hunger === 100) healthDamage = 5;
 
-        // Шкода від суму (якщо не голодний)
         if (healthDamage === 0 && this.happiness === 0) {
             healthDamage = 1;
         }
-
-        // Шкода від бруду (додається до іншої шкоди!)
         if (this.cleanliness === 100) {
-            healthDamage += 1; // Бруд додатково шкодить здоров'ю
+            healthDamage += 1; // Бруд додатково шкодить
         }
-
-        // Застосовуємо загальну шкоду
         if (healthDamage > 0) {
             this.health -= healthDamage;
         }
-
-        //переконуємось, що здоров'я не падає нижче 0
         if (this.health < 0) this.health = 0;
+    }
+
+    feed() {
+        this.hunger -= 15;
+        if (this.hunger < 0) this.hunger = 0;
+        this.health += 5;
+        if (this.health > 100) this.health = 100;
+    }
+    play() {
+        this.happiness += 20;
+        if (this.happiness > 100) this.happiness = 100;
+        this.energy -= 10;
+        if (this.energy < 0) this.energy = 0;
+        this.hunger += 10;
+        if (this.hunger > 100) this.hunger = 100;
+    }
+    sleep() {
+        this.energy += 30;
+        if (this.energy > 100) this.energy = 100;
+        this.hunger += 15;
+        if (this.hunger > 100) this.hunger = 100;
+    }
+    heal() {
+        this.health += 25;
+        if (this.health > 100) this.health = 100;
+        this.happiness -= 10;
+        if (this.happiness < 0) this.happiness = 0;
+    }
+    clean() {
+        this.cleanliness = 0;
+        this.happiness += 10;
+        if (this.happiness > 100) this.happiness = 100;
     }
 }
