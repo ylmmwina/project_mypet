@@ -27,6 +27,17 @@ export async function setupDatabase() {
         );
     `);
 
+    await db.exec(`
+    CREATE TABLE IF NOT EXISTS Purchases (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        petId INTEGER NOT NULL,
+        itemId TEXT NOT NULL,
+        price INTEGER NOT NULL,
+        createdAt TEXT NOT NULL,
+        FOREIGN KEY (petId) REFERENCES Pets(id)
+    );
+`);
+
     console.log("✅ База даних SQLite готова.");
     return db;
 }
