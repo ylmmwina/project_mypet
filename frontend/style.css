@@ -1,14 +1,16 @@
-/* Скидання стилів */
+/* --- 1. ІМПОРТ ШРИФТІВ --- */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* --- 2. БАЗОВІ НАЛАШТУВАННЯ --- */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* Використовуємо новий шрифт */
     font-family: 'VT323', monospace;
 }
 
 body {
-    /* ФОН ЗА КВАДРАТИКОМ: Пастельно-жовтий */
     background-color: #fff9c4;
     display: flex;
     justify-content: center;
@@ -16,26 +18,18 @@ body {
     height: 100vh;
 }
 
-/* Головний контейнер ("екранчик" гри) */
+/* --- 3. ГОЛОВНИЙ КОНТЕЙНЕР ("ЕКРАН") --- */
 .game-container {
-    /* ТРІШКИ БІЛЬШИЙ РОЗМІР */
     width: 500px;
     height: 600px;
-
-    /* ФОН КВАДРАТИКА: Пастельно-рожевий */
     background-color: #ffe4e1;
-
-    /* МЕНША ТОВЩИНА КОНТУРУ (2px замість 4px) */
     border: 2px solid #000;
-
-    /* ЧІТКІ ГРАНІ (прибираємо заокруглення) */
     border-radius: 0;
-
     position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    box-shadow: 10px 10px 0px rgba(0,0,0,0.1); /* Легка тінь для об'єму */
+    box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
 }
 
 .screen {
@@ -50,12 +44,12 @@ body {
 
 .hidden { display: none !important; }
 
-/* --- ШРИФТИ ТА ТЕКСТИ --- */
+/* --- 4. ТИПОГРАФІКА --- */
 h1 { font-size: 64px; color: #d81b60; margin-bottom: 20px; }
 h2 { font-size: 48px; color: #333; }
 p { font-size: 24px; color: #555; }
 
-/* --- ЕЛЕМЕНТИ ВВОДУ --- */
+/* --- 5. ЕЛЕМЕНТИ ВВОДУ ТА КНОПКИ --- */
 input[type="text"] {
     padding: 10px;
     font-size: 24px;
@@ -75,9 +69,18 @@ input[type="text"] {
 }
 .btn-start:hover { background: #45a049; }
 
-/* --- ЕКРАН ГРИ --- */
+.btn-secondary {
+    background: #ccc;
+    border: 2px solid #000;
+    padding: 5px 15px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 20px;
+}
 
-/* Верхня панель */
+.action-btn-wide { width: 100%; }
+
+/* --- 6. ЕКРАН ТАМАГОЧІ (UI) --- */
 .top-bar {
     width: 100%;
     height: 60px;
@@ -86,12 +89,12 @@ input[type="text"] {
     align-items: center;
     padding: 0 15px;
     border-bottom: 2px solid #000;
-    background: rgba(255, 255, 255, 0.5); /* Напівпрозорий білий */
+    background: rgba(255, 255, 255, 0.5);
     position: absolute;
     top: 0;
 }
 
-#btn-menu {
+.icon-btn {
     background: none;
     border: none;
     font-size: 24px;
@@ -101,7 +104,6 @@ input[type="text"] {
 
 .stats-mini { font-size: 32px; }
 
-/* Зона тваринки */
 .pet-area {
     flex-grow: 1;
     display: flex;
@@ -113,12 +115,11 @@ input[type="text"] {
 }
 
 .pet-placeholder {
-    font-size: 150px; /* Збільшили розмір спрайта */
+    font-size: 150px;
     animation: bounce 2s infinite;
     filter: drop-shadow(5px 5px 0px rgba(0,0,0,0.2));
 }
 
-/* Нижня панель кнопок */
 .bottom-bar {
     width: 100%;
     height: 80px;
@@ -128,7 +129,7 @@ input[type="text"] {
     align-items: center;
     position: absolute;
     bottom: 0;
-    background: #fff9c4; /* Такий же жовтий, як фон сторінки */
+    background: #fff9c4;
 }
 
 .action-btn {
@@ -138,8 +139,11 @@ input[type="text"] {
     background: white;
     font-size: 32px;
     cursor: pointer;
-    box-shadow: 4px 4px 0px #000; /* Ретро-тінь для кнопок */
+    box-shadow: 4px 4px 0px #000;
     transition: all 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .action-btn:active {
@@ -147,23 +151,22 @@ input[type="text"] {
     box-shadow: 2px 2px 0px #000;
 }
 
-/* Анімація стрибання */
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
 }
 
-/* Стилі для списку тварин */
+/* --- 7. СПИСОК ТВАРИН --- */
 .pets-list-container {
     width: 100%;
     max-height: 300px;
-    overflow-y: auto; /* Прокрутка, якщо тварин багато */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 20px;
     padding: 10px;
-    border: 2px inset #000; /* Ефект "вдавленого" екрану */
+    border: 2px inset #000;
     background: #fff;
 }
 
@@ -179,18 +182,56 @@ input[type="text"] {
 }
 
 .pet-card:hover {
-    background: #b2fab4; /* Зеленуватий при наведенні */
+    background: #b2fab4;
 }
 
 .pet-card-name { font-size: 24px; font-weight: bold; }
 .pet-card-info { font-size: 18px; color: #666; }
 
-.btn-secondary {
-    background: #ccc;
-    border: 2px solid #000;
-    padding: 5px 15px;
-    cursor: pointer;
-    margin-top: 10px;
-    font-size: 20px;
+/* --- 8. СТИЛІ ДЛЯ МІНІ-ГРИ (PHASER) --- */
+
+#phaser-game {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: 9999; /* Високий пріоритет */
+
+    display: none; /* Спочатку сховано JS-ом */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
-.action-btn-wide { width: 100%; }
+
+canvas {
+    display: block;
+    outline: 4px solid white;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+}
+
+/* КНОПКА ВИХОДУ (ХРЕСТИК) */
+.exit-game-btn {
+    position: fixed; /* Фіксована, щоб не залежати від контейнерів */
+    top: 20px;
+    right: 20px;
+
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    padding: 10px 20px;
+
+    background: #ff0000;
+    color: white;
+    border: 4px solid white;
+
+    cursor: pointer;
+    z-index: 10000; /* ЩЕ ВИЩЕ ніж гра */
+
+    transition: transform 0.1s;
+}
+
+.exit-game-btn:hover {
+    background: #cc0000;
+    transform: scale(1.1);
+}
