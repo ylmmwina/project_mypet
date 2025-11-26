@@ -23,6 +23,7 @@ async function startServer() {
     app.use(cors());
     app.use(express.json());
     app.use(cookieParser());
+    app.use(express.static("frontend"));
 
     //налаштовуємо HTTP та Socket.IO
     const httpServer = createServer(app);

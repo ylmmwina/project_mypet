@@ -22,7 +22,8 @@ export async function setupDatabase() {
             hunger INTEGER DEFAULT 0,
             happiness INTEGER DEFAULT 0,
             energy INTEGER DEFAULT 0,
-            cleanliness INTEGER DEFAULT 0
+            cleanliness INTEGER DEFAULT 0,
+            coins INTEGER DEFAULT 0
         );
     `);
 
