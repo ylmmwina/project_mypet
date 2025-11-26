@@ -1,7 +1,7 @@
 import { jest, describe, test, expect, beforeEach, afterEach } from '@jest/globals';
 import fs from 'fs';
 import Storage from '../backend/utils/storage.js';
-import Pet from '../backend/models/pet.js';
+import Pet from '../../backend/models/pet.js';
 
 describe("Storage Utility", () => {
     let writeSpy, readSpy, existsSpy, mkdirSpy;

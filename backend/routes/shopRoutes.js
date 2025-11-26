@@ -1,5 +1,13 @@
-import { shopItems, findShopItem, applyItemEffects } from "../shop/shopItems.js";
+import { shopItems, findShopItem } from "../shop/shopItems.js";
 import Pet from "../models/pet.js";
+import {
+    getPetByOwnerId,
+    getPetIdByOwnerId,
+    savePet,
+    addInventoryItem,
+    addPurchaseHistoryEntry,
+    getPurchaseHistory
+} from "../utils/database.js";
 
 export default function registerShopRoutes(app, db) {
 
@@ -8,7 +16,7 @@ export default function registerShopRoutes(app, db) {
         res.json(shopItems);
     });
 
-    // Купівля товару 
+    // Купівля товару → додати в інвентар
     app.post("/shop/buy", async (req, res) => {
         const ownerId = req.ownerId;
         const { itemId } = req.body;
@@ -29,8 +37,8 @@ export default function registerShopRoutes(app, db) {
         }
 
         try {
-            // отримуємо тваринку
-            const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+            // отримуємо тваринку за ownerId
+            const petData = await getPetByOwnerId(db, ownerId);
             if (!petData) {
                 return res.status(404).json({
                     error: "PET_NOT_FOUND",
@@ -40,7 +48,7 @@ export default function registerShopRoutes(app, db) {
 
             const pet = Pet.fromJSON(petData);
 
-            // перевірки
+            // перевірки стану
             if (pet.health <= 0) {
                 return res.status(400).json({
                     error: "PET_DEAD",
@@ -58,29 +66,20 @@ export default function registerShopRoutes(app, db) {
             // списуємо монети
             pet.coins -= item.price;
 
-            // застосовуємо ефекти товару
-            applyItemEffects(pet, item);
+            // зберігаємо оновленого пета
+            await savePet(db, pet);
 
-            // зберігаємо оновлення тваринки
-            await db.run(
-                `UPDATE Pets SET 
-                    health = ?, hunger = ?, happiness = ?, 
-                    energy = ?, cleanliness = ?, age = ?, coins = ?
-                 WHERE ownerId = ?`,
-                pet.health, pet.hunger, pet.happiness,
-                pet.energy, pet.cleanliness, pet.age, pet.coins,
-                ownerId
-            );
+            // дізнаємось petId
+            const petId = await getPetIdByOwnerId(db, ownerId);
+            const now = new Date().toISOString();
+
+            // додаємо товар до інвентаря
+            await addInventoryItem(db, petId, item.id, now);
 
             // логування покупки
-            await db.run(
-                "INSERT INTO Purchases (petId, itemId, price, createdAt) VALUES (?, ?, ?, ?)",
-                pet.id,
-                item.id,
-                item.price,
-                new Date().toISOString()
-            );
+            await addPurchaseHistoryEntry(db, petId, item.id, item.price, now);
 
+            // повертаємо оновленого пета
             res.json(pet.toJSON());
 
         } catch (error) {
@@ -96,22 +95,24 @@ export default function registerShopRoutes(app, db) {
     app.get("/shop/history", async (req, res) => {
         const ownerId = req.ownerId;
 
-        // отримуємо id тваринки
-        const pet = await db.get("SELECT id FROM Pets WHERE ownerId = ?", ownerId);
+        try {
+            const petId = await getPetIdByOwnerId(db, ownerId);
+            if (!petId) {
+                return res.status(404).json({
+                    error: "PET_NOT_FOUND",
+                    message: "Create a pet first"
+                });
+            }
+            
+            const history = await getPurchaseHistory(db, petId);
 
-        if (!pet) {
-            return res.status(404).json({
-                error: "PET_NOT_FOUND",
-                message: "Create a pet first"
+            res.json(history);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                error: "HISTORY_ERROR",
+                message: "Failed to load purchase history"
             });
         }
-
-        // витягуємо історію покупок
-        const history = await db.all(
-            "SELECT itemId, price, createdAt FROM Purchases WHERE petId = ? ORDER BY createdAt DESC LIMIT 20",
-            pet.id
-        );
-
-        res.json(history);
     });
 }
