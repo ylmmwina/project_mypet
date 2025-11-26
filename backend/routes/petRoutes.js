@@ -2,85 +2,91 @@ import Pet from "../models/pet.js";
 
 export default function registerPetRoutes(app, db, io) {
 
-    // --- Універсальна функція для оновлення улюбленця ---
-    /**
-     * Знаходить улюбленця за ownerId, застосовує до нього дію (pet => pet.feed()),
-     * і оновлює його в базі даних.
-     */
     async function updatePet(ownerId, actionCallback) {
-        // Знайти поточні дані улюбленця
         const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+        if (!petData) throw new Error("Pet not found for this owner.");
 
-        if (!petData) {
-            throw new Error("Pet not found for this owner.");
-        }
-
-        // Створити об'єкт Pet з даними з БД
-        // Ми використовуємо fromJSON, щоб перетворити дані з БД на наш клас Pet
         const pet = Pet.fromJSON(petData);
+        actionCallback(pet); // Виконуємо дію
 
-        actionCallback(pet);
-
-        // оновити дані в базі даних
-        // Ми беремо оновлені значення з об'єкта 'pet'
+        // Оновлюємо ВСІ поля, включаючи coins
         await db.run(
             `UPDATE Pets SET 
                 health = ?, hunger = ?, happiness = ?, 
-                energy = ?, cleanliness = ?, age = ?
+                energy = ?, cleanliness = ?, age = ?, coins = ?
              WHERE ownerId = ?`,
             pet.health, pet.hunger, pet.happiness,
-            pet.energy, pet.cleanliness, pet.age,
+            pet.energy, pet.cleanliness, pet.age, pet.coins,
             ownerId
         );
 
-        //повернути оновлений об'єкт
         return pet.toJSON();
     }
 
-
-    // --- Маршрути ---
-
+    // ... (app.get і app.post/create-pet ті самі) ...
     app.get("/pet", async (req, res) => {
         const ownerId = req.ownerId;
         const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
-
-        if (petData) {
-            res.send(petData);
-        } else {
-            res.send({});
-        }
+        if (petData) res.send(petData); else res.send({});
     });
 
     app.post("/create-pet", async (req, res) => {
         const { name, type } = req.body;
         const ownerId = req.ownerId;
-
         const validTypes = ["dog", "cat", "monkey"];
-        if (!validTypes.includes(type)) {
-            return res.status(400).send({ error: "Invalid pet type. Must be 'dog', 'cat', or 'monkey'." });
-        }
+        if (!validTypes.includes(type)) return res.status(400).send({ error: "Invalid type." });
 
         try {
-            await db.run(
-                "INSERT OR IGNORE INTO Pets (ownerId, name, type) VALUES (?, ?, ?)",
-                ownerId, name, type
-            );
-
+            await db.run("INSERT OR IGNORE INTO Pets (ownerId, name, type) VALUES (?, ?, ?)", ownerId, name, type);
             const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
             res.send(petData);
         } catch (error) {
-            console.error(error);
-            res.status(500).send({ error: "Could not create pet" });
+            res.status(500).send({ error: "Creation failed" });
         }
     });
 
-    //універсальний обробник для всіх дій
+    // --- 🎮 МАРШРУТ: КІНЕЦЬ ГРИ ---
+    app.post("/pet/finish-game", async (req, res) => {
+        const ownerId = req.ownerId;
+        // Очікуємо, що фронтенд надішле, скільки монет зібрав гравець
+        const { score, coinsEarned } = req.body;
+
+        if (score === undefined || coinsEarned === undefined) {
+            return res.status(400).send({ error: "Score and coinsEarned are required" });
+        }
+
+        try {
+            const updatedPet = await updatePet(ownerId, (pet) => {
+                // 1. Додаємо зароблені в грі монети
+                pet.coins += Math.floor(coinsEarned);
+
+                // 2. Вплив на стани (як ти просив)
+                // Очки впливають на щастя
+                pet.happiness += Math.floor(score / 2);
+                if (pet.happiness > 100) pet.happiness = 100;
+
+                // Гра втомлює
+                pet.energy -= 20;
+                if (pet.energy < 0) pet.energy = 0;
+
+                // Гра викликає апетит
+                pet.hunger += 15;
+                if (pet.hunger > 100) pet.hunger = 100;
+
+                // Здоров'я НЕ чіпаємо (нереалістично, щоб спорт вбивав)
+            });
+
+            res.send(updatedPet);
+        } catch (error) {
+            res.status(400).send({ error: error.message });
+        }
+    });
+
+    // --- Звичайні дії ---
     const handlePetAction = (actionCallback) => async (req, res) => {
         const ownerId = req.ownerId;
         try {
-            //використовуємо нашу нову функцію
             const updatedPet = await updatePet(ownerId, actionCallback);
-            //відправляємо оновленого улюбленця
             res.send(updatedPet);
         } catch (error) {
             res.status(400).send({ error: error.message });
