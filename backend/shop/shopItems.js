@@ -63,7 +63,42 @@ export const findShopItem = (itemId) =>
 
 // Застосувати ефекти товару
 export function applyItemEffects(pet, item) {
-    const effects = item.effects || {};
+    const effects = { ...item.effects }; // копія, щоб можна було змінювати
+
+    // МАВПА — обожнює банани
+    if (pet.type === "monkey") {
+        if (item.id === "banana_snack") {
+            effects.happiness = (effects.happiness || 0) + 10;
+            effects.energy = (effects.energy || 0) + 5; 
+        }
+        if (item.type === "food") {
+            effects.happiness = (effects.happiness || 0) + 5;
+        }
+    }
+
+    // СОБАКА — активна, отримує енергію від будь-якої їжі, любить миття
+    if (pet.type === "dog") {
+        if (item.type === "food") {
+            effects.energy = (effects.energy || 0) + 5; 
+        }
+        if (item.type === "soap") {
+            effects.happiness = (effects.happiness || 0) + 5;
+        }
+    }
+
+    // КІТ — вибагливий
+    if (pet.type === "cat") {
+        if (item.id === "basic_food") {
+            effects.happiness = (effects.happiness || 0) + 5;
+        }
+        if (item.id === "premium_food") {
+            effects.happiness = (effects.happiness || 0) + 10;
+            effects.energy = (effects.energy || 0) + 5; 
+        }
+        if (item.type === "soap") {
+            effects.happiness = (effects.happiness || 0) - 5;
+        }
+    }
 
     if (effects.health) {
         pet.health = clamp(pet.health + effects.health, 0, 100);
