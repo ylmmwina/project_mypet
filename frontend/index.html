@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyPet</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
+    <title>MyPet Tamagotchi</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
 
 <div class="game-container">
 
-    <div id="screen-menu" class="screen"> <h1>MyPet 🐾</h1>
+    <div id="screen-menu" class="screen">
+        <h1>MyPet 🐾</h1>
         <p>Твої улюбленці:</p>
-
         <div id="pets-list" class="pets-list-container">
             <p class="loading-text">Завантаження...</p>
         </div>
-
         <button id="btn-to-create" class="btn-start action-btn-wide">➕ Новий улюбленець</button>
     </div>
 
@@ -40,7 +45,10 @@
     <div id="screen-game" class="screen hidden">
         <div class="top-bar">
             <button id="btn-back-menu" class="icon-btn">💾 Меню</button>
-            <div class="stats-mini">❤️ <span id="stat-health">100</span></div>
+            <div class="stats-mini">
+                ❤️ <span id="stat-health">100</span>
+                🪙 <span id="stat-coins">0</span>
+            </div>
         </div>
 
         <div class="pet-area">
@@ -49,39 +57,22 @@
         </div>
 
         <div class="bottom-bar">
-            <button class="action-btn" title="Годувати">🍖</button>
-            <button class="action-btn" title="Грати">🎾</button>
-            <button class="action-btn" title="Спати">💤</button>
-            <button class="action-btn" title="Лікувати">💊</button>
-            <button class="action-btn" title="Прибирати">🧹</button>
-        </div>
-    </div>
-
-</div>
-<script src="script.js"></script>
-
-    <div id="screen-game" class="screen hidden">
-        <div class="top-bar">
-            <button id="btn-menu" class="icon-btn">⬅ Меню</button>
-            <div class="stats-mini">❤️ <span id="stat-health">100</span></div>
-        </div>
-
-        <div class="pet-area">
-            <div id="pet-sprite" class="pet-placeholder">🐱</div>
-            <h2 id="display-name">Name</h2>
-        </div>
-
-        <div class="bottom-bar">
-            <button class="action-btn" title="Годувати">🍖</button>
-            <button class="action-btn" title="Грати">🎾</button>
-            <button class="action-btn" title="Спати">💤</button>
-            <button class="action-btn" title="Лікувати">💊</button>
-            <button class="action-btn" title="Прибирати">🧹</button>
+            <button id="btn-feed" class="action-btn" title="Годувати">🍖</button>
+            <button id="btn-play-game" class="action-btn" title="Play Mini-Game" style="color: gold; font-weight: bold;">🎮</button>
+            <button id="btn-sleep" class="action-btn" title="Спати">💤</button>
+            <button id="btn-heal" class="action-btn" title="Лікувати">💊</button>
+            <button id="btn-clean" class="action-btn" title="Прибирати">🧹</button>
         </div>
     </div>
 
 </div>
 
+<div id="phaser-game" style="display: none;"></div>
+
+<button id="btn-force-exit" class="exit-game-btn" style="display: none;">❌ ВИХІД</button>
+
+<script src="game/src/main.js" type="module"></script>
 <script src="script.js"></script>
+
 </body>
 </html>
