@@ -24,6 +24,17 @@ export class GameOverScene extends Phaser.Scene {
             strokeThickness: 4
         }).setOrigin(0.5);
 
+        if (window.finishGameAndSendResults) {
+            // Логіка: скільки монет даємо за очки?
+            // Наприклад, 1 очко = 1 монета.
+            const coinsEarned = this.finalScore;
+
+            console.log(`Відправляємо результати: Score: ${this.finalScore}, Coins: ${coinsEarned}`);
+
+            // Відправляємо на сервер через script.js
+            window.finishGameAndSendResults(this.finalScore, coinsEarned);
+        }
+
         // 2. ЛОГІКА ЗБЕРЕЖЕННЯ РЕКОРДУ
         let highScore = localStorage.getItem('coin_rush_highscore') || 0;
         let isNewRecord = false;
