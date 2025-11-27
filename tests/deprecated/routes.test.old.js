@@ -1,9 +1,9 @@
 import { jest, describe, test, expect, beforeEach, afterEach } from '@jest/globals';
 import request from 'supertest';
 import express from 'express'; // Беремо експрес, щоб створити тестовий додаток
-import registerPetRoutes from '../backend/routes/petRoutes.js'; // Імпортуємо тільки функцію маршрутів
+import registerPetRoutes from '../../backend/routes/petRoutes.js'; // Імпортуємо тільки функцію маршрутів
 import Storage from '../backend/utils/storage.js';
-import Pet from '../backend/models/pet.js';
+import Pet from '../../backend/models/pet.js';
 
 // Створюємо окремий тестовий додаток, щоб не чіпати server.js
 const app = express();

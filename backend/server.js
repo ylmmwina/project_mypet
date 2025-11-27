@@ -7,6 +7,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import crypto from "crypto";
 import Pet from "./models/pet.js";
+import registerShopRoutes from "./routes/shopRoutes.js";
+import registerInventoryRoutes from "./routes/inventoryRoutes.js";
 
 //Тут ми будемо зберігати, який 'ownerId' (з cookie)
 //відповідає якому 'socket.id' (з WebSocket)
@@ -55,6 +57,8 @@ async function startServer() {
 
     //передаємо 'db' та 'io' у наші маршрути
     registerPetRoutes(app, db, io);
+    registerShopRoutes(app, db);
+    registerInventoryRoutes(app, db);
 
     const GAME_TICK_RATE_MS = 30000;
     console.log(`🐾 Ігровий цикл запущено. Тік кожні ${GAME_TICK_RATE_MS / 1000} сек.`);

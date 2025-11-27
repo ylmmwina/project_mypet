@@ -1,4 +1,4 @@
-import Pet from "../backend/models/pet.js";
+import Pet from "../../backend/models/pet.js";
 
 describe("Pet Model", () => {
     test("should create a pet with correct properties via constructor", () => {

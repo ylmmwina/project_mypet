@@ -23,7 +23,6 @@ export default function registerPetRoutes(app, db, io) {
         return pet.toJSON();
     }
 
-    // ... (app.get і app.post/create-pet ті самі) ...
     app.get("/pet", async (req, res) => {
         const ownerId = req.ownerId;
         const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
@@ -45,7 +44,7 @@ export default function registerPetRoutes(app, db, io) {
         }
     });
 
-    // --- 🎮 МАРШРУТ: КІНЕЦЬ ГРИ ---
+    // МАРШРУТ: КІНЕЦЬ ГРИ 
     app.post("/pet/finish-game", async (req, res) => {
         const ownerId = req.ownerId;
         // Очікуємо, що фронтенд надішле, скільки монет зібрав гравець
@@ -60,7 +59,7 @@ export default function registerPetRoutes(app, db, io) {
                 // 1. Додаємо зароблені в грі монети
                 pet.coins += Math.floor(coinsEarned);
 
-                // 2. Вплив на стани (як ти просив)
+                // 2. Вплив на стани
                 // Очки впливають на щастя
                 pet.happiness += Math.floor(score / 2);
                 if (pet.happiness > 100) pet.happiness = 100;
@@ -73,7 +72,7 @@ export default function registerPetRoutes(app, db, io) {
                 pet.hunger += 15;
                 if (pet.hunger > 100) pet.hunger = 100;
 
-                // Здоров'я НЕ чіпаємо (нереалістично, щоб спорт вбивав)
+                // Здоров'я НЕ чіпаємо
             });
 
             res.send(updatedPet);
