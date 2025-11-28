@@ -66,8 +66,9 @@ async function startServer() {
 
     setInterval(async () => {
         try {
-            //знайти ВСІХ живих улюбленців
-            const allPetsData = await db.all("SELECT * FROM Pets WHERE health > 0");
+            // --- ЗМІНА: Тепер беремо ВСІХ улюбленців, навіть якщо health = 0 ---
+            // Це дозволяє їм продовжувати існувати в циклі (наприклад, ставати ще бруднішими)
+            const allPetsData = await db.all("SELECT * FROM Pets");
 
             //пройтись по кожному
             for (const petData of allPetsData) {
@@ -77,9 +78,9 @@ async function startServer() {
 
                 //оновити улюбленця в базі даних
                 await db.run(
-                    `UPDATE Pets SET 
-                        health = ?, hunger = ?, happiness = ?, 
-                        energy = ?, cleanliness = ?, age = ?
+                    `UPDATE Pets SET
+                                     health = ?, hunger = ?, happiness = ?,
+                                     energy = ?, cleanliness = ?, age = ?
                      WHERE id = ?`,
                     pet.health, pet.hunger, pet.happiness,
                     pet.energy, pet.cleanliness, pet.age,

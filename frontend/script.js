@@ -1,7 +1,9 @@
 const API_URL = "http://localhost:3000";
 let currentPet = null;
-let myPets = []; // Зберігаємо список усіх наших тварин локально
+let myPets = [];
 let happyTimer = null;
+let notificationTimer = null;
+let isSavingGame = false; // Замок від подвійного нарахування
 
 // --- СЛОВНИК АСЕТІВ ---
 const itemIcons = {
@@ -30,6 +32,29 @@ const modalShop = document.getElementById("modal-shop");
 const modalInventory = document.getElementById("modal-inventory");
 const shopContainer = document.getElementById("shop-items-container");
 const invContainer = document.getElementById("inventory-items-container");
+
+const notificationBox = document.getElementById("pixel-notification");
+const notificationText = document.getElementById("notification-text");
+
+// --- ФУНКЦІЯ ПОВІДОМЛЕНЬ ---
+function showNotification(message, type = 'info') {
+    if (!notificationBox || !notificationText) {
+        console.log(message);
+        return;
+    }
+    notificationText.textContent = message;
+    notificationBox.classList.remove("hidden");
+
+    notificationBox.className = "notification-box";
+    if (type === 'error') notificationBox.classList.add("error");
+    else if (type === 'success') notificationBox.classList.add("success");
+
+    if (notificationTimer) clearTimeout(notificationTimer);
+
+    notificationTimer = setTimeout(() => {
+        notificationBox.classList.add("hidden");
+    }, 3000);
+}
 
 // --- ДОПОМІЖНІ ФУНКЦІЇ ---
 function showScreen(screenToShow) {
@@ -67,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPetsList();
 });
 
-// --- МЕНЮ ТА СТВОРЕННЯ (ОНОВЛЕНО) ---
+// --- МЕНЮ ТА СТВОРЕННЯ ---
 async function loadPetsList() {
     showScreen(screenMenu);
     petsListContainer.innerHTML = '<p>Завантаження...</p>';
@@ -75,7 +100,7 @@ async function loadPetsList() {
         const data = await apiRequest('/pets', 'GET');
 
         petsListContainer.innerHTML = '';
-        myPets = []; // Очищаємо список
+        myPets = [];
 
         if (Array.isArray(data)) myPets = data;
         else if (data && data.name) myPets = [data];
@@ -87,15 +112,30 @@ async function loadPetsList() {
                 const card = document.createElement('div');
                 card.className = 'pet-card';
                 const iconType = pet.type || 'cat';
+
+                // Додаємо кнопку видалення
                 card.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:10px;">
+                    <div class="pet-info-click" style="display:flex; align-items:center; gap:10px; flex-grow:1;">
                         <img src="assets/${iconType}_normal.png" style="width:40px;" onerror="this.src='assets/cat_normal.png'">
                         <span class="pet-card-name">${pet.name}</span>
                     </div>
-                    <span>🪙 ${pet.coins || 0}</span>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                        <span>🪙 ${pet.coins || 0}</span>
+                        <button class="delete-btn" title="Видалити">
+                            <img src="assets/button_delete.png" alt="Delete">
+                        </button>
+                    </div>
                 `;
-                // Клік по картці перемикає на цього улюбленця
-                card.addEventListener('click', () => startGame(pet));
+
+                // Клік на картку - Грати
+                card.querySelector('.pet-info-click').addEventListener('click', () => startGame(pet));
+
+                // Клік на смітник - Видалити
+                card.querySelector('.delete-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deletePet(pet.id, pet.name);
+                });
+
                 petsListContainer.appendChild(card);
             });
         }
@@ -105,10 +145,22 @@ async function loadPetsList() {
     }
 }
 
+// Функція видалення
+async function deletePet(petId, petName) {
+    if (!confirm(`Ти точно хочеш видалити ${petName}? Це незворотно!`)) return;
+
+    try {
+        await apiRequest('/pet/delete', "POST", { petId });
+        showNotification(`${petName} видалено.`, "success");
+        loadPetsList();
+    } catch (e) {
+        showNotification("Помилка видалення: " + e.message, "error");
+    }
+}
+
 document.getElementById("btn-to-create").onclick = () => {
-    // ПЕРЕВІРКА ЛІМІТУ (Макс 3)
     if (myPets.length >= 3) {
-        alert("Можна мати максимум 3 улюбленці!");
+        showNotification("Можна мати максимум 3 улюбленці!", "error");
         return;
     }
     createForm.reset();
@@ -123,19 +175,17 @@ createForm.addEventListener("submit", async (e) => {
     const typeInput = document.querySelector('input[name="pet-type"]:checked');
     const type = typeInput ? typeInput.value : 'cat';
 
-    // ПЕРЕВІРКА ТИПУ (Тільки один вид кожного типу)
-    const alreadyHasType = myPets.some(p => p.type === type);
-    if (alreadyHasType) {
-        alert(`У тебе вже є ${type === 'cat' ? 'кіт' : type === 'dog' ? 'пес' : 'мавпа'}! Обери іншого.`);
+    if (myPets.some(p => p.type === type)) {
+        showNotification(`У тебе вже є ${type}! Обери іншого.`, "error");
         return;
     }
 
     try {
         const newPet = await apiRequest('/create-pet', "POST", { name, type });
-        // Оновлюємо список і запускаємо гру з новим петом
         myPets.push(newPet);
         startGame(newPet);
-    } catch (e) { alert("Помилка створення: " + e.message); }
+        showNotification("Улюбленця створено!", "success");
+    } catch (e) { showNotification("Помилка створення: " + e.message, "error"); }
 });
 
 // --- ГРА ---
@@ -158,39 +208,23 @@ function updateUI(pet) {
     document.getElementById("val-health").textContent = pet.health + "%";
     document.getElementById("val-cleanliness").textContent = (100 - pet.cleanliness) + "%";
 
-    // --- ЛОГІКА СПРАЙТІВ (ВИПРАВЛЕНО) ---
     const type = pet.type;
     let state = "normal";
 
-    // Пріоритети станів:
-
-    // 1. Якщо явно запущена анімація (через кнопку) - найвищий пріоритет
     if (happyTimer) {
-        // Якщо це був сон, то state вже "sleep"
-        // Якщо ні, то "happy"
-        // Ми не перезаписуємо тут, бо happyTimer встановлюється в triggerHappyState
+        // Залишаємо поточний стан
     }
-    // 2. Якщо режим сну (оверлей) - спимо
     else if (sleepOverlay.classList.contains('active')) {
         state = "sleep";
     }
-    // 3. Якщо просто погані показники - сумний
     else if (pet.health < 30 || pet.happiness < 30 || pet.hunger > 70 || pet.energy < 10) {
-        // ВИПРАВЛЕННЯ: Якщо мало енергії, він СУМНИЙ, а не спить (поки ми не вкладемо)
         state = "sad";
     }
-    // 4. Інакше нормальний
-    else {
-        state = "normal";
-    }
 
-    // Додатково: якщо зараз йде triggerHappyState('sleep'), то картинка вже задана
-    // Але якщо ми просто оновлюємо UI, то беремо state
     if (!happyTimer) {
         petSprite.src = `assets/${type}_${state}.png`;
     }
 
-    // Хмаринка потреб
     let need = null;
     if (pet.health < 50) need = "heal";
     else if (pet.hunger > 50) need = "eat";
@@ -209,9 +243,8 @@ function updateUI(pet) {
 // --- ДІЇ ---
 document.getElementById("btn-feed").onclick = () => openInventory(true);
 
-// 2. ГРА (Phaser)
 document.getElementById("btn-play-game").onclick = () => {
-    if (!currentPet) return; // Про всяк випадок
+    if (!currentPet) return;
 
     screenGame.classList.add("hidden");
     gameWrapper.style.display = "flex";
@@ -219,7 +252,6 @@ document.getElementById("btn-play-game").onclick = () => {
 
     setTimeout(() => {
         if (window.launchGame) {
-            // ПЕРЕДАЄМО ТИП ТВАРИНИ (cat, dog, monkey)
             window.launchGame(currentPet.type);
         } else {
             console.error("Функція window.launchGame не знайдена!");
@@ -227,21 +259,18 @@ document.getElementById("btn-play-game").onclick = () => {
     }, 100);
 };
 
-// --- СОН (ЗБІЛЬШЕНО ЧАС) ---
 document.getElementById("btn-sleep").onclick = async () => {
     sleepOverlay.classList.add("active");
-    triggerHappyState('sleep'); // Встановити спрайт сну
+    triggerHappyState('sleep');
 
     try {
         const updated = await apiRequest('/pet/sleep', "POST", { petId: currentPet.id });
         currentPet = updated;
-        // Тут НЕ викликаємо updateUI одразу, щоб не збити спрайт сну
     } catch(e) { console.error(e); }
 
-    // Спимо 8 СЕКУНД
     setTimeout(() => {
         sleepOverlay.classList.remove("active");
-        triggerHappyState('happy'); // Прокидається веселий
+        triggerHappyState('happy');
     }, 8000);
 };
 
@@ -250,11 +279,11 @@ document.getElementById("btn-clean").onclick = () => useSpecificItem("soap_basic
 
 async function useSpecificItem(itemId, actionName) {
     try {
-        const inventory = await apiRequest('/inventory');
-        const hasItem = inventory.find(i => i.itemId === itemId && i.quantity > 0);
+        const items = await apiRequest(`/inventory?petId=${currentPet.id}`);
+        const hasItem = items.find(i => i.itemId === itemId && i.quantity > 0);
         if (hasItem) useItem(itemId);
         else {
-            alert(`Потрібно купити предмет для ${actionName}!`);
+            showNotification(`Треба купити предмет для: ${actionName}!`, "error");
             openShop();
         }
     } catch(e) { console.error(e); }
@@ -287,10 +316,12 @@ async function openShop() {
 async function buyItem(itemId) {
     try {
         const data = await apiRequest('/shop/buy', "POST", { itemId, petId: currentPet.id });
-        currentPet = data;
-        updateUI(data);
-        alert("Куплено!");
-    } catch(e) { alert(e.message); }
+        if (currentPet.id === data.id) {
+            currentPet = data;
+            updateUI(data);
+        }
+        showNotification("Успішно куплено!", "success");
+    } catch(e) { showNotification(e.message, "error"); }
 }
 
 document.getElementById("btn-inventory").onclick = () => openInventory(false);
@@ -335,29 +366,31 @@ async function useItem(itemId) {
         currentPet = data.pet;
         updateUI(data.pet);
         triggerHappyState('happy');
+
+        if (itemId.includes("food") || itemId.includes("snack")) showNotification("Ням-ням! Смачно!", "success");
+        else if (itemId.includes("medkit")) showNotification("Вилікували!", "success");
+        else if (itemId.includes("soap")) showNotification("Тепер чистенький!", "success");
+        else showNotification("Предмет використано!", "success");
+
         if (!modalInventory.classList.contains("hidden")) {
             const isFoodMode = document.getElementById("inv-title").textContent === "Вибери їжу";
             openInventory(isFoodMode);
         }
-    } catch(e) { alert(e.message); }
+    } catch(e) { showNotification(e.message, "error"); }
 }
 
 function triggerHappyState(overrideState) {
     const type = currentPet.type;
     petSprite.src = `assets/${type}_${overrideState}.png`;
 
-    // Якщо вже був таймер, скидаємо його
     if (happyTimer) clearTimeout(happyTimer);
 
-    // Встановлюємо таймер для повернення до "normal/sad"
-    // АЛЕ якщо це сон, ми чекаємо завершення сну в функції сну
     if (overrideState !== 'sleep') {
         happyTimer = setTimeout(() => {
             happyTimer = null;
             updateUI(currentPet);
         }, 2000);
     } else {
-        // Якщо це сон, ставимо happyTimer як "зайнятий", щоб updateUI не перебивав картинку
         happyTimer = 999;
     }
 }
@@ -371,7 +404,6 @@ function startLiveUpdates() {
 socket.on('pet-update', (updatedPet) => {
     if (currentPet && updatedPet.id === currentPet.id) {
         currentPet = updatedPet;
-        // Оновлюємо UI, тільки якщо не йде анімація
         if (!happyTimer && !sleepOverlay.classList.contains("active")) {
             updateUI(updatedPet);
         }
@@ -383,20 +415,38 @@ window.closeGame = () => {
     document.getElementById("btn-force-exit").style.display = "none";
     if (window.destroyGame) window.destroyGame();
     screenGame.classList.remove("hidden");
+
+    // Скидаємо замок
+    isSavingGame = false;
+
     if (currentPet) {
-        apiRequest(`/pet?id=${currentPet.id}`).then(p => { currentPet = p; updateUI(p); });
+        apiRequest('/pets').then(data => {
+            let foundPet;
+            if (Array.isArray(data)) {
+                foundPet = data.find(p => p.id === currentPet.id);
+            } else {
+                foundPet = data;
+            }
+            if (foundPet) {
+                currentPet = foundPet;
+                updateUI(foundPet);
+            }
+        }).catch(console.error);
     }
 };
 
 window.finishGameAndSendResults = async (score, coins) => {
+    if (isSavingGame) return; // Блокуємо повторний виклик
+    isSavingGame = true;
+
     try {
         const updatedPet = await apiRequest('/pet/finish-game', "POST", { score, coinsEarned: coins, petId: currentPet.id });
-        alert(`Гру завершено! +${coins} монет.`);
+        showNotification(`Гру завершено! +${coins} монет.`, "success");
         currentPet = updatedPet;
         updateUI(updatedPet);
-        window.closeGame();
     } catch (e) {
-        alert("Помилка збереження: " + e.message);
+        showNotification("Помилка збереження: " + e.message, "error");
+    } finally {
         window.closeGame();
     }
 };

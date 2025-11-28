@@ -1,17 +1,16 @@
 import { shopItems, findShopItem } from "../shop/shopItems.js";
 import Pet from "../models/pet.js";
 import {
-    getPetIdByOwnerId,
+    getPetByOwnerIdAndPetId, // Використовуємо це для конкретного пета
     savePet,
     addInventoryItem,
     addPurchaseHistoryEntry,
-    getPurchaseHistory,
-    getPetByOwnerIdAndPetId
+    getPurchaseHistory
 } from "../utils/database.js";
 
 export default function registerShopRoutes(app, db) {
 
-    // Список товарів 
+    // Список товарів
     app.get("/shop/items", (req, res) => {
         res.json(shopItems);
     });
@@ -28,6 +27,13 @@ export default function registerShopRoutes(app, db) {
             });
         }
 
+        if (!petId) {
+            return res.status(400).json({
+                error: "PET_ID_REQUIRED",
+                message: "You must provide petId"
+            });
+        }
+
         const item = findShopItem(itemId);
         if (!item) {
             return res.status(404).json({
@@ -37,24 +43,17 @@ export default function registerShopRoutes(app, db) {
         }
 
         try {
-            // отримуємо тваринку за ownerId
+            // Отримуємо КОНКРЕТНУ тваринку
             const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
+
             if (!petData) {
                 return res.status(404).json({
                     error: "PET_NOT_FOUND",
-                    message: "Create a pet first"
+                    message: "Pet not found or access denied"
                 });
             }
 
             const pet = Pet.fromJSON(petData);
-
-            // перевірки стану
-            // if (pet.health <= 0) {
-            //     return res.status(400).json({
-            //         error: "PET_DEAD",
-            //         message: "Your pet is dead. Shop is unavailable."
-            //     });
-            // }
 
             if (pet.coins < item.price) {
                 return res.status(400).json({
@@ -63,20 +62,21 @@ export default function registerShopRoutes(app, db) {
                 });
             }
 
-            // списуємо монети
+            // Списуємо монети
             pet.coins -= item.price;
 
-            // зберігаємо оновленого пета
+            // Зберігаємо оновленого пета
             await savePet(db, pet);
-            
 
-            // додаємо товар до інвентаря
+            const now = new Date().toISOString();
+
+            // Додаємо товар до інвентаря САМЕ ЦЬОГО пета
             await addInventoryItem(db, petId, item.id);
 
-            // логування покупки
+            // Логування покупки
             await addPurchaseHistoryEntry(db, petId, item.id, item.price);
 
-            // повертаємо оновленого пета
+            // Повертаємо оновленого пета (з новим балансом)
             res.json(pet.toJSON());
 
         } catch (error) {
@@ -88,21 +88,26 @@ export default function registerShopRoutes(app, db) {
         }
     });
 
-    // Історія покупок 
+    // Історія покупок (Тепер приймає petId як параметр: /shop/history?petId=1)
     app.get("/shop/history", async (req, res) => {
         const ownerId = req.ownerId;
+        const petId = req.query.petId;
+
+        if (!petId) {
+            return res.status(400).json({ error: "PET_ID_REQUIRED", message: "petId query param required" });
+        }
 
         try {
-            const petId = await getPetIdByOwnerId(db, ownerId);
-            if (!petId) {
+            // Перевіряємо права доступу
+            const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
+            if (!petData) {
                 return res.status(404).json({
                     error: "PET_NOT_FOUND",
-                    message: "Create a pet first"
+                    message: "Pet not found or access denied"
                 });
             }
-            
-            const history = await getPurchaseHistory(db, petId);
 
+            const history = await getPurchaseHistory(db, petId);
             res.json(history);
         } catch (error) {
             console.error(error);
