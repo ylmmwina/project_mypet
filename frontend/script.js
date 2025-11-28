@@ -72,7 +72,7 @@ async function loadPetsList() {
     showScreen(screenMenu);
     petsListContainer.innerHTML = '<p>Завантаження...</p>';
     try {
-        const data = await apiRequest('/pet');
+        const data = await apiRequest('/pets', 'GET');
 
         petsListContainer.innerHTML = '';
         myPets = []; // Очищаємо список
@@ -233,7 +233,7 @@ document.getElementById("btn-sleep").onclick = async () => {
     triggerHappyState('sleep'); // Встановити спрайт сну
 
     try {
-        const updated = await apiRequest('/pet/sleep', "POST");
+        const updated = await apiRequest('/pet/sleep', "POST", { petId: currentPet.id });
         currentPet = updated;
         // Тут НЕ викликаємо updateUI одразу, щоб не збити спрайт сну
     } catch(e) { console.error(e); }
@@ -286,7 +286,7 @@ async function openShop() {
 
 async function buyItem(itemId) {
     try {
-        const data = await apiRequest('/shop/buy', "POST", { itemId });
+        const data = await apiRequest('/shop/buy', "POST", { itemId, petId: currentPet.id });
         currentPet = data;
         updateUI(data);
         alert("Куплено!");
@@ -301,7 +301,7 @@ async function openInventory(filterFood = false) {
     document.getElementById("inv-title").textContent = filterFood ? "Вибери їжу" : "Рюкзак";
 
     try {
-        const items = await apiRequest('/inventory');
+        const items = await apiRequest(`/inventory?petId=${currentPet.id}`);
         invContainer.innerHTML = "";
         const filtered = filterFood ? items.filter(i => i.item && i.item.type === 'food') : items;
 
@@ -331,7 +331,7 @@ async function openInventory(filterFood = false) {
 
 async function useItem(itemId) {
     try {
-        const data = await apiRequest('/inventory/use', "POST", { itemId });
+        const data = await apiRequest('/inventory/use', "POST", { itemId, petId: currentPet.id });
         currentPet = data.pet;
         updateUI(data.pet);
         triggerHappyState('happy');
@@ -384,13 +384,13 @@ window.closeGame = () => {
     if (window.destroyGame) window.destroyGame();
     screenGame.classList.remove("hidden");
     if (currentPet) {
-        apiRequest('/pet').then(p => { currentPet = p; updateUI(p); });
+        apiRequest(`/pet?id=${currentPet.id}`).then(p => { currentPet = p; updateUI(p); });
     }
 };
 
 window.finishGameAndSendResults = async (score, coins) => {
     try {
-        const updatedPet = await apiRequest('/pet/finish-game', "POST", { score, coinsEarned: coins });
+        const updatedPet = await apiRequest('/pet/finish-game', "POST", { score, coinsEarned: coins, petId: currentPet.id });
         alert(`Гру завершено! +${coins} монет.`);
         currentPet = updatedPet;
         updateUI(updatedPet);

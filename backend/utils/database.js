@@ -1,9 +1,15 @@
 import sqlite3 from "sqlite3";
 import { open } from "sqlite";
+import fs from "fs";
 
 export async function setupDatabase() {
+
+    const dbFilename = "pets.db"
+    const path = "./backend/storage";
+    fs.mkdirSync(path, { recursive: true });
+
     const db = await open({
-        filename: "./backend/storage/pets.db",
+        filename: path + '/' + dbFilename,
         driver: sqlite3.Database
     });
 
@@ -11,7 +17,7 @@ export async function setupDatabase() {
     await db.exec(`
         CREATE TABLE IF NOT EXISTS Pets (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ownerId TEXT NOT NULL UNIQUE,
+            ownerId TEXT NOT NULL,
             name TEXT NOT NULL,
             type TEXT NOT NULL,
             age INTEGER DEFAULT 0,
@@ -20,7 +26,8 @@ export async function setupDatabase() {
             happiness INTEGER DEFAULT 0,
             energy INTEGER DEFAULT 0,
             cleanliness INTEGER DEFAULT 0,
-            coins INTEGER DEFAULT 0
+            coins INTEGER DEFAULT 0,
+            createdAt INTEGER NOT NULL
         );
     `);
 
@@ -57,6 +64,10 @@ export async function setupDatabase() {
 // Отримати улюбленця за ownerId (повний запис з БД)
 export async function getPetByOwnerId(db, ownerId) {
     return await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+}
+
+export async function getPetByOwnerIdAndPetId(db, ownerId, petId) {
+    return await db.get("SELECT * FROM Pets WHERE ownerId = ? AND id = ?", ownerId, petId)
 }
 
 // Отримати тільки id улюбленця за ownerId
@@ -113,7 +124,8 @@ export async function getInventoryItem(db, petId, itemId) {
 }
 
 // Додати предмет в інвентар (або збільшити quantity, якщо вже є)
-export async function addInventoryItem(db, petId, itemId, now) {
+export async function addInventoryItem(db, petId, itemId) {
+    const now = new Date().toISOString();
     const existing = await getInventoryItem(db, petId, itemId);
 
     if (existing) {
@@ -163,7 +175,8 @@ export async function consumeInventoryItem(db, petId, itemId, now) {
 }
 
 // Додати запис в історію покупок
-export async function addPurchaseHistoryEntry(db, petId, itemId, price, now) {
+export async function addPurchaseHistoryEntry(db, petId, itemId, price) {
+    const now = new Date().toISOString();
     await db.run(
         "INSERT INTO Purchases (petId, itemId, price, createdAt) VALUES (?, ?, ?, ?)",
         petId,
