@@ -1,3 +1,10 @@
+/**
+ * @file inventoryRoutes.js
+ * @brief Маршрути API для управління інвентарем улюбленця.
+ * * Цей файл містить Express-обробники для перегляду вмісту рюкзака (інвентаря)
+ * та використання предметів (їжа, ліки, мило) на улюбленцеві.
+ */
+
 import Pet from "../models/pet.js";
 import { findShopItem, applyItemEffects } from "../shop/shopItems.js";
 import {
@@ -8,9 +15,24 @@ import {
     getPetByOwnerIdAndPetId // Імпортуємо правильну функцію
 } from "../utils/database.js";
 
+/**
+ * @brief Реєструє маршрути, пов'язані з інвентарем, у додатку Express.
+ * * @param {Object} app - Екземпляр додатка Express.
+ * @param {Object} db - Екземпляр бази даних SQLite.
+ */
 export default function registerInventoryRoutes(app, db) {
 
-    // Отримати інвентар поточного улюбленця
+    /**
+     * @brief Отримати інвентар поточного улюбленця.
+     * @route GET /inventory
+     * * Перевіряє права доступу власника до улюбленця та повертає список предметів,
+     * що є у нього в наявності, разом з їхніми характеристиками.
+     * * @param {Object} req - Об'єкт запиту Express.
+     * @param {string} req.query.petId - ID улюбленця (Query Parameter).
+     * @param {string} req.ownerId - ID власника (встановлюється middleware).
+     * @param {Object} res - Об'єкт відповіді Express.
+     * * @returns {JSON} Список предметів в інвентарі або повідомлення про помилку.
+     */
     app.get("/inventory", async (req, res) => {
         const ownerId = req.ownerId;
         const petId = req.query.petId;
@@ -54,7 +76,17 @@ export default function registerInventoryRoutes(app, db) {
         }
     });
 
-    // Використати предмет з інвентаря
+    /**
+     * @brief Використати предмет з інвентаря.
+     * @route POST /inventory/use
+     * * Застосовує ефект предмета до улюбленця (лікує, годує, миє тощо),
+     * зберігає оновлений стан улюбленця та зменшує кількість предметів в інвентарі.
+     * * @param {Object} req - Об'єкт запиту Express.
+     * @param {string} req.body.petId - ID улюбленця.
+     * @param {string} req.body.itemId - ID предмета для використання.
+     * @param {Object} res - Об'єкт відповіді Express.
+     * * @returns {JSON} Оновлений об'єкт улюбленця та залишок предмета.
+     */
     app.post("/inventory/use", async (req, res) => {
         const ownerId = req.ownerId;
         const { itemId, petId } = req.body;
@@ -84,6 +116,16 @@ export default function registerInventoryRoutes(app, db) {
             }
 
             const pet = Pet.fromJSON(petData);
+
+            // Перевірку на смерть видалено, щоб дозволити реанімацію або дії при 0 HP
+            /*
+            if (pet.health <= 0) {
+                return res.status(400).json({
+                    error: "PET_DEAD",
+                    message: "Your pet is dead. You cannot use items."
+                });
+            }
+            */
 
             const item = findShopItem(itemId);
             if (!item) {

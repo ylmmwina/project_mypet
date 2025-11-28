@@ -1,8 +1,31 @@
+/**
+ * @file petRoutes.js
+ * @brief Маршрути API для управління улюбленцями.
+ * * Цей файл містить Express-обробники для створення, отримання списку,
+ * видалення улюбленців, а також виконання дій над ними (годування, гра, сон тощо).
+ */
+
 import Pet from "../models/pet.js";
 import { getAllPetsByOwnerId, getPetById, deletePet } from "../utils/database.js";
 
+/**
+ * @brief Реєструє маршрути улюбленців у додатку Express.
+ * @param {Object} app - Екземпляр додатка Express.
+ * @param {Object} db - Екземпляр бази даних SQLite.
+ * @param {Object} io - Екземпляр Socket.IO.
+ */
 export default function registerPetRoutes(app, db, io) {
 
+    /**
+     * @brief Оновлює стан улюбленця в базі даних.
+     * * Допоміжна функція, яка знаходить улюбленця, застосовує до нього дію (callback)
+     * і зберігає зміни.
+     * * @param {string} ownerId - ID власника.
+     * @param {number} petId - ID улюбленця.
+     * @param {Function} actionCallback - Функція, що змінює параметри об'єкта Pet.
+     * @returns {Promise<Object>} Оновлений об'єкт улюбленця (JSON).
+     * @throws {Error} Якщо улюбленця не знайдено або ID некоректний.
+     */
     async function updatePetAction(ownerId, petId, actionCallback) {
         if (!petId) throw new Error("petId is required");
 
@@ -25,6 +48,12 @@ export default function registerPetRoutes(app, db, io) {
         return pet.toJSON();
     }
 
+    /**
+     * @brief Отримати всіх улюбленців користувача.
+     * @route GET /pets
+     * @param {Object} req - Об'єкт запиту (req.ownerId встановлюється middleware).
+     * @param {Object} res - Об'єкт відповіді.
+     */
     app.get("/pets", async (req, res) => {
         const ownerId = req.ownerId;
         try {
@@ -36,6 +65,10 @@ export default function registerPetRoutes(app, db, io) {
         }
     });
 
+    /**
+     * @brief Отримати улюбленця (альтернативний маршрут).
+     * @route GET /pet
+     */
     app.get("/pet", async (req, res) => {
         const ownerId = req.ownerId;
         try {
@@ -47,6 +80,12 @@ export default function registerPetRoutes(app, db, io) {
         }
     });
 
+    /**
+     * @brief Створити нового улюбленця.
+     * @route POST /create-pet
+     * @param {Object} req - Тіло запиту містить { name, type }.
+     * @param {Object} res - Повертає створеного улюбленця.
+     */
     app.post("/create-pet", async (req, res) => {
         const { name, type } = req.body;
         const ownerId = req.ownerId;
@@ -67,6 +106,12 @@ export default function registerPetRoutes(app, db, io) {
         }
     });
 
+    /**
+     * @brief Завершення міні-гри.
+     * @route POST /pet/finish-game
+     * * Оновлює статистику (монети, щастя, голод) на основі результатів гри.
+     * @param {Object} req - Тіло запиту { score, coinsEarned, petId }.
+     */
     app.post("/pet/finish-game", async (req, res) => {
         const ownerId = req.ownerId;
         const { score, coinsEarned, petId } = req.body;
@@ -91,6 +136,10 @@ export default function registerPetRoutes(app, db, io) {
         }
     });
 
+    /**
+     * @brief Middleware для обробки стандартних дій (feed, play тощо).
+     * @param {Function} actionCallback - Метод класу Pet.
+     */
     const handlePetAction = (actionCallback) => async (req, res) => {
         const ownerId = req.ownerId;
         const { petId } = req.body;
@@ -103,12 +152,22 @@ export default function registerPetRoutes(app, db, io) {
         }
     };
 
+    /** @brief Погодувати улюбленця (POST /pet/feed) */
     app.post("/pet/feed", handlePetAction((pet) => pet.feed()));
+    /** @brief Пограти з улюбленцем (POST /pet/play) */
     app.post("/pet/play", handlePetAction((pet) => pet.play()));
+    /** @brief Вкласти спати (POST /pet/sleep) */
     app.post("/pet/sleep", handlePetAction((pet) => pet.sleep()));
+    /** @brief Полікувати (POST /pet/heal) */
     app.post("/pet/heal", handlePetAction((pet) => pet.heal()));
+    /** @brief Помити (POST /pet/clean) */
     app.post("/pet/clean", handlePetAction((pet) => pet.clean()));
 
+    /**
+     * @brief Видалити улюбленця.
+     * @route POST /pet/delete
+     * @param {Object} req - Тіло запиту { petId }.
+     */
     app.post("/pet/delete", async (req, res) => {
         const ownerId = req.ownerId;
         const { petId } = req.body;

@@ -1,16 +1,37 @@
-// src/scenes/UIScene.js
-// Сцена для відображення елементів UI (кнопок, меню).
-// Працює паралельно з GameScene.
+/**
+ * @file UIScene.js
+ * @brief Сцена інтерфейсу користувача (HUD).
+ * * Ця сцена працює паралельно з GameScene (основною грою).
+ * Вона відповідає за відображення елементів, які повинні бути
+ * зафіксовані на екрані (наприклад, кнопка паузи, рахунок, якщо він
+ * не інтегрований безпосередньо у Scoreboard).
+ */
 
+/**
+ * @class UIScene
+ * @extends Phaser.Scene
+ * @brief Сцена, що містить елементи користувацького інтерфейсу.
+ * * Основна функціональність: обробка логіки паузи.
+ */
 export class UIScene extends Phaser.Scene {
+
+    /**
+     * @brief Конструктор сцени.
+     */
     constructor() {
         super({ key: 'UIScene' });
     }
 
+    /**
+     * @brief Створення об'єктів сцени UI.
+     * * Створює кнопку "Пауза" та налаштовує її інтерактивність для
+     * керування станом основної гри.
+     */
     create() {
         console.log("UIScene: Сцена UI запущена.");
 
         // Отримуємо посилання на головну сцену гри
+        /** @property {Phaser.Scene} gameScene - Посилання на GameScene для управління паузою. */
         this.gameScene = this.scene.get('GameScene');
 
         // Додавання кнопки "Пауза"
@@ -20,7 +41,7 @@ export class UIScene extends Phaser.Scene {
             { fontSize: '20px', fill: '#FFFFFF', backgroundColor: '#333333' }
         )
             .setInteractive() // Робимо текст клікабельним
-            .setScrollFactor(0); // Фіксуємо на екрані
+            .setScrollFactor(0); // Фіксуємо на екрані (не рухається за камерою)
 
         // Логіка для кнопки "Пауза"
         pauseButton.on('pointerdown', () => {
@@ -33,6 +54,5 @@ export class UIScene extends Phaser.Scene {
             }
         });
 
-        // TODO: Пізніше тут буде відображення рахунку, якщо ми вирішимо розділити UI.
     }
 }

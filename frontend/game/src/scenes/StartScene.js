@@ -1,11 +1,33 @@
-// src/scenes/StartScene.js
+/**
+ * @file StartScene.js
+ * @brief Початкова сцена гри (Меню).
+ * * Ця сцена відображається, коли міні-гра запускається з основного інтерфейсу
+ * та очікує на команду "Почати". Вона показує назву гри та поточний рекорд.
+ */
+
 import { SceneManager } from './SceneManager.js';
 
+/**
+ * @class StartScene
+ * @extends Phaser.Scene
+ * @brief Сцена стартового меню.
+ * * Обробляє логіку High Score та очікує на натискання користувача,
+ * щоб перейти до ігрової сцени.
+ */
 export class StartScene extends Phaser.Scene {
+
+    /**
+     * @brief Конструктор сцени.
+     */
     constructor() {
         super({ key: 'StartScene' });
     }
 
+    /**
+     * @brief Створення об'єктів сцени.
+     * * Малює заголовок, рекорд, інструкцію та налаштовує обробники подій
+     * для старту гри.
+     */
     create() {
         const { width, height } = this.game.config;
 
@@ -22,6 +44,7 @@ export class StartScene extends Phaser.Scene {
         }).setOrigin(0.5);
 
         // 2. ЛОГІКА РЕКОРДУ (HIGH SCORE)
+        /** @property {number} highScore - Найкращий рахунок, збережений у Local Storage. */
         const highScore = localStorage.getItem('coin_rush_highscore') || 0;
 
         this.add.text(width / 2, height / 2, `РЕКОРД: ${highScore}`, {

@@ -1,0 +1,47 @@
+# Конфігурація Doxygen для MyPet
+
+PROJECT_NAME           = "MyPet Tamagotchi Project (OOP)"
+PROJECT_BRIEF          = "Fullstack Tamagotchi application using Node.js, Express, SQLite, and Phaser."
+PROJECT_LOGO           = frontend/assets/favicon.png
+
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = YES
+OUTPUT_LANGUAGE        = Ukrainian
+DOXYFILE_ENCODING      = UTF-8
+INPUT_ENCODING         = UTF-8
+
+# Scan settings
+RECURSIVE              = YES
+
+EXCLUDE_PATTERNS       = */node_modules/* *.css *.html *.json *.png *.test.js
+FILE_PATTERNS          = *.js
+
+# Output
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+
+# Extraction
+EXTRACT_ALL            = YES
+EXTRACT_STATIC         = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_PACKAGE        = YES
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+
+# JS/JSDoc support
+OPTIMIZE_OUTPUT_JAVA   = YES
+JAVADOC_LIKE           = YES
+
+# Input folders
+INPUT                  = backend \
+                         frontend/game/src \
+                         frontend
+
+# Graphs
+HAVE_DOT               = YES
+CLASS_DIAGRAMS         = YES
+UML_LOOK               = YES
+TEMPLATE_RELATIONS     = YES
+INCLUDE_GRAPH          = YES
