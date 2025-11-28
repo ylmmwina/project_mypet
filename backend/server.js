@@ -1,3 +1,10 @@
+/**
+ * @file server.js
+ * @brief Точка входу в бекенд-додаток.
+ * * Цей файл налаштовує Express сервер, підключення до бази даних SQLite,
+ * WebSocket сервер (Socket.IO) та запускає основний ігровий цикл.
+ */
+
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -10,33 +17,43 @@ import Pet from "./models/pet.js";
 import registerShopRoutes from "./routes/shopRoutes.js";
 import registerInventoryRoutes from "./routes/inventoryRoutes.js";
 
-//Тут ми будемо зберігати, який 'ownerId' (з cookie)
-//відповідає якому 'socket.id' (з WebSocket)
+/**
+ * @brief Мапа відповідності між ID власника та ID сокета.
+ * * Використовується для надсилання персональних оновлень конкретному користувачу.
+ * @type {Map<string, string>}
+ * Key: ownerId (з cookie), Value: socket.id
+ */
 const userSocketMap = new Map();
 
-
-//Асинхронна функція для запуску сервера
+/**
+ * @brief Асинхронна функція для ініціалізації та запуску сервера.
+ */
 async function startServer() {
+    // 1. Ініціалізація бази даних
     const db = await setupDatabase();
 
-    //налаштовуємо Express
+    // 2. Налаштування Express
     const app = express();
     const PORT = 3000;
     app.use(cors());
     app.use(express.json());
     app.use(cookieParser());
-    app.use(express.static("frontend"));
+    app.use(express.static("frontend")); // Роздача статики
 
-    //налаштовуємо HTTP та Socket.IO
+    // 3. Налаштування HTTP та Socket.IO
     const httpServer = createServer(app);
     const io = new Server(httpServer, {
         cors: { origin: "*", methods: ["GET", "POST"] }
     });
 
-    //"Middleware" для ID Гравця (Cookie)
+    /**
+     * @brief Middleware для ідентифікації гравця.
+     * * Перевіряє наявність кукі 'ownerId'. Якщо немає — створює новий UUID
+     * і записує його в кукі. Додає ownerId до об'єкта req для використання в маршрутах.
+     */
     app.use((req, res, next) => {
         const ownerId = req.cookies.ownerId;
-        console.log(req.originalUrl, req.body)
+        console.log(req.originalUrl, req.body);
         if (ownerId) {
             req.ownerId = ownerId;
             next();
@@ -44,39 +61,47 @@ async function startServer() {
             const newOwnerId = crypto.randomUUID();
             res.cookie('ownerId', newOwnerId, {
                 httpOnly: true,
-                maxAge: 365 * 24 * 60 * 60 * 1000
+                maxAge: 365 * 24 * 60 * 60 * 1000 // 1 рік
             });
             req.ownerId = newOwnerId;
             next();
         }
     });
 
-    //маршрути
+    // Базовий маршрут для перевірки працездатності
     app.get("/", (req, res) => {
         res.send(`🐾 MyPet сервер працює! Ваш ID: ${req.ownerId}`);
     });
 
-    //передаємо 'db' та 'io' у наші маршрути
+    // Реєстрація маршрутів API
     registerPetRoutes(app, db, io);
     registerShopRoutes(app, db);
     registerInventoryRoutes(app, db);
 
-    const GAME_TICK_RATE_MS = 30000;
+    // --- GAME LOOP ---
+    const GAME_TICK_RATE_MS = 30000; // 30 секунд
     console.log(`🐾 Ігровий цикл запущено. Тік кожні ${GAME_TICK_RATE_MS / 1000} сек.`);
 
+    /**
+     * @brief Основний ігровий цикл.
+     * * Виконується кожні 30 секунд.
+     * 1. Отримує всіх улюбленців з БД.
+     * 2. Викликає pet.live() для симуляції життя (голод, бруд тощо).
+     * 3. Оновлює дані в БД.
+     * 4. Надсилає оновлений стан власнику через WebSocket (якщо він онлайн).
+     */
     setInterval(async () => {
         try {
-            // --- ЗМІНА: Тепер беремо ВСІХ улюбленців, навіть якщо health = 0 ---
-            // Це дозволяє їм продовжувати існувати в циклі (наприклад, ставати ще бруднішими)
+            // Беремо ВСІХ улюбленців, щоб обробляти навіть тих, у кого 0 здоров'я
             const allPetsData = await db.all("SELECT * FROM Pets");
 
-            //пройтись по кожному
             for (const petData of allPetsData) {
-                //застосувати логіку `live()` з нашого класу Pet
                 const pet = Pet.fromJSON(petData);
-                pet.live(); // Наш клас Pet сам рахує, як погіршити стан
 
-                //оновити улюбленця в базі даних
+                // Застосувати логіку погіршення стану
+                pet.live();
+
+                // Оновити запис у БД
                 await db.run(
                     `UPDATE Pets SET
                                      health = ?, hunger = ?, happiness = ?,
@@ -87,7 +112,7 @@ async function startServer() {
                     pet.id
                 );
 
-                //надіслати оновлення власнику, якщо він online
+                // Знайти сокет власника і надіслати оновлення
                 const socketId = userSocketMap.get(pet.ownerId);
                 if (socketId) {
                     io.to(socketId).emit('pet-update', pet.toJSON());
@@ -98,18 +123,22 @@ async function startServer() {
         }
     }, GAME_TICK_RATE_MS);
 
-    // --- SOCKET.IO ---
+    // --- SOCKET.IO EVENTS ---
     io.on("connection", (socket) => {
         console.log(`🔌 Клієнт підключився: ${socket.id}`);
 
-        //чекаємо, що клієнт "представиться" і надішле свій ownerId
+        /**
+         * @event register
+         * @brief Реєстрація сокета за ownerId.
+         * * Клієнт надсилає свій ownerId (з кукі), сервер пов'язує його з socket.id.
+         * Також сервер одразу надсилає актуальний стан пета.
+         */
         socket.on('register', (ownerId) => {
             if (ownerId) {
                 console.log(`🔗 Клієнт ${socket.id} зареєстрований для ownerId: ${ownerId}`);
-                //зберігаємо зв'язок ownerId <-> socket.id
                 userSocketMap.set(ownerId, socket.id);
 
-                //одразу надсилаємо йому актуальний стан
+                // Одразу надсилаємо актуальний стан
                 db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId)
                     .then(petData => {
                         if (petData) {
@@ -121,7 +150,7 @@ async function startServer() {
 
         socket.on("disconnect", () => {
             console.log(`🔌 Клієнт відключився: ${socket.id}`);
-            // Видаляємо зв'язок, коли клієнт відключається
+            // Очищення мапи сокетів
             for (let [ownerId, id] of userSocketMap.entries()) {
                 if (id === socket.id) {
                     userSocketMap.delete(ownerId);
@@ -132,11 +161,11 @@ async function startServer() {
         });
     });
 
-    //Запуск сервера
+    // Запуск HTTP сервера
     httpServer.listen(PORT, () => {
         console.log(`✅ Сервер (HTTP, WebSocket, DB) запущено на http://localhost:${PORT}`);
     });
 }
 
-//Запускаємо наш сервер
+// Запускаємо сервер
 startServer();

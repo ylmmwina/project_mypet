@@ -1,8 +1,33 @@
-// Обмеження значень 0–100
+/**
+ * @file shopItems.js
+ * @brief Конфігурація товарів та логіка їх впливу.
+ * * Цей файл містить базу даних доступних для покупки предметів,
+ * а також логіку застосування їх ефектів на улюбленців з урахуванням
+ * особливостей кожного типу тварини (поліморфізм).
+ */
+
+/**
+ * @brief Обмежує числове значення заданим діапазоном.
+ * * Використовується для того, щоб показники (здоров'я, голод тощо) не виходили
+ * за межі 0-100.
+ * * @param {number} value - Вхідне значення.
+ * @param {number} min - Мінімальна межа.
+ * @param {number} max - Максимальна межа.
+ * @returns {number} Значення в межах [min, max].
+ */
 export const clamp = (value, min, max) =>
     Math.min(max, Math.max(min, value));
 
-// Список товарів магазину
+/**
+ * @brief Список товарів, доступних у магазині.
+ * * Кожен товар має унікальний ID, назву, тип, ціну та об'єкт ефектів.
+ * * @type {Array<Object>}
+ * @property {string} id - Унікальний ідентифікатор товару.
+ * @property {string} name - Назва для відображення.
+ * @property {string} type - Тип предмета ('food', 'soap', 'medkit').
+ * @property {number} price - Вартість у монетах.
+ * @property {Object} effects - Зміни показників (ключ: параметр, значення: дельта).
+ */
 export const shopItems = [
     {
         id: "basic_food",
@@ -57,11 +82,21 @@ export const shopItems = [
     }
 ];
 
-// Знайти товар по id
+/**
+ * @brief Знайти товар за його ID.
+ * * @param {string} itemId - Ідентифікатор товару.
+ * @returns {Object|undefined} Об'єкт товару або undefined, якщо не знайдено.
+ */
 export const findShopItem = (itemId) =>
     shopItems.find((item) => item.id === itemId);
 
-// Застосувати ефекти товару
+/**
+ * @brief Застосувати ефекти предмета до улюбленця.
+ * * Ця функція реалізує складну логіку взаємодії предметів з різними типами тварин.
+ * Наприклад, мавпи отримують бонуси від бананів, а коти можуть вередувати.
+ * * @param {Object} pet - Об'єкт улюбленця (екземпляр класу Pet).
+ * @param {Object} item - Об'єкт предмета з shopItems.
+ */
 export function applyItemEffects(pet, item) {
     const effects = { ...item.effects }; // копія, щоб можна було змінювати
 
@@ -69,7 +104,7 @@ export function applyItemEffects(pet, item) {
     if (pet.type === "monkey") {
         if (item.id === "banana_snack") {
             effects.happiness = (effects.happiness || 0) + 10;
-            effects.energy = (effects.energy || 0) + 5; 
+            effects.energy = (effects.energy || 0) + 5;
         }
         if (item.type === "food") {
             effects.happiness = (effects.happiness || 0) + 5;
@@ -79,7 +114,7 @@ export function applyItemEffects(pet, item) {
     // СОБАКА — активна, отримує енергію від будь-якої їжі, любить миття
     if (pet.type === "dog") {
         if (item.type === "food") {
-            effects.energy = (effects.energy || 0) + 5; 
+            effects.energy = (effects.energy || 0) + 5;
         }
         if (item.type === "soap") {
             effects.happiness = (effects.happiness || 0) + 5;
@@ -93,13 +128,14 @@ export function applyItemEffects(pet, item) {
         }
         if (item.id === "premium_food") {
             effects.happiness = (effects.happiness || 0) + 10;
-            effects.energy = (effects.energy || 0) + 5; 
+            effects.energy = (effects.energy || 0) + 5;
         }
         if (item.type === "soap") {
             effects.happiness = (effects.happiness || 0) - 5;
         }
     }
 
+    // Застосування базових ефектів з обмеженням (clamp)
     if (effects.health) {
         pet.health = clamp(pet.health + effects.health, 0, 100);
     }
