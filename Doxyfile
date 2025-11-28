@@ -37,9 +37,3 @@ OPTIMIZE_OUTPUT_JAVA   = YES
 INPUT                  = backend \
                          frontend/game/src \
                          frontend
-
-# --- Графіки та залежності ---
-HAVE_DOT               = NO
-UML_LOOK               = YES
-TEMPLATE_RELATIONS     = YES
-INCLUDE_GRAPH          = YES
