@@ -93,6 +93,996 @@ $(function(){initNavTree('d3/d59/script_8js.html','../../',''); });
   <div class="headertitle"><div class="title">Файл script.js</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Основний файл клієнтської логіки (Frontend).  
+<a href="#details">Детальніше...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Функції</h2></td></tr>
+<tr class="memitem:aab5a7d973ac8b26674be79f1b9a3277a" id="r_aab5a7d973ac8b26674be79f1b9a3277a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab5a7d973ac8b26674be79f1b9a3277a">showNotification</a> (message, type='info')</td></tr>
+<tr class="memdesc:aab5a7d973ac8b26674be79f1b9a3277a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Відображає кастомне піксельне сповіщення.  <br /></td></tr>
+<tr class="memitem:a978eaeb459aab3a585b6ec8ddef17b97" id="r_a978eaeb459aab3a585b6ec8ddef17b97"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a978eaeb459aab3a585b6ec8ddef17b97">showScreen</a> (screenToShow)</td></tr>
+<tr class="memdesc:a978eaeb459aab3a585b6ec8ddef17b97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перемикає відображення головних екранів.  <br /></td></tr>
+<tr class="memitem:a577ba8890ff5da627b74a7188dc019c4" id="r_a577ba8890ff5da627b74a7188dc019c4"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a577ba8890ff5da627b74a7188dc019c4">apiRequest</a> (endpoint, method=&quot;GET&quot;, body=null)</td></tr>
+<tr class="memdesc:a577ba8890ff5da627b74a7188dc019c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Виконує запит до бекенд API.  <br /></td></tr>
+<tr class="memitem:a0a421887cb6cca9d434602af4ea473d9" id="r_a0a421887cb6cca9d434602af4ea473d9"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a421887cb6cca9d434602af4ea473d9">loadPetsList</a> ()</td></tr>
+<tr class="memdesc:a0a421887cb6cca9d434602af4ea473d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Завантажує список улюбленців користувача і відображає його.  <br /></td></tr>
+<tr class="memitem:a2ee2ce3807d29b364a14b3f7a9983627" id="r_a2ee2ce3807d29b364a14b3f7a9983627"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2ee2ce3807d29b364a14b3f7a9983627">deletePet</a> (petId, petName)</td></tr>
+<tr class="memdesc:a2ee2ce3807d29b364a14b3f7a9983627"><td class="mdescLeft">&#160;</td><td class="mdescRight">Видаляє улюбленця через API.  <br /></td></tr>
+<tr class="memitem:abe27365e6c82f85d3bf99a0f9dbe9ae2" id="r_abe27365e6c82f85d3bf99a0f9dbe9ae2"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abe27365e6c82f85d3bf99a0f9dbe9ae2">startGame</a> (pet)</td></tr>
+<tr class="memdesc:abe27365e6c82f85d3bf99a0f9dbe9ae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запускає ігровий екран та ініціює оновлення.  <br /></td></tr>
+<tr class="memitem:ac6a288fadf2a68e0e118259a791676c3" id="r_ac6a288fadf2a68e0e118259a791676c3"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6a288fadf2a68e0e118259a791676c3">updateUI</a> (pet)</td></tr>
+<tr class="memdesc:ac6a288fadf2a68e0e118259a791676c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Оновлює всі показники та спрайт улюбленця на UI.  <br /></td></tr>
+<tr class="memitem:ab905827fc6ac9d329f6e7c49a8ae782c" id="r_ab905827fc6ac9d329f6e7c49a8ae782c"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab905827fc6ac9d329f6e7c49a8ae782c">useSpecificItem</a> (itemId, actionName)</td></tr>
+<tr class="memdesc:ab905827fc6ac9d329f6e7c49a8ae782c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Перевіряє наявність специфічного предмета в інвентарі перед виконанням дії.  <br /></td></tr>
+<tr class="memitem:a61eab4895a93d76f8346069f7affc77b" id="r_a61eab4895a93d76f8346069f7affc77b"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61eab4895a93d76f8346069f7affc77b">openShop</a> ()</td></tr>
+<tr class="memdesc:a61eab4895a93d76f8346069f7affc77b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Відкриває модальне вікно магазину та завантажує список товарів.  <br /></td></tr>
+<tr class="memitem:a1b236f620ad124afe1ba485855afa3ba" id="r_a1b236f620ad124afe1ba485855afa3ba"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b236f620ad124afe1ba485855afa3ba">buyItem</a> (itemId)</td></tr>
+<tr class="memdesc:a1b236f620ad124afe1ba485855afa3ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Купує предмет через API.  <br /></td></tr>
+<tr class="memitem:ac27fc3c111671d4bcb68e595ca2b24b3" id="r_ac27fc3c111671d4bcb68e595ca2b24b3"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac27fc3c111671d4bcb68e595ca2b24b3">openInventory</a> (filterFood=false)</td></tr>
+<tr class="memdesc:ac27fc3c111671d4bcb68e595ca2b24b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Відкриває модальне вікно інвентарю та завантажує вміст.  <br /></td></tr>
+<tr class="memitem:a61d4e9c2cba392d334e050cd0e1ad50c" id="r_a61d4e9c2cba392d334e050cd0e1ad50c"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61d4e9c2cba392d334e050cd0e1ad50c">useItem</a> (itemId)</td></tr>
+<tr class="memdesc:a61d4e9c2cba392d334e050cd0e1ad50c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Використовує предмет з інвентарю.  <br /></td></tr>
+<tr class="memitem:a823bfb47dcbb4586572fdb0eac824899" id="r_a823bfb47dcbb4586572fdb0eac824899"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a823bfb47dcbb4586572fdb0eac824899">triggerHappyState</a> (overrideState)</td></tr>
+<tr class="memdesc:a823bfb47dcbb4586572fdb0eac824899"><td class="mdescLeft">&#160;</td><td class="mdescRight">Тимчасово змінює стан спрайта улюбленця (наприклад, на 'happy' або 'sleep').  <br /></td></tr>
+<tr class="memitem:ada55cad293a28c3576063d005a8155c9" id="r_ada55cad293a28c3576063d005a8155c9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada55cad293a28c3576063d005a8155c9">startLiveUpdates</a> ()</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Змінні</h2></td></tr>
+<tr class="memitem:aa9c3f00ad89212e52eb3139dbebbfc28" id="r_aa9c3f00ad89212e52eb3139dbebbfc28"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9c3f00ad89212e52eb3139dbebbfc28">API_URL</a> = &quot;http://localhost:3000&quot;</td></tr>
+<tr class="memitem:a9ecbe9135e6a05d30657d838549314b2" id="r_a9ecbe9135e6a05d30657d838549314b2"><td class="memItemLeft" align="right" valign="top">let&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a> = null</td></tr>
+<tr class="memdesc:a9ecbe9135e6a05d30657d838549314b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Object|null} currentPet - Об'єкт поточного обраного улюбленця.  <br /></td></tr>
+<tr class="memitem:a49abd1deafa61f7b93ef16769e4bbed8" id="r_a49abd1deafa61f7b93ef16769e4bbed8"><td class="memItemLeft" align="right" valign="top">let&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49abd1deafa61f7b93ef16769e4bbed8">myPets</a> = []</td></tr>
+<tr class="memdesc:a49abd1deafa61f7b93ef16769e4bbed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Array&lt;Object&gt;} myPets - Масив усіх улюбленців, що належать користувачу.  <br /></td></tr>
+<tr class="memitem:a0d7b2963cab7f1372fc72ca594d29a2e" id="r_a0d7b2963cab7f1372fc72ca594d29a2e"><td class="memItemLeft" align="right" valign="top">let&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d7b2963cab7f1372fc72ca594d29a2e">happyTimer</a> = null</td></tr>
+<tr class="memdesc:a0d7b2963cab7f1372fc72ca594d29a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {number|null} happyTimer - Таймер для тимчасового "щасливого" стану спрайта.  <br /></td></tr>
+<tr class="memitem:ac399479d367c68d2d87d0180f9a2e0b3" id="r_ac399479d367c68d2d87d0180f9a2e0b3"><td class="memItemLeft" align="right" valign="top">let&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac399479d367c68d2d87d0180f9a2e0b3">notificationTimer</a> = null</td></tr>
+<tr class="memdesc:ac399479d367c68d2d87d0180f9a2e0b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {number|null} notificationTimer - Таймер для автоматичного приховування сповіщень.  <br /></td></tr>
+<tr class="memitem:a580d275d543fb0604b4e4bf2f524469f" id="r_a580d275d543fb0604b4e4bf2f524469f"><td class="memItemLeft" align="right" valign="top">let&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a580d275d543fb0604b4e4bf2f524469f">isSavingGame</a> = false</td></tr>
+<tr class="memdesc:a580d275d543fb0604b4e4bf2f524469f"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {boolean} isSavingGame - Запобіжник від подвійного нарахування результатів гри.  <br /></td></tr>
+<tr class="memitem:a8da0ad316d7979c67c4392c8f012267a" id="r_a8da0ad316d7979c67c4392c8f012267a"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8da0ad316d7979c67c4392c8f012267a">itemIcons</a></td></tr>
+<tr class="memdesc:a8da0ad316d7979c67c4392c8f012267a"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {Object} itemIcons - Мапа для зіставлення ID предмета та імені файлу іконки.  <br /></td></tr>
+<tr class="memitem:a6e969667a97b4f91a5bd4da55c299927" id="r_a6e969667a97b4f91a5bd4da55c299927"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e969667a97b4f91a5bd4da55c299927">screenMenu</a> = document.getElementById(&quot;screen-menu&quot;)</td></tr>
+<tr class="memdesc:a6e969667a97b4f91a5bd4da55c299927"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} screenMenu - Екран вибору улюбленців.  <br /></td></tr>
+<tr class="memitem:a5941b6e6101dac64a41f2c9381f74c3a" id="r_a5941b6e6101dac64a41f2c9381f74c3a"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5941b6e6101dac64a41f2c9381f74c3a">screenCreate</a> = document.getElementById(&quot;screen-create&quot;)</td></tr>
+<tr class="memdesc:a5941b6e6101dac64a41f2c9381f74c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} screenCreate - Екран створення нового улюбленця.  <br /></td></tr>
+<tr class="memitem:ac508d67666d4f58b448b7019379adcd7" id="r_ac508d67666d4f58b448b7019379adcd7"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac508d67666d4f58b448b7019379adcd7">screenGame</a> = document.getElementById(&quot;screen-game&quot;)</td></tr>
+<tr class="memdesc:ac508d67666d4f58b448b7019379adcd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} screenGame - Екран догляду за улюбленцем.  <br /></td></tr>
+<tr class="memitem:adb388cfb5e5383c742841587e84f0145" id="r_adb388cfb5e5383c742841587e84f0145"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb388cfb5e5383c742841587e84f0145">gameWrapper</a> = document.getElementById(&quot;phaser-game&quot;)</td></tr>
+<tr class="memdesc:adb388cfb5e5383c742841587e84f0145"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} gameWrapper - Контейнер для Phaser Canvas.  <br /></td></tr>
+<tr class="memitem:acbba4ccdbb1dd96e3f1c5bf7d1f07fc9" id="r_acbba4ccdbb1dd96e3f1c5bf7d1f07fc9"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbba4ccdbb1dd96e3f1c5bf7d1f07fc9">petsListContainer</a> = document.getElementById(&quot;pets-list&quot;)</td></tr>
+<tr class="memdesc:acbba4ccdbb1dd96e3f1c5bf7d1f07fc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} petsListContainer - Контейнер для відображення списку улюбленців.  <br /></td></tr>
+<tr class="memitem:a7f2307876c50b2623e5988f6d741dc53" id="r_a7f2307876c50b2623e5988f6d741dc53"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f2307876c50b2623e5988f6d741dc53">createForm</a> = document.getElementById(&quot;create-form&quot;)</td></tr>
+<tr class="memdesc:a7f2307876c50b2623e5988f6d741dc53"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLFormElement} createForm - Форма створення нового улюбленця.  <br /></td></tr>
+<tr class="memitem:a70cb27ff257a919a044837cb033200e6" id="r_a70cb27ff257a919a044837cb033200e6"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a70cb27ff257a919a044837cb033200e6">petSprite</a> = document.getElementById(&quot;pet-sprite&quot;)</td></tr>
+<tr class="memdesc:a70cb27ff257a919a044837cb033200e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLImageElement} petSprite - Зображення улюбленця.  <br /></td></tr>
+<tr class="memitem:aab4bd429d53c15a585219d5cfd479161" id="r_aab4bd429d53c15a585219d5cfd479161"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab4bd429d53c15a585219d5cfd479161">thoughtCloud</a> = document.getElementById(&quot;thought-cloud&quot;)</td></tr>
+<tr class="memdesc:aab4bd429d53c15a585219d5cfd479161"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} thoughtCloud - Контейнер для хмаринки думок.  <br /></td></tr>
+<tr class="memitem:a82fe94b0c70ddfa18ab2accafa28c4c3" id="r_a82fe94b0c70ddfa18ab2accafa28c4c3"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82fe94b0c70ddfa18ab2accafa28c4c3">cloudImg</a> = document.getElementById(&quot;cloud-img&quot;)</td></tr>
+<tr class="memdesc:a82fe94b0c70ddfa18ab2accafa28c4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLImageElement} cloudImg - Зображення іконки в хмаринці думок.  <br /></td></tr>
+<tr class="memitem:ad9388cf09073f3292397e3b49b26c01d" id="r_ad9388cf09073f3292397e3b49b26c01d"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad9388cf09073f3292397e3b49b26c01d">sleepOverlay</a> = document.getElementById(&quot;sleep-overlay&quot;)</td></tr>
+<tr class="memdesc:ad9388cf09073f3292397e3b49b26c01d"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} sleepOverlay - Оверлей сну (затемнення екрана).  <br /></td></tr>
+<tr class="memitem:a46c65456ba992236d85717f45c71baf6" id="r_a46c65456ba992236d85717f45c71baf6"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46c65456ba992236d85717f45c71baf6">modalShop</a> = document.getElementById(&quot;modal-shop&quot;)</td></tr>
+<tr class="memdesc:a46c65456ba992236d85717f45c71baf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} modalShop - Модальне вікно магазину.  <br /></td></tr>
+<tr class="memitem:a1a1fb2952b660001f921b240b88e1b72" id="r_a1a1fb2952b660001f921b240b88e1b72"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a1fb2952b660001f921b240b88e1b72">modalInventory</a> = document.getElementById(&quot;modal-inventory&quot;)</td></tr>
+<tr class="memdesc:a1a1fb2952b660001f921b240b88e1b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} modalInventory - Модальне вікно інвентарю.  <br /></td></tr>
+<tr class="memitem:a779931fc61b8103bacba9ee0b508e155" id="r_a779931fc61b8103bacba9ee0b508e155"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a779931fc61b8103bacba9ee0b508e155">shopContainer</a> = document.getElementById(&quot;shop-items-container&quot;)</td></tr>
+<tr class="memdesc:a779931fc61b8103bacba9ee0b508e155"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} shopContainer - Контейнер для товарів у магазині.  <br /></td></tr>
+<tr class="memitem:ac984590484d9b4fd7e87029d9e7b10f3" id="r_ac984590484d9b4fd7e87029d9e7b10f3"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac984590484d9b4fd7e87029d9e7b10f3">invContainer</a> = document.getElementById(&quot;inventory-items-container&quot;)</td></tr>
+<tr class="memdesc:ac984590484d9b4fd7e87029d9e7b10f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} invContainer - Контейнер для предметів в інвентарі.  <br /></td></tr>
+<tr class="memitem:a9749c14edd11eb74d3d8f124c56e7129" id="r_a9749c14edd11eb74d3d8f124c56e7129"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9749c14edd11eb74d3d8f124c56e7129">notificationBox</a> = document.getElementById(&quot;pixel-notification&quot;)</td></tr>
+<tr class="memdesc:a9749c14edd11eb74d3d8f124c56e7129"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} notificationBox - Кастомний елемент для сповіщень.  <br /></td></tr>
+<tr class="memitem:a95ff1d5419f4ae6997e271665709d8b9" id="r_a95ff1d5419f4ae6997e271665709d8b9"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95ff1d5419f4ae6997e271665709d8b9">notificationText</a> = document.getElementById(&quot;notification-text&quot;)</td></tr>
+<tr class="memdesc:a95ff1d5419f4ae6997e271665709d8b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">@type {HTMLElement} notificationText - Текст сповіщення.  <br /></td></tr>
+<tr class="memitem:a712d2a835f95b6cf1214f89cc5c41d85" id="r_a712d2a835f95b6cf1214f89cc5c41d85"><td class="memItemLeft" align="right" valign="top">window&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a712d2a835f95b6cf1214f89cc5c41d85">closeModal</a></td></tr>
+<tr class="memdesc:a712d2a835f95b6cf1214f89cc5c41d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Глобальна функція для закриття модальних вікон.  <br /></td></tr>
+<tr class="memitem:a37f795f4a14f3b96a8390c3716fcec3f" id="r_a37f795f4a14f3b96a8390c3716fcec3f"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37f795f4a14f3b96a8390c3716fcec3f">socket</a> = io(<a class="el" href="#aa9c3f00ad89212e52eb3139dbebbfc28">API_URL</a>)</td></tr>
+<tr class="memdesc:a37f795f4a14f3b96a8390c3716fcec3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ініціалізує Socket.IO та реєструє користувача для отримання live-оновлень.  <br /></td></tr>
+<tr class="memitem:a5a74fe9a7c37f5bc0892d08e4cae504e" id="r_a5a74fe9a7c37f5bc0892d08e4cae504e"><td class="memItemLeft" align="right" valign="top">window&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a74fe9a7c37f5bc0892d08e4cae504e">closeGame</a></td></tr>
+<tr class="memdesc:a5a74fe9a7c37f5bc0892d08e4cae504e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Глобальна функція для закриття міні-гри.  <br /></td></tr>
+<tr class="memitem:a64d15a5467cab70fbc098c9dff333949" id="r_a64d15a5467cab70fbc098c9dff333949"><td class="memItemLeft" align="right" valign="top">window&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64d15a5467cab70fbc098c9dff333949">finishGameAndSendResults</a></td></tr>
+<tr class="memdesc:a64d15a5467cab70fbc098c9dff333949"><td class="mdescLeft">&#160;</td><td class="mdescRight">Глобальна функція для відправки результатів міні-гри на бекенд.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Основний файл клієнтської логіки (Frontend). </p>
+<ul>
+<li>Цей файл керує відображенням інтерфейсу (Tamagotchi UI), обробляє події користувача, взаємодіє з бекендом через REST API та WebSockets, а також інтегрує міні-гру Phaser. </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Опис функцій</h2>
+<a id="a577ba8890ff5da627b74a7188dc019c4" name="a577ba8890ff5da627b74a7188dc019c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a577ba8890ff5da627b74a7188dc019c4">&#9670;&#160;</a></span>apiRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async apiRequest </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>endpoint</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>method</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;GET&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>body</em></span><span class="paramdefsep"> = </span><span class="paramdefval">null</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Виконує запит до бекенд API. </p>
+<ul>
+<li>Обробляє кукі (ownerId) та помилки, повертаючи дані у форматі JSON.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>endpoint - URL-шлях до API. </td></tr>
+    <tr><td class="paramname">{string}</td><td>[method='GET'] - HTTP метод. </td></tr>
+    <tr><td class="paramname">{Object|null}</td><td>[body=null] - Тіло запиту. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Object&gt;} Відповідь сервера у форматі JSON. </dd></dl>
+<dl class="exception"><dt>Обробка виняткових ситуацій</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">{Error}</td><td>Якщо відповідь сервера не OK. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a1b236f620ad124afe1ba485855afa3ba" name="a1b236f620ad124afe1ba485855afa3ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b236f620ad124afe1ba485855afa3ba">&#9670;&#160;</a></span>buyItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async buyItem </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Купує предмет через API. </p>
+<p>@async </p><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>itemId - ID предмета для покупки. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2ee2ce3807d29b364a14b3f7a9983627" name="a2ee2ce3807d29b364a14b3f7a9983627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ee2ce3807d29b364a14b3f7a9983627">&#9670;&#160;</a></span>deletePet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async deletePet </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petName</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Видаляє улюбленця через API. </p>
+<p>@async </p><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>petName - Ім'я улюбленця (для відображення у сповіщенні). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0a421887cb6cca9d434602af4ea473d9" name="a0a421887cb6cca9d434602af4ea473d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a421887cb6cca9d434602af4ea473d9">&#9670;&#160;</a></span>loadPetsList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async loadPetsList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Завантажує список улюбленців користувача і відображає його. </p>
+<p>@async </p>
+
+</div>
+</div>
+<a id="ac27fc3c111671d4bcb68e595ca2b24b3" name="ac27fc3c111671d4bcb68e595ca2b24b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac27fc3c111671d4bcb68e595ca2b24b3">&#9670;&#160;</a></span>openInventory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async openInventory </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>filterFood</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Відкриває модальне вікно інвентарю та завантажує вміст. </p>
+<p>@async </p><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{boolean}</td><td>[filterFood=false] - Якщо true, показувати лише їжу (для кнопки "Годувати"). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a61eab4895a93d76f8346069f7affc77b" name="a61eab4895a93d76f8346069f7affc77b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61eab4895a93d76f8346069f7affc77b">&#9670;&#160;</a></span>openShop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async openShop </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Відкриває модальне вікно магазину та завантажує список товарів. </p>
+<p>@async </p>
+
+</div>
+</div>
+<a id="aab5a7d973ac8b26674be79f1b9a3277a" name="aab5a7d973ac8b26674be79f1b9a3277a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab5a7d973ac8b26674be79f1b9a3277a">&#9670;&#160;</a></span>showNotification()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function showNotification </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>message</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span><span class="paramdefsep"> = </span><span class="paramdefval">'info'</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Відображає кастомне піксельне сповіщення. </p>
+<ul>
+<li>Замінює стандартний alert(). Відображається протягом 3 секунд і зникає.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>message - Текст сповіщення. </td></tr>
+    <tr><td class="paramname">{string}</td><td>[type='info'] - Тип сповіщення ('info', 'error', 'success'). </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a978eaeb459aab3a585b6ec8ddef17b97" name="a978eaeb459aab3a585b6ec8ddef17b97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a978eaeb459aab3a585b6ec8ddef17b97">&#9670;&#160;</a></span>showScreen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function showScreen </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>screenToShow</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Перемикає відображення головних екранів. </p>
+<ul>
+<li>Приховує всі екрани та відображає вказаний.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{HTMLElement}</td><td>screenToShow - Екран, який потрібно показати. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="abe27365e6c82f85d3bf99a0f9dbe9ae2" name="abe27365e6c82f85d3bf99a0f9dbe9ae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe27365e6c82f85d3bf99a0f9dbe9ae2">&#9670;&#160;</a></span>startGame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function startGame </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pet</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Запускає ігровий екран та ініціює оновлення. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>pet - Об'єкт улюбленця. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ada55cad293a28c3576063d005a8155c9" name="ada55cad293a28c3576063d005a8155c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada55cad293a28c3576063d005a8155c9">&#9670;&#160;</a></span>startLiveUpdates()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function startLiveUpdates </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a823bfb47dcbb4586572fdb0eac824899" name="a823bfb47dcbb4586572fdb0eac824899"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a823bfb47dcbb4586572fdb0eac824899">&#9670;&#160;</a></span>triggerHappyState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function triggerHappyState </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>overrideState</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Тимчасово змінює стан спрайта улюбленця (наприклад, на 'happy' або 'sleep'). </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>overrideState - Новий стан спрайта ('normal', 'sad', 'happy', 'sleep'). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac6a288fadf2a68e0e118259a791676c3" name="ac6a288fadf2a68e0e118259a791676c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6a288fadf2a68e0e118259a791676c3">&#9670;&#160;</a></span>updateUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function updateUI </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pet</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Оновлює всі показники та спрайт улюбленця на UI. </p>
+<ul>
+<li>Визначає поточний стан (sad, normal, sleep) та виводить підказку (хмаринку).</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>pet - Об'єкт улюбленця. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a61d4e9c2cba392d334e050cd0e1ad50c" name="a61d4e9c2cba392d334e050cd0e1ad50c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61d4e9c2cba392d334e050cd0e1ad50c">&#9670;&#160;</a></span>useItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async useItem </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Використовує предмет з інвентарю. </p>
+<p>@async </p><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>itemId - ID предмета, який потрібно вжити. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab905827fc6ac9d329f6e7c49a8ae782c" name="ab905827fc6ac9d329f6e7c49a8ae782c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab905827fc6ac9d329f6e7c49a8ae782c">&#9670;&#160;</a></span>useSpecificItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async useSpecificItem </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>actionName</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Перевіряє наявність специфічного предмета в інвентарі перед виконанням дії. </p>
+<p>@async </p><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>itemId - ID необхідного предмета. </td></tr>
+    <tr><td class="paramname">{string}</td><td>actionName - Назва дії для повідомлення. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Опис змінних</h2>
+<a id="aa9c3f00ad89212e52eb3139dbebbfc28" name="aa9c3f00ad89212e52eb3139dbebbfc28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9c3f00ad89212e52eb3139dbebbfc28">&#9670;&#160;</a></span>API_URL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const API_URL = &quot;http://localhost:3000&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5a74fe9a7c37f5bc0892d08e4cae504e" name="a5a74fe9a7c37f5bc0892d08e4cae504e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a74fe9a7c37f5bc0892d08e4cae504e">&#9670;&#160;</a></span>closeGame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">window closeGame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= () =&gt; {</div>
+<div class="line">    <a class="code hl_variable" href="#adb388cfb5e5383c742841587e84f0145">gameWrapper</a>.style.display = <span class="stringliteral">&quot;none&quot;</span>;</div>
+<div class="line">    document.getElementById(<span class="stringliteral">&quot;btn-force-exit&quot;</span>).style.display = <span class="stringliteral">&quot;none&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">if</span> (window.destroyGame) window.destroyGame(); </div>
+<div class="line">    <a class="code hl_variable" href="#ac508d67666d4f58b448b7019379adcd7">screenGame</a>.classList.remove(<span class="stringliteral">&quot;hidden&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    </div>
+<div class="line">    <a class="code hl_variable" href="#a580d275d543fb0604b4e4bf2f524469f">isSavingGame</a> = <span class="keyword">false</span>;</div>
+<div class="line"> </div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a>) {</div>
+<div class="line">        <a class="code hl_function" href="#a577ba8890ff5da627b74a7188dc019c4">apiRequest</a>(<span class="stringliteral">&#39;/pets&#39;</span>).then(data =&gt; {</div>
+<div class="line">            let foundPet;</div>
+<div class="line">            <span class="keywordflow">if</span> (Array.isArray(data)) {</div>
+<div class="line">                foundPet = data.find(p =&gt; p.id === <a class="code hl_variable" href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a>.id);</div>
+<div class="line">            } <span class="keywordflow">else</span> {</div>
+<div class="line">                foundPet = data;</div>
+<div class="line">            }</div>
+<div class="line">            <span class="keywordflow">if</span> (foundPet) {</div>
+<div class="line">                <a class="code hl_variable" href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a> = foundPet;</div>
+<div class="line">                <a class="code hl_function" href="#ac6a288fadf2a68e0e118259a791676c3">updateUI</a>(foundPet);</div>
+<div class="line">            }</div>
+<div class="line">        }).<span class="keywordflow">catch</span>(console.error);</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="ascript_8js_html_a577ba8890ff5da627b74a7188dc019c4"><div class="ttname"><a href="#a577ba8890ff5da627b74a7188dc019c4">apiRequest</a></div><div class="ttdeci">function async apiRequest(endpoint, method=&quot;GET&quot;, body=null)</div><div class="ttdoc">Виконує запит до бекенд API.</div><div class="ttdef"><b>Definition</b> script.js:125</div></div>
+<div class="ttc" id="ascript_8js_html_a580d275d543fb0604b4e4bf2f524469f"><div class="ttname"><a href="#a580d275d543fb0604b4e4bf2f524469f">isSavingGame</a></div><div class="ttdeci">let isSavingGame</div><div class="ttdoc">@type {boolean} isSavingGame - Запобіжник від подвійного нарахування результатів гри.</div><div class="ttdef"><b>Definition</b> script.js:19</div></div>
+<div class="ttc" id="ascript_8js_html_a9ecbe9135e6a05d30657d838549314b2"><div class="ttname"><a href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a></div><div class="ttdeci">let currentPet</div><div class="ttdoc">@type {Object|null} currentPet - Об&#39;єкт поточного обраного улюбленця.</div><div class="ttdef"><b>Definition</b> script.js:11</div></div>
+<div class="ttc" id="ascript_8js_html_ac508d67666d4f58b448b7019379adcd7"><div class="ttname"><a href="#ac508d67666d4f58b448b7019379adcd7">screenGame</a></div><div class="ttdeci">const screenGame</div><div class="ttdoc">@type {HTMLElement} screenGame - Екран догляду за улюбленцем.</div><div class="ttdef"><b>Definition</b> script.js:37</div></div>
+<div class="ttc" id="ascript_8js_html_ac6a288fadf2a68e0e118259a791676c3"><div class="ttname"><a href="#ac6a288fadf2a68e0e118259a791676c3">updateUI</a></div><div class="ttdeci">function updateUI(pet)</div><div class="ttdoc">Оновлює всі показники та спрайт улюбленця на UI.</div><div class="ttdef"><b>Definition</b> script.js:268</div></div>
+<div class="ttc" id="ascript_8js_html_adb388cfb5e5383c742841587e84f0145"><div class="ttname"><a href="#adb388cfb5e5383c742841587e84f0145">gameWrapper</a></div><div class="ttdeci">const gameWrapper</div><div class="ttdoc">@type {HTMLElement} gameWrapper - Контейнер для Phaser Canvas.</div><div class="ttdef"><b>Definition</b> script.js:39</div></div>
+</div><!-- fragment -->
+<p>Глобальна функція для закриття міні-гри. </p>
+<ul>
+<li>Викликається з Phaser (<a class="el" href="../../d0/d0f/classGameOverScene.html" title="Сцена, що активується після програшу.">GameOverScene</a>) або з кнопки "Вихід" під час гри.</li>
+<li>@global </li>
+</ul>
+
+</div>
+</div>
+<a id="a712d2a835f95b6cf1214f89cc5c41d85" name="a712d2a835f95b6cf1214f89cc5c41d85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a712d2a835f95b6cf1214f89cc5c41d85">&#9670;&#160;</a></span>closeModal</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">window closeModal</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= (modalId) =&gt; {</div>
+<div class="line">    document.getElementById(modalId).classList.add(<span class="stringliteral">&quot;hidden&quot;</span>);</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Глобальна функція для закриття модальних вікон. </p>
+<ul>
+<li>Викликається з index.html.</li>
+<li>@global <dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>modalId - ID модального вікна. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a82fe94b0c70ddfa18ab2accafa28c4c3" name="a82fe94b0c70ddfa18ab2accafa28c4c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82fe94b0c70ddfa18ab2accafa28c4c3">&#9670;&#160;</a></span>cloudImg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const cloudImg = document.getElementById(&quot;cloud-img&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLImageElement} cloudImg - Зображення іконки в хмаринці думок. </p>
+
+</div>
+</div>
+<a id="a7f2307876c50b2623e5988f6d741dc53" name="a7f2307876c50b2623e5988f6d741dc53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f2307876c50b2623e5988f6d741dc53">&#9670;&#160;</a></span>createForm</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const createForm = document.getElementById(&quot;create-form&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLFormElement} createForm - Форма створення нового улюбленця. </p>
+
+</div>
+</div>
+<a id="a9ecbe9135e6a05d30657d838549314b2" name="a9ecbe9135e6a05d30657d838549314b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ecbe9135e6a05d30657d838549314b2">&#9670;&#160;</a></span>currentPet</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">let currentPet = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {Object|null} currentPet - Об'єкт поточного обраного улюбленця. </p>
+
+</div>
+</div>
+<a id="a64d15a5467cab70fbc098c9dff333949" name="a64d15a5467cab70fbc098c9dff333949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64d15a5467cab70fbc098c9dff333949">&#9670;&#160;</a></span>finishGameAndSendResults</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">window finishGameAndSendResults</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= async (score, coins) =&gt; {</div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a580d275d543fb0604b4e4bf2f524469f">isSavingGame</a>) <span class="keywordflow">return</span>; </div>
+<div class="line">    <a class="code hl_variable" href="#a580d275d543fb0604b4e4bf2f524469f">isSavingGame</a> = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">try</span> {</div>
+<div class="line">        <span class="keyword">const</span> updatedPet = await <a class="code hl_function" href="#a577ba8890ff5da627b74a7188dc019c4">apiRequest</a>(<span class="stringliteral">&#39;/pet/finish-game&#39;</span>, <span class="stringliteral">&quot;POST&quot;</span>, { score, coinsEarned: coins, petId: <a class="code hl_variable" href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a>.id });</div>
+<div class="line">        <a class="code hl_function" href="#aab5a7d973ac8b26674be79f1b9a3277a">showNotification</a>(`Гру завершено! +${coins} монет.`, <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line">        <a class="code hl_variable" href="#a9ecbe9135e6a05d30657d838549314b2">currentPet</a> = updatedPet;</div>
+<div class="line">        <a class="code hl_function" href="#ac6a288fadf2a68e0e118259a791676c3">updateUI</a>(updatedPet);</div>
+<div class="line">    } <span class="keywordflow">catch</span> (e) {</div>
+<div class="line">        <a class="code hl_function" href="#aab5a7d973ac8b26674be79f1b9a3277a">showNotification</a>(<span class="stringliteral">&quot;Помилка збереження: &quot;</span> + e.message, <span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line">    } <span class="keywordflow">finally</span> {</div>
+<div class="line">        window.closeGame();</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="ascript_8js_html_aab5a7d973ac8b26674be79f1b9a3277a"><div class="ttname"><a href="#aab5a7d973ac8b26674be79f1b9a3277a">showNotification</a></div><div class="ttdeci">function showNotification(message, type=&#39;info&#39;)</div><div class="ttdoc">Відображає кастомне піксельне сповіщення.</div><div class="ttdef"><b>Definition</b> script.js:75</div></div>
+</div><!-- fragment -->
+<p>Глобальна функція для відправки результатів міні-гри на бекенд. </p>
+<ul>
+<li>Забезпечує, що результати будуть відправлені лише один раз.</li>
+<li>@global @async <dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{number}</td><td>score - Фінальний рахунок гри. </td></tr>
+    <tr><td class="paramname">{number}</td><td>coins - Зароблені монети. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="adb388cfb5e5383c742841587e84f0145" name="adb388cfb5e5383c742841587e84f0145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb388cfb5e5383c742841587e84f0145">&#9670;&#160;</a></span>gameWrapper</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const gameWrapper = document.getElementById(&quot;phaser-game&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} gameWrapper - Контейнер для Phaser Canvas. </p>
+
+</div>
+</div>
+<a id="a0d7b2963cab7f1372fc72ca594d29a2e" name="a0d7b2963cab7f1372fc72ca594d29a2e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d7b2963cab7f1372fc72ca594d29a2e">&#9670;&#160;</a></span>happyTimer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">let happyTimer = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {number|null} happyTimer - Таймер для тимчасового "щасливого" стану спрайта. </p>
+
+</div>
+</div>
+<a id="ac984590484d9b4fd7e87029d9e7b10f3" name="ac984590484d9b4fd7e87029d9e7b10f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac984590484d9b4fd7e87029d9e7b10f3">&#9670;&#160;</a></span>invContainer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const invContainer = document.getElementById(&quot;inventory-items-container&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} invContainer - Контейнер для предметів в інвентарі. </p>
+
+</div>
+</div>
+<a id="a580d275d543fb0604b4e4bf2f524469f" name="a580d275d543fb0604b4e4bf2f524469f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a580d275d543fb0604b4e4bf2f524469f">&#9670;&#160;</a></span>isSavingGame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">let isSavingGame = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {boolean} isSavingGame - Запобіжник від подвійного нарахування результатів гри. </p>
+
+</div>
+</div>
+<a id="a8da0ad316d7979c67c4392c8f012267a" name="a8da0ad316d7979c67c4392c8f012267a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8da0ad316d7979c67c4392c8f012267a">&#9670;&#160;</a></span>itemIcons</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const itemIcons</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    <span class="stringliteral">&quot;basic_food&quot;</span>: <span class="stringliteral">&quot;regular_feed.png&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;premium_food&quot;</span>: <span class="stringliteral">&quot;premium_feed.png&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;banana_snack&quot;</span>: <span class="stringliteral">&quot;banana_snack.png&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;soap_basic&quot;</span>: <span class="stringliteral">&quot;soap.png&quot;</span>,</div>
+<div class="line">    <span class="stringliteral">&quot;medkit_small&quot;</span>: <span class="stringliteral">&quot;medicine.png&quot;</span></div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>@type {Object} itemIcons - Мапа для зіставлення ID предмета та імені файлу іконки. </p>
+
+</div>
+</div>
+<a id="a1a1fb2952b660001f921b240b88e1b72" name="a1a1fb2952b660001f921b240b88e1b72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a1fb2952b660001f921b240b88e1b72">&#9670;&#160;</a></span>modalInventory</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const modalInventory = document.getElementById(&quot;modal-inventory&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} modalInventory - Модальне вікно інвентарю. </p>
+
+</div>
+</div>
+<a id="a46c65456ba992236d85717f45c71baf6" name="a46c65456ba992236d85717f45c71baf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46c65456ba992236d85717f45c71baf6">&#9670;&#160;</a></span>modalShop</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const modalShop = document.getElementById(&quot;modal-shop&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} modalShop - Модальне вікно магазину. </p>
+
+</div>
+</div>
+<a id="a49abd1deafa61f7b93ef16769e4bbed8" name="a49abd1deafa61f7b93ef16769e4bbed8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49abd1deafa61f7b93ef16769e4bbed8">&#9670;&#160;</a></span>myPets</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">let myPets = []</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {Array&lt;Object&gt;} myPets - Масив усіх улюбленців, що належать користувачу. </p>
+
+</div>
+</div>
+<a id="a9749c14edd11eb74d3d8f124c56e7129" name="a9749c14edd11eb74d3d8f124c56e7129"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9749c14edd11eb74d3d8f124c56e7129">&#9670;&#160;</a></span>notificationBox</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const notificationBox = document.getElementById(&quot;pixel-notification&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} notificationBox - Кастомний елемент для сповіщень. </p>
+
+</div>
+</div>
+<a id="a95ff1d5419f4ae6997e271665709d8b9" name="a95ff1d5419f4ae6997e271665709d8b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95ff1d5419f4ae6997e271665709d8b9">&#9670;&#160;</a></span>notificationText</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const notificationText = document.getElementById(&quot;notification-text&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} notificationText - Текст сповіщення. </p>
+
+</div>
+</div>
+<a id="ac399479d367c68d2d87d0180f9a2e0b3" name="ac399479d367c68d2d87d0180f9a2e0b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac399479d367c68d2d87d0180f9a2e0b3">&#9670;&#160;</a></span>notificationTimer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">let notificationTimer = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {number|null} notificationTimer - Таймер для автоматичного приховування сповіщень. </p>
+
+</div>
+</div>
+<a id="acbba4ccdbb1dd96e3f1c5bf7d1f07fc9" name="acbba4ccdbb1dd96e3f1c5bf7d1f07fc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbba4ccdbb1dd96e3f1c5bf7d1f07fc9">&#9670;&#160;</a></span>petsListContainer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const petsListContainer = document.getElementById(&quot;pets-list&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} petsListContainer - Контейнер для відображення списку улюбленців. </p>
+
+</div>
+</div>
+<a id="a70cb27ff257a919a044837cb033200e6" name="a70cb27ff257a919a044837cb033200e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70cb27ff257a919a044837cb033200e6">&#9670;&#160;</a></span>petSprite</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const petSprite = document.getElementById(&quot;pet-sprite&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLImageElement} petSprite - Зображення улюбленця. </p>
+
+</div>
+</div>
+<a id="a5941b6e6101dac64a41f2c9381f74c3a" name="a5941b6e6101dac64a41f2c9381f74c3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5941b6e6101dac64a41f2c9381f74c3a">&#9670;&#160;</a></span>screenCreate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const screenCreate = document.getElementById(&quot;screen-create&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} screenCreate - Екран створення нового улюбленця. </p>
+
+</div>
+</div>
+<a id="ac508d67666d4f58b448b7019379adcd7" name="ac508d67666d4f58b448b7019379adcd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac508d67666d4f58b448b7019379adcd7">&#9670;&#160;</a></span>screenGame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const screenGame = document.getElementById(&quot;screen-game&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} screenGame - Екран догляду за улюбленцем. </p>
+
+</div>
+</div>
+<a id="a6e969667a97b4f91a5bd4da55c299927" name="a6e969667a97b4f91a5bd4da55c299927"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e969667a97b4f91a5bd4da55c299927">&#9670;&#160;</a></span>screenMenu</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const screenMenu = document.getElementById(&quot;screen-menu&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} screenMenu - Екран вибору улюбленців. </p>
+
+</div>
+</div>
+<a id="a779931fc61b8103bacba9ee0b508e155" name="a779931fc61b8103bacba9ee0b508e155"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a779931fc61b8103bacba9ee0b508e155">&#9670;&#160;</a></span>shopContainer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const shopContainer = document.getElementById(&quot;shop-items-container&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} shopContainer - Контейнер для товарів у магазині. </p>
+
+</div>
+</div>
+<a id="ad9388cf09073f3292397e3b49b26c01d" name="ad9388cf09073f3292397e3b49b26c01d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9388cf09073f3292397e3b49b26c01d">&#9670;&#160;</a></span>sleepOverlay</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const sleepOverlay = document.getElementById(&quot;sleep-overlay&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} sleepOverlay - Оверлей сну (затемнення екрана). </p>
+
+</div>
+</div>
+<a id="a37f795f4a14f3b96a8390c3716fcec3f" name="a37f795f4a14f3b96a8390c3716fcec3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37f795f4a14f3b96a8390c3716fcec3f">&#9670;&#160;</a></span>socket</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const socket = io(<a class="el" href="#aa9c3f00ad89212e52eb3139dbebbfc28">API_URL</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ініціалізує Socket.IO та реєструє користувача для отримання live-оновлень. </p>
+
+</div>
+</div>
+<a id="aab4bd429d53c15a585219d5cfd479161" name="aab4bd429d53c15a585219d5cfd479161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab4bd429d53c15a585219d5cfd479161">&#9670;&#160;</a></span>thoughtCloud</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const thoughtCloud = document.getElementById(&quot;thought-cloud&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>@type {HTMLElement} thoughtCloud - Контейнер для хмаринки думок. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

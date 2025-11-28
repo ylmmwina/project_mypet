@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MyPet Tamagotchi Project (OOP): Клас Player</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../favicon.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">MyPet Tamagotchi Project (OOP)
+   </div>
+   <div id="projectbrief">Fullstack Tamagotchi application using Node.js, Express, SQLite, and Phaser.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Створено системою Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',true,false,'search.php','Пошук',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('d2/d4b/classPlayer.html','../../','dc/dc5/classPlayer-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Завантаження...</div>
+<div class="SRStatus" id="Searching">Пошук...</div>
+<div class="SRStatus" id="NoMatches">Нічого не знайдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Клас Player</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Головний персонаж гри.  
+ <a href="#details">Детальніше...</a></p>
+<div class="dynheader">
+Схема успадкувань для Player</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="../../d2/d4b/classPlayer.png" alt=""/>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Загальнодоступні елементи</h2></td></tr>
+<tr class="memitem:a295e33b6510a0b1e5cd299c4c6a5838a" id="r_a295e33b6510a0b1e5cd299c4c6a5838a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a295e33b6510a0b1e5cd299c4c6a5838a">move</a> (direction)</td></tr>
+<tr class="memdesc:a295e33b6510a0b1e5cd299c4c6a5838a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Переміщення гравця по горизонталі.  <br /></td></tr>
+<tr class="memitem:aeb841006821b4ff10a5199cd6fd389c3" id="r_aeb841006821b4ff10a5199cd6fd389c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb841006821b4ff10a5199cd6fd389c3">jump</a> ()</td></tr>
+<tr class="memdesc:aeb841006821b4ff10a5199cd6fd389c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Стрибок гравця.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Головний персонаж гри. </p>
+<ul>
+<li>Відповідає за відображення спрайта гравця, обробку фізики (гравітація, колізії) та реакцію на введення користувача (рух вліво/вправо, стрибок). </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Опис методів компонент</h2>
+<a id="aeb841006821b4ff10a5199cd6fd389c3" name="aeb841006821b4ff10a5199cd6fd389c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb841006821b4ff10a5199cd6fd389c3">&#9670;&#160;</a></span>jump()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Player::jump </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Стрибок гравця. </p>
+<ul>
+<li>Дозволяє стрибнути лише якщо гравець стоїть на землі (body.blocked.down або body.touching.down). Застосовує вертикальну швидкість <span class="tt">jumpForce</span>. </li>
+</ul>
+
+</div>
+</div>
+<a id="a295e33b6510a0b1e5cd299c4c6a5838a" name="a295e33b6510a0b1e5cd299c4c6a5838a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a295e33b6510a0b1e5cd299c4c6a5838a">&#9670;&#160;</a></span>move()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Player::move </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>direction</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Переміщення гравця по горизонталі. </p>
+<ul>
+<li>Встановлює швидкість по осі X залежно від напрямку.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{number}</td><td>direction - Напрямок руху:</td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+<li><span class="tt">-1</span>: Вліво.</li>
+<li><span class="tt">1</span>: Вправо.</li>
+<li><span class="tt">0</span>: Стояти на місці. </li>
+</ul>
+
+</div>
+</div>
+<hr/>Документація цього класу була створена з файлу:<ul>
+<li>frontend/game/src/game_objects/<a class="el" href="../../d0/d24/Player_8js.html">Player.js</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="../../d2/d4b/classPlayer.html">Player</a></li>
+    <li class="footer">Створено системою <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,4 +1,20 @@
 var searchData=
 [
-  ['database_2ejs_0',['database.js',['../da/dd5/database_8js.html',1,'']]]
+  ['clamp_0',['clamp',['../d9/d4f/shopItems_8js.html#ac923c70fe92f3e62c3b1eb8186c9d4a4',1,'shopItems.js']]],
+  ['clean_1',['clean',['../df/d14/classPet.html#aedab6ef8f451f73c112682f2e542d69d',1,'Pet']]],
+  ['closegame_2',['closeGame',['../d3/d59/script_8js.html#a5a74fe9a7c37f5bc0892d08e4cae504e',1,'script.js']]],
+  ['closemodal_3',['closeModal',['../d3/d59/script_8js.html#a712d2a835f95b6cf1214f89cc5c41d85',1,'script.js']]],
+  ['cloudimg_4',['cloudImg',['../d3/d59/script_8js.html#a82fe94b0c70ddfa18ab2accafa28c4c3',1,'script.js']]],
+  ['coin_5',['Coin',['../dc/d51/classCoin.html',1,'']]],
+  ['coin_2ejs_6',['Coin.js',['../d8/dfe/Coin_8js.html',1,'']]],
+  ['collectable_7',['Collectable',['../d8/daa/classCollectable.html',1,'']]],
+  ['collectable_2ejs_8',['Collectable.js',['../d8/dfe/Collectable_8js.html',1,'']]],
+  ['config_9',['config',['../d3/d98/game_8js.html#a8c363cc66a1232af11677883f5bd9b00',1,'config:&#160;game.js'],['../db/d42/main_8js.html#a8c363cc66a1232af11677883f5bd9b00',1,'config:&#160;main.js']]],
+  ['constructor_10',['constructor',['../df/d14/classPet.html#ab42f44c1ae1493dcb645857f259d1f9f',1,'Pet::constructor()'],['../dc/d51/classCoin.html#a995ef18e8e45aba80f86321c1dd318e0',1,'Coin::constructor()'],['../d8/daa/classCollectable.html#a03444f8f132e82be8f9c39c80d446358',1,'Collectable::constructor()'],['../dc/dad/classObstacle.html#a98baf62364be021d20e8f74375577c01',1,'Obstacle::constructor()'],['../d0/d0f/classGameOverScene.html#af88575130371455f784c972763620296',1,'GameOverScene::constructor()'],['../db/d9f/classGameScene.html#a0235d06c515ae83a35316f896e59e392',1,'GameScene::constructor()'],['../df/d14/classStartScene.html#ae24783c7100efd60d16949af03347195',1,'StartScene::constructor()'],['../d8/d87/classUIScene.html#a2081bf733984ac2bcc763c2eb9a7fec6',1,'UIScene::constructor()']]],
+  ['consumeinventoryitem_11',['consumeInventoryItem',['../da/dd5/database_8js.html#a557a062a02d547b4db0fb0246e097122',1,'database.js']]],
+  ['cors_12',['cors',['../d5/d46/server_8js.html#af4ac9e8184c264c92c77d4619cb808be',1,'server.js']]],
+  ['create_13',['create',['../d0/d0f/classGameOverScene.html#a6b4e2327939e936577299c239c495362',1,'GameOverScene::create()'],['../db/d9f/classGameScene.html#a319c98a17421067ce03300c132c37d48',1,'GameScene::create()']]],
+  ['createform_14',['createForm',['../d3/d59/script_8js.html#a7f2307876c50b2623e5988f6d741dc53',1,'script.js']]],
+  ['crypto_15',['crypto',['../d5/d46/server_8js.html#a193ef4d0bd7802cfa57a4f440526d1f9',1,'server.js']]],
+  ['currentpet_16',['currentPet',['../d3/d59/script_8js.html#a9ecbe9135e6a05d30657d838549314b2',1,'script.js']]]
 ];

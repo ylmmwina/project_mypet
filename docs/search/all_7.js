@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['pet_2ejs_0',['pet.js',['../d2/d10/pet_8js.html',1,'']]],
-  ['petroutes_2ejs_1',['petRoutes.js',['../d3/dd2/pet_routes_8js.html',1,'']]],
-  ['player_2ejs_2',['Player.js',['../d1/dd2/_player_8js.html',1,'']]]
+  ['handlecoincollection_0',['handleCoinCollection',['../db/d9f/classGameScene.html#a76b2373e6309e840cc79fcfec0cc6024',1,'GameScene']]],
+  ['handleobstaclecollision_1',['handleObstacleCollision',['../db/d9f/classGameScene.html#a4c525aa33f13a4500e309b848031d331',1,'GameScene']]],
+  ['happytimer_2',['happyTimer',['../d3/d59/script_8js.html#a0d7b2963cab7f1372fc72ca594d29a2e',1,'script.js']]],
+  ['heal_3',['heal',['../df/d14/classPet.html#ac7e9888c6ccf3a9c2e2c997861ce961d',1,'Pet']]]
 ];

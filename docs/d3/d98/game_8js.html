@@ -93,6 +93,90 @@ $(function(){initNavTree('d3/d98/game_8js.html','../../',''); });
   <div class="headertitle"><div class="title">Файл game.js</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Основний файл конфігурації та запуску Phaser гри.  
+<a href="#details">Детальніше...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Змінні</h2></td></tr>
+<tr class="memitem:a59be084da8908b7d77ff34b25cd84488" id="r_a59be084da8908b7d77ff34b25cd84488"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> { <a class="el" href="../../d5/d9e/classSceneManager.html">SceneManager</a> } from './scenes/<a class="el" href="../../d6/dd1/inventoryRoutes_8js.html#a9acef3c6b806b8de4ac8d66c9958f3f7">SceneManager.js</a>'</td></tr>
+<tr class="memitem:a8c363cc66a1232af11677883f5bd9b00" id="r_a8c363cc66a1232af11677883f5bd9b00"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c363cc66a1232af11677883f5bd9b00">config</a></td></tr>
+<tr class="memitem:a5645c9140209534a38545dbe5dec038d" id="r_a5645c9140209534a38545dbe5dec038d"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5645c9140209534a38545dbe5dec038d">game</a> = new Phaser.Game(<a class="el" href="#a8c363cc66a1232af11677883f5bd9b00">config</a>)</td></tr>
+<tr class="memdesc:a5645c9140209534a38545dbe5dec038d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Створення головного екземпляра гри Phaser.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Основний файл конфігурації та запуску Phaser гри. </p>
+<ul>
+<li>Цей файл визначає параметри гри (розмір, тип рендера, фізика) та ініціює створення екземпляра гри Phaser. </li>
+</ul>
+</div><a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Опис змінних</h2>
+<a id="a8c363cc66a1232af11677883f5bd9b00" name="a8c363cc66a1232af11677883f5bd9b00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c363cc66a1232af11677883f5bd9b00">&#9670;&#160;</a></span>config</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    type: Phaser.AUTO,</div>
+<div class="line">    width: 800,</div>
+<div class="line">    height: 600,</div>
+<div class="line">    parent: document.body, </div>
+<div class="line">    backgroundColor: <span class="stringliteral">&#39;#000000&#39;</span>, </div>
+<div class="line">    scale: {</div>
+<div class="line">        mode: Phaser.Scale.FIT, </div>
+<div class="line">        autoCenter: Phaser.Scale.CENTER_BOTH </div>
+<div class="line">    },</div>
+<div class="line">    physics: {</div>
+<div class="line">        <span class="keywordflow">default</span>: <span class="stringliteral">&#39;arcade&#39;</span>,</div>
+<div class="line">        arcade: {</div>
+<div class="line">            gravity: { y: 600 },</div>
+<div class="line">            debug: <span class="keyword">false</span> </div>
+<div class="line">        }</div>
+<div class="line">    },</div>
+<div class="line">    render: {</div>
+<div class="line">        pixelArt: <span class="keyword">true</span> </div>
+<div class="line">    },</div>
+<div class="line">    scene: [] </div>
+<div class="line">}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5645c9140209534a38545dbe5dec038d" name="a5645c9140209534a38545dbe5dec038d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5645c9140209534a38545dbe5dec038d">&#9670;&#160;</a></span>game</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const game = new Phaser.Game(<a class="el" href="#a8c363cc66a1232af11677883f5bd9b00">config</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Створення головного екземпляра гри Phaser. </p>
+<p>@type {Phaser.Game} </p>
+
+</div>
+</div>
+<a id="a59be084da8908b7d77ff34b25cd84488" name="a59be084da8908b7d77ff34b25cd84488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59be084da8908b7d77ff34b25cd84488">&#9670;&#160;</a></span>import</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">import { <a class="el" href="../../d5/d9e/classSceneManager.html">SceneManager</a> } from './scenes/<a class="el" href="../../d6/dd1/inventoryRoutes_8js.html#a9acef3c6b806b8de4ac8d66c9958f3f7">SceneManager.js</a>'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

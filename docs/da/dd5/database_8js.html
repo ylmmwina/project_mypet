@@ -93,6 +93,599 @@ $(function(){initNavTree('da/dd5/database_8js.html','../../',''); });
   <div class="headertitle"><div class="title">Файл database.js</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Модуль для роботи з базою даних SQLite.  
+<a href="#details">Детальніше...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Функції</h2></td></tr>
+<tr class="memitem:a1d2b49acecdaac3c478121d17ed685c8" id="r_a1d2b49acecdaac3c478121d17ed685c8"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d2b49acecdaac3c478121d17ed685c8">setupDatabase</a> ()</td></tr>
+<tr class="memdesc:a1d2b49acecdaac3c478121d17ed685c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ініціалізує базу даних.  <br /></td></tr>
+<tr class="memitem:a2e468681826c9c40b6b4b9aee2f78af5" id="r_a2e468681826c9c40b6b4b9aee2f78af5"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e468681826c9c40b6b4b9aee2f78af5">getAllPetsByOwnerId</a> (db, ownerId)</td></tr>
+<tr class="memdesc:a2e468681826c9c40b6b4b9aee2f78af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати всіх улюбленців конкретного власника.  <br /></td></tr>
+<tr class="memitem:aeeffd62d565061f178f1e5f0a3d6c224" id="r_aeeffd62d565061f178f1e5f0a3d6c224"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeeffd62d565061f178f1e5f0a3d6c224">getPetById</a> (db, petId, ownerId)</td></tr>
+<tr class="memdesc:aeeffd62d565061f178f1e5f0a3d6c224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати улюбленця за його ID та ID власника.  <br /></td></tr>
+<tr class="memitem:a14e5e0472ccbc46799a0fe2960004c3f" id="r_a14e5e0472ccbc46799a0fe2960004c3f"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14e5e0472ccbc46799a0fe2960004c3f">getPetByOwnerId</a> (db, ownerId)</td></tr>
+<tr class="memdesc:a14e5e0472ccbc46799a0fe2960004c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати першого знайденого улюбленця власника.  <br /></td></tr>
+<tr class="memitem:a31e4d4acf1a4d9e252599cdde85dfd4b" id="r_a31e4d4acf1a4d9e252599cdde85dfd4b"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31e4d4acf1a4d9e252599cdde85dfd4b">getPetIdByOwnerId</a> (db, ownerId)</td></tr>
+<tr class="memdesc:a31e4d4acf1a4d9e252599cdde85dfd4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати тільки ID улюбленця власника.  <br /></td></tr>
+<tr class="memitem:a3fce714faaf6835b90ed592571b28ce2" id="r_a3fce714faaf6835b90ed592571b28ce2"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fce714faaf6835b90ed592571b28ce2">savePet</a> (db, pet)</td></tr>
+<tr class="memdesc:a3fce714faaf6835b90ed592571b28ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Зберегти змінений стан улюбленця в БД.  <br /></td></tr>
+<tr class="memitem:a169e518e649780306da43febcc37c9c1" id="r_a169e518e649780306da43febcc37c9c1"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a169e518e649780306da43febcc37c9c1">getInventoryForPet</a> (db, petId)</td></tr>
+<tr class="memdesc:a169e518e649780306da43febcc37c9c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати весь інвентар улюбленця.  <br /></td></tr>
+<tr class="memitem:afbacac2c70d0cbe142cc7f056298039f" id="r_afbacac2c70d0cbe142cc7f056298039f"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbacac2c70d0cbe142cc7f056298039f">getInventoryItem</a> (db, petId, itemId)</td></tr>
+<tr class="memdesc:afbacac2c70d0cbe142cc7f056298039f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати конкретний предмет з інвентарю.  <br /></td></tr>
+<tr class="memitem:a4bb8bae18c5260ea22a2d213ac7c6fe6" id="r_a4bb8bae18c5260ea22a2d213ac7c6fe6"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4bb8bae18c5260ea22a2d213ac7c6fe6">addInventoryItem</a> (db, petId, itemId)</td></tr>
+<tr class="memdesc:a4bb8bae18c5260ea22a2d213ac7c6fe6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Додати предмет в інвентар.  <br /></td></tr>
+<tr class="memitem:a557a062a02d547b4db0fb0246e097122" id="r_a557a062a02d547b4db0fb0246e097122"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a557a062a02d547b4db0fb0246e097122">consumeInventoryItem</a> (db, petId, itemId, now)</td></tr>
+<tr class="memdesc:a557a062a02d547b4db0fb0246e097122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Використати (списати) предмет з інвентарю.  <br /></td></tr>
+<tr class="memitem:ac3241595dfe7aef89697643aedb32bd5" id="r_ac3241595dfe7aef89697643aedb32bd5"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3241595dfe7aef89697643aedb32bd5">addPurchaseHistoryEntry</a> (db, petId, itemId, price)</td></tr>
+<tr class="memdesc:ac3241595dfe7aef89697643aedb32bd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Записати факт покупки в історію.  <br /></td></tr>
+<tr class="memitem:ae36820b1d98d4eb088d74b1a5007444f" id="r_ae36820b1d98d4eb088d74b1a5007444f"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae36820b1d98d4eb088d74b1a5007444f">getPurchaseHistory</a> (db, petId, limit=20)</td></tr>
+<tr class="memdesc:ae36820b1d98d4eb088d74b1a5007444f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отримати історію покупок (останні N записів).  <br /></td></tr>
+<tr class="memitem:aaa3af7593136017f4070f4997911468e" id="r_aaa3af7593136017f4070f4997911468e"><td class="memItemLeft" align="right" valign="top">function async&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa3af7593136017f4070f4997911468e">deletePet</a> (db, petId, ownerId)</td></tr>
+<tr class="memdesc:aaa3af7593136017f4070f4997911468e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Видалити улюбленця та всі пов'язані дані.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Змінні</h2></td></tr>
+<tr class="memitem:a706f8f0cb9e0dc1b44e2da80ccad2f90" id="r_a706f8f0cb9e0dc1b44e2da80ccad2f90"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> sqlite3 from&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a706f8f0cb9e0dc1b44e2da80ccad2f90">sqlite3</a></td></tr>
+<tr class="memitem:a59be084da8908b7d77ff34b25cd84488" id="r_a59be084da8908b7d77ff34b25cd84488"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> { open } from &quot;sqlite&quot;</td></tr>
+<tr class="memitem:af8ce9fa6716fc58c447139e59bf1828c" id="r_af8ce9fa6716fc58c447139e59bf1828c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> fs from&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8ce9fa6716fc58c447139e59bf1828c">fs</a></td></tr>
+<tr class="memitem:ab92a965df85fb00068fa08763ee7ce6e" id="r_ab92a965df85fb00068fa08763ee7ce6e"><td class="memItemLeft" align="right" valign="top">export const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab92a965df85fb00068fa08763ee7ce6e">getPetByOwnerIdAndPetId</a> = (db, ownerId, petId) =&gt; <a class="el" href="#aeeffd62d565061f178f1e5f0a3d6c224">getPetById</a>(db, petId, ownerId)</td></tr>
+<tr class="memdesc:ab92a965df85fb00068fa08763ee7ce6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Аліас для getPetById (для зручності імпорту).  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Модуль для роботи з базою даних SQLite. </p>
+<ul>
+<li>Цей файл містить функції для ініціалізації бази даних, створення таблиць, а також методи CRUD (Create, Read, Update, Delete) для сутностей Pets, Inventory та Purchases. </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Опис функцій</h2>
+<a id="a4bb8bae18c5260ea22a2d213ac7c6fe6" name="a4bb8bae18c5260ea22a2d213ac7c6fe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bb8bae18c5260ea22a2d213ac7c6fe6">&#9670;&#160;</a></span>addInventoryItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async addInventoryItem </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Додати предмет в інвентар. </p>
+<ul>
+<li>Якщо предмет вже є, збільшує кількість (stacking). Якщо немає — створює новий запис.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>itemId - ID предмета. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;number&gt;} Нова кількість предметів цього типу. </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="ac3241595dfe7aef89697643aedb32bd5" name="ac3241595dfe7aef89697643aedb32bd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3241595dfe7aef89697643aedb32bd5">&#9670;&#160;</a></span>addPurchaseHistoryEntry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async addPurchaseHistoryEntry </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>price</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Записати факт покупки в історію. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>itemId - ID товару. </td></tr>
+    <tr><td class="paramname">{number}</td><td>price - Ціна покупки. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a557a062a02d547b4db0fb0246e097122" name="a557a062a02d547b4db0fb0246e097122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a557a062a02d547b4db0fb0246e097122">&#9670;&#160;</a></span>consumeInventoryItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async consumeInventoryItem </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>now</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Використати (списати) предмет з інвентарю. </p>
+<ul>
+<li>Зменшує кількість на 1. Якщо кількість стає 0, видаляє запис.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>itemId - ID предмета. </td></tr>
+    <tr><td class="paramname">{string}</td><td>now - Поточна дата (ISO string). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;number&gt;} Залишок предметів. </dd></dl>
+<dl class="exception"><dt>Обробка виняткових ситуацій</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">{Error}</td><td>Якщо предмета немає або його кількість &lt;= 0. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="aaa3af7593136017f4070f4997911468e" name="aaa3af7593136017f4070f4997911468e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa3af7593136017f4070f4997911468e">&#9670;&#160;</a></span>deletePet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async deletePet </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ownerId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Видалити улюбленця та всі пов'язані дані. </p>
+<ul>
+<li>Видаляє записи з таблиць Inventory, Purchases та Pets (каскадне видалення вручну, оскільки в SQLite foreign keys не завжди увімкнені за замовчуванням або налаштовані на CASCADE).</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>ownerId - ID власника (для безпеки). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Обробка виняткових ситуацій</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">{Error}</td><td>Якщо улюбленця не знайдено або немає доступу. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a2e468681826c9c40b6b4b9aee2f78af5" name="a2e468681826c9c40b6b4b9aee2f78af5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e468681826c9c40b6b4b9aee2f78af5">&#9670;&#160;</a></span>getAllPetsByOwnerId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getAllPetsByOwnerId </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ownerId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати всіх улюбленців конкретного власника. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{string}</td><td>ownerId - ID власника. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Array&gt;} Масив об'єктів улюбленців. </dd></dl>
+
+</div>
+</div>
+<a id="a169e518e649780306da43febcc37c9c1" name="a169e518e649780306da43febcc37c9c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a169e518e649780306da43febcc37c9c1">&#9670;&#160;</a></span>getInventoryForPet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getInventoryForPet </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати весь інвентар улюбленця. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Array&gt;} Список предметів в інвентарі. </dd></dl>
+
+</div>
+</div>
+<a id="afbacac2c70d0cbe142cc7f056298039f" name="afbacac2c70d0cbe142cc7f056298039f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbacac2c70d0cbe142cc7f056298039f">&#9670;&#160;</a></span>getInventoryItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getInventoryItem </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>itemId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати конкретний предмет з інвентарю. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>itemId - ID предмета. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Object|undefined&gt;} Запис про предмет в інвентарі. </dd></dl>
+
+</div>
+</div>
+<a id="aeeffd62d565061f178f1e5f0a3d6c224" name="aeeffd62d565061f178f1e5f0a3d6c224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeeffd62d565061f178f1e5f0a3d6c224">&#9670;&#160;</a></span>getPetById()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getPetById </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ownerId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати улюбленця за його ID та ID власника. </p>
+<ul>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{string}</td><td>ownerId - ID власника (для перевірки доступу). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Object|undefined&gt;} Об'єкт улюбленця або undefined. </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a14e5e0472ccbc46799a0fe2960004c3f" name="a14e5e0472ccbc46799a0fe2960004c3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e5e0472ccbc46799a0fe2960004c3f">&#9670;&#160;</a></span>getPetByOwnerId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getPetByOwnerId </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ownerId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати першого знайденого улюбленця власника. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{string}</td><td>ownerId - ID власника. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Object|undefined&gt;} Об'єкт улюбленця. </dd></dl>
+
+</div>
+</div>
+<a id="a31e4d4acf1a4d9e252599cdde85dfd4b" name="a31e4d4acf1a4d9e252599cdde85dfd4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31e4d4acf1a4d9e252599cdde85dfd4b">&#9670;&#160;</a></span>getPetIdByOwnerId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getPetIdByOwnerId </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ownerId</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати тільки ID улюбленця власника. </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{string}</td><td>ownerId - ID власника. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;number|null&gt;} ID улюбленця або null. </dd></dl>
+
+</div>
+</div>
+<a id="ae36820b1d98d4eb088d74b1a5007444f" name="ae36820b1d98d4eb088d74b1a5007444f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae36820b1d98d4eb088d74b1a5007444f">&#9670;&#160;</a></span>getPurchaseHistory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async getPurchaseHistory </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>petId</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>limit</em></span><span class="paramdefsep"> = </span><span class="paramdefval">20</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Отримати історію покупок (останні N записів). </p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{number}</td><td>petId - ID улюбленця. </td></tr>
+    <tr><td class="paramname">{number}</td><td>[limit=20] - Максимальна кількість записів. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Array&gt;} Список покупок. </dd></dl>
+
+</div>
+</div>
+<a id="a3fce714faaf6835b90ed592571b28ce2" name="a3fce714faaf6835b90ed592571b28ce2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fce714faaf6835b90ed592571b28ce2">&#9670;&#160;</a></span>savePet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async savePet </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>db</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pet</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Зберегти змінений стан улюбленця в БД. </p>
+<ul>
+<li>Оновлює основні показники (здоров'я, голод, щастя, монети тощо).</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>db - Підключення до БД. </td></tr>
+    <tr><td class="paramname">{Object}</td><td>pet - Об'єкт улюбленця (має містити id). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Обробка виняткових ситуацій</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">{Error}</td><td>Якщо у об'єкта немає ID. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a1d2b49acecdaac3c478121d17ed685c8" name="a1d2b49acecdaac3c478121d17ed685c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d2b49acecdaac3c478121d17ed685c8">&#9670;&#160;</a></span>setupDatabase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function async setupDatabase </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Ініціалізує базу даних. </p>
+<ul>
+<li>Створює файл бази даних (якщо його немає), підключається до нього та створює необхідні таблиці:</li>
+<li><b>Pets</b>: Зберігає інформацію про улюбленців.</li>
+<li><b>Purchases</b>: Історія покупок.</li>
+<li><b>Inventory</b>: Інвентар предметів для кожного улюбленця.</li>
+<li><dl class="section return"><dt>Повертає</dt><dd>{Promise&lt;Object&gt;} Екземпляр підключення до бази даних. </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Опис змінних</h2>
+<a id="af8ce9fa6716fc58c447139e59bf1828c" name="af8ce9fa6716fc58c447139e59bf1828c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8ce9fa6716fc58c447139e59bf1828c">&#9670;&#160;</a></span>fs</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> fs from fs</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab92a965df85fb00068fa08763ee7ce6e" name="ab92a965df85fb00068fa08763ee7ce6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab92a965df85fb00068fa08763ee7ce6e">&#9670;&#160;</a></span>getPetByOwnerIdAndPetId</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">export const getPetByOwnerIdAndPetId = (db, ownerId, petId) =&gt; <a class="el" href="#aeeffd62d565061f178f1e5f0a3d6c224">getPetById</a>(db, petId, ownerId)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Аліас для getPetById (для зручності імпорту). </p>
+
+</div>
+</div>
+<a id="a59be084da8908b7d77ff34b25cd84488" name="a59be084da8908b7d77ff34b25cd84488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59be084da8908b7d77ff34b25cd84488">&#9670;&#160;</a></span>import</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">import { open } from &quot;sqlite&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a706f8f0cb9e0dc1b44e2da80ccad2f90" name="a706f8f0cb9e0dc1b44e2da80ccad2f90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a706f8f0cb9e0dc1b44e2da80ccad2f90">&#9670;&#160;</a></span>sqlite3</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> sqlite3 from sqlite3</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

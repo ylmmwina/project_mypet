@@ -25,15 +25,30 @@
 var NAVTREE =
 [
   [ "MyPet Tamagotchi Project (OOP)", "index.html", [
+    [ "Класи", "annotated.html", [
+      [ "Класи", "annotated.html", "annotated_dup" ],
+      [ "Алфавітний покажчик класів", "classes.html", null ],
+      [ "Ієрархія класів", "hierarchy.html", "hierarchy" ],
+      [ "Елементи класів", "functions.html", [
+        [ "Всі", "functions.html", null ],
+        [ "Функції", "functions_func.html", null ]
+      ] ]
+    ] ],
     [ "Файли", "files.html", [
-      [ "Файли", "files.html", "files_dup" ]
-    ] ]
+      [ "Файли", "files.html", "files_dup" ],
+      [ "Елементи файлу", "globals.html", [
+        [ "Всі", "globals.html", null ],
+        [ "Функції", "globals_func.html", null ],
+        [ "Змінні", "globals_vars.html", null ]
+      ] ]
+    ] ],
+    [ "Приклади", "examples.html", "examples" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"d1/d01/shop_routes_8js.html"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'клацніть мишкою, щоб заборонити синхронізацію панелі';

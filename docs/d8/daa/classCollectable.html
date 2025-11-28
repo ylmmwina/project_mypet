@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MyPet Tamagotchi Project (OOP): Клас Collectable</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../favicon.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">MyPet Tamagotchi Project (OOP)
+   </div>
+   <div id="projectbrief">Fullstack Tamagotchi application using Node.js, Express, SQLite, and Phaser.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Створено системою Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',true,false,'search.php','Пошук',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('d8/daa/classCollectable.html','../../','d4/da0/classCollectable-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Завантаження...</div>
+<div class="SRStatus" id="Searching">Пошук...</div>
+<div class="SRStatus" id="NoMatches">Нічого не знайдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Клас Collectable</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Абстракція предмета, який можна підібрати.  
+ <a href="#details">Детальніше...</a></p>
+<div class="dynheader">
+Схема успадкувань для Collectable</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="../../d8/daa/classCollectable.png" alt=""/>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Загальнодоступні елементи</h2></td></tr>
+<tr class="memitem:a03444f8f132e82be8f9c39c80d446358" id="r_a03444f8f132e82be8f9c39c80d446358"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03444f8f132e82be8f9c39c80d446358">constructor</a> (scene, x, y, textureKey)</td></tr>
+<tr class="memdesc:a03444f8f132e82be8f9c39c80d446358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор базового збираного об'єкта.  <br /></td></tr>
+<tr class="memitem:afba39d4be146902e033f832951f3a6f8" id="r_afba39d4be146902e033f832951f3a6f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afba39d4be146902e033f832951f3a6f8">interact</a> (player)</td></tr>
+<tr class="memdesc:afba39d4be146902e033f832951f3a6f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Метод взаємодії з гравцем.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Абстракція предмета, який можна підібрати. </p>
+<ul>
+<li>Налаштовує об'єкт як нерухомий (immovable) і такий, що не піддається гравітації. Надає метод <a class="el" href="#afba39d4be146902e033f832951f3a6f8" title="Метод взаємодії з гравцем.">interact()</a>, який має бути перевизначений у нащадках. </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Опис методів компонент</h2>
+<a id="a03444f8f132e82be8f9c39c80d446358" name="a03444f8f132e82be8f9c39c80d446358"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03444f8f132e82be8f9c39c80d446358">&#9670;&#160;</a></span>constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Collectable::constructor </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>scene</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>textureKey</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конструктор базового збираного об'єкта. </p>
+<ul>
+<li>Ініціалізує спрайт, додає його до сцени та налаштовує фізичне тіло.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Phaser.Scene}</td><td>scene - Поточна сцена гри. </td></tr>
+    <tr><td class="paramname">{number}</td><td>x - Координата X появи. </td></tr>
+    <tr><td class="paramname">{number}</td><td>y - Координата Y появи. </td></tr>
+    <tr><td class="paramname">{string}</td><td>textureKey - Ключ текстури для спрайта. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="afba39d4be146902e033f832951f3a6f8" name="afba39d4be146902e033f832951f3a6f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afba39d4be146902e033f832951f3a6f8">&#9670;&#160;</a></span>interact()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Collectable::interact </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>player</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Метод взаємодії з гравцем. </p>
+<ul>
+<li>Викликається при колізії або перетині з гравцем. Базова реалізація просто вимикає об'єкт (збирає його). Цей метод демонструє поліморфізм, оскільки може бути змінений у класах-спадкоємцях.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Player}</td><td>player - Екземпляр гравця, що взаємодіє з предметом. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<hr/>Документація цього класу була створена з файлу:<ul>
+<li>frontend/game/src/game_objects/<a class="el" href="../../d8/dfe/Collectable_8js.html">Collectable.js</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="../../d8/daa/classCollectable.html">Collectable</a></li>
+    <li class="footer">Створено системою <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

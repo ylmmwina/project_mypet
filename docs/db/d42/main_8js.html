@@ -93,6 +93,159 @@ $(function(){initNavTree('db/d42/main_8js.html','../../',''); });
   <div class="headertitle"><div class="title">Файл main.js</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Основний лаунчер міні-гри Phaser.  
+<a href="#details">Детальніше...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Змінні</h2></td></tr>
+<tr class="memitem:a59be084da8908b7d77ff34b25cd84488" id="r_a59be084da8908b7d77ff34b25cd84488"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59be084da8908b7d77ff34b25cd84488">import</a> { <a class="el" href="../../df/d14/classStartScene.html">StartScene</a> } from './scenes/<a class="el" href="../../d6/dd1/inventoryRoutes_8js.html#a9acef3c6b806b8de4ac8d66c9958f3f7">StartScene.js</a>'</td></tr>
+<tr class="memitem:a8c363cc66a1232af11677883f5bd9b00" id="r_a8c363cc66a1232af11677883f5bd9b00"><td class="memItemLeft" align="right" valign="top">const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c363cc66a1232af11677883f5bd9b00">config</a></td></tr>
+<tr class="memdesc:a8c363cc66a1232af11677883f5bd9b00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Об'єкт конфігурації гри Phaser.  <br /></td></tr>
+<tr class="memitem:ad47020f167c0d6086ae8f5f30e1ceed7" id="r_ad47020f167c0d6086ae8f5f30e1ceed7"><td class="memItemLeft" align="right" valign="top">let&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad47020f167c0d6086ae8f5f30e1ceed7">game</a> = null</td></tr>
+<tr class="memitem:a21008342821436c344ee08ad68459d51" id="r_a21008342821436c344ee08ad68459d51"><td class="memItemLeft" align="right" valign="top">window&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21008342821436c344ee08ad68459d51">launchGame</a></td></tr>
+<tr class="memdesc:a21008342821436c344ee08ad68459d51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Запускає гру Phaser.  <br /></td></tr>
+<tr class="memitem:abb504ae08f95f38b7bf26927a4925609" id="r_abb504ae08f95f38b7bf26927a4925609"><td class="memItemLeft" align="right" valign="top">window&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb504ae08f95f38b7bf26927a4925609">destroyGame</a></td></tr>
+<tr class="memdesc:abb504ae08f95f38b7bf26927a4925609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Знищує активний екземпляр гри Phaser.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Основний лаунчер міні-гри Phaser. </p>
+<ul>
+<li>Цей файл відповідає за конфігурацію екземпляра гри Phaser.Game, а також надає глобальні функції <span class="tt"><a class="el" href="#a21008342821436c344ee08ad68459d51" title="Запускає гру Phaser.">launchGame</a></span> та <span class="tt"><a class="el" href="#abb504ae08f95f38b7bf26927a4925609" title="Знищує активний екземпляр гри Phaser.">destroyGame</a></span> для керування грою з основного інтерфейсу (<a class="el" href="../../d3/d59/script_8js.html" title="Основний файл клієнтської логіки (Frontend).">script.js</a>). </li>
+</ul>
+</div><a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Опис змінних</h2>
+<a id="a8c363cc66a1232af11677883f5bd9b00" name="a8c363cc66a1232af11677883f5bd9b00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c363cc66a1232af11677883f5bd9b00">&#9670;&#160;</a></span>config</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const config</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    type: Phaser.AUTO,</div>
+<div class="line">    width: 1280,</div>
+<div class="line">    height: 720,</div>
+<div class="line">    parent: <span class="stringliteral">&#39;phaser-game&#39;</span>, </div>
+<div class="line">    backgroundColor: <span class="stringliteral">&#39;#000000&#39;</span>,</div>
+<div class="line">    scale: {</div>
+<div class="line">        mode: Phaser.Scale.FIT,</div>
+<div class="line">        autoCenter: Phaser.Scale.CENTER_BOTH</div>
+<div class="line">    },</div>
+<div class="line">    physics: {</div>
+<div class="line">        <span class="keywordflow">default</span>: <span class="stringliteral">&#39;arcade&#39;</span>,</div>
+<div class="line">        arcade: {</div>
+<div class="line">            gravity: { y: 0 }, </div>
+<div class="line">            debug: <span class="keyword">false</span></div>
+<div class="line">        }</div>
+<div class="line">    },</div>
+<div class="line">    scene: [StartScene, GameScene, UIScene, GameOverScene]</div>
+<div class="line">}</div>
+</div><!-- fragment -->
+<p>Об'єкт конфігурації гри Phaser. </p>
+<ul>
+<li>Налаштовує розмір, фізичний рушій (Arcade) та список усіх сцен. @type {Object} </li>
+</ul>
+
+</div>
+</div>
+<a id="abb504ae08f95f38b7bf26927a4925609" name="abb504ae08f95f38b7bf26927a4925609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb504ae08f95f38b7bf26927a4925609">&#9670;&#160;</a></span>destroyGame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">window destroyGame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= () =&gt; {</div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a>) {</div>
+<div class="line">        <a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a>.destroy(<span class="keyword">true</span>); </div>
+<div class="line">        <a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a> = <span class="keyword">null</span>;</div>
+<div class="line">        window.gameInstance = <span class="keyword">null</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="agame_8js_html_a5645c9140209534a38545dbe5dec038d"><div class="ttname"><a href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a></div><div class="ttdeci">const game</div><div class="ttdoc">Створення головного екземпляра гри Phaser.</div><div class="ttdef"><b>Definition</b> game.js:49</div></div>
+</div><!-- fragment -->
+<p>Знищує активний екземпляр гри Phaser. </p>
+<ul>
+<li>Викликається після завершення гри (або при натисканні кнопки "Вихід") для очищення пам'яті та закриття Canvas.</li>
+<li>@global </li>
+</ul>
+
+</div>
+</div>
+<a id="ad47020f167c0d6086ae8f5f30e1ceed7" name="ad47020f167c0d6086ae8f5f30e1ceed7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad47020f167c0d6086ae8f5f30e1ceed7">&#9670;&#160;</a></span>game</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">let game = null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a59be084da8908b7d77ff34b25cd84488" name="a59be084da8908b7d77ff34b25cd84488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59be084da8908b7d77ff34b25cd84488">&#9670;&#160;</a></span>import</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">import { <a class="el" href="../../df/d14/classStartScene.html">StartScene</a> } from './scenes/<a class="el" href="../../d6/dd1/inventoryRoutes_8js.html#a9acef3c6b806b8de4ac8d66c9958f3f7">StartScene.js</a>'</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a21008342821436c344ee08ad68459d51" name="a21008342821436c344ee08ad68459d51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21008342821436c344ee08ad68459d51">&#9670;&#160;</a></span>launchGame</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">window launchGame</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= (petType = <span class="stringliteral">&#39;cat&#39;</span>) =&gt; {</div>
+<div class="line">    <span class="keywordflow">if</span> (<a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a>) <span class="keywordflow">return</span>; </div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a> = <span class="keyword">new</span> Phaser.Game(<a class="code hl_variable" href="../../d3/d98/game_8js.html#a8c363cc66a1232af11677883f5bd9b00">config</a>);</div>
+<div class="line"> </div>
+<div class="line">    </div>
+<div class="line">    <a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a>.registry.set(<span class="stringliteral">&#39;petType&#39;</span>, petType);</div>
+<div class="line"> </div>
+<div class="line">    </div>
+<div class="line">    window.gameInstance = <a class="code hl_variable" href="../../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d">game</a>;</div>
+<div class="line">}</div>
+<div class="ttc" id="agame_8js_html_a8c363cc66a1232af11677883f5bd9b00"><div class="ttname"><a href="../../d3/d98/game_8js.html#a8c363cc66a1232af11677883f5bd9b00">config</a></div><div class="ttdeci">const config</div><div class="ttdef"><b>Definition</b> game.js:22</div></div>
+</div><!-- fragment -->
+<p>Запускає гру Phaser. </p>
+<ul>
+<li>Створює новий екземпляр гри та зберігає тип улюбленця (для вибору спрайта) у глобальному реєстрі Phaser.</li>
+<li>@global <dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>[petType='cat'] - Тип улюбленця ('cat', 'dog', 'monkey'). </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">

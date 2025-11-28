@@ -1,0 +1,518 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MyPet Tamagotchi Project (OOP): Клас Pet</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../favicon.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">MyPet Tamagotchi Project (OOP)
+   </div>
+   <div id="projectbrief">Fullstack Tamagotchi application using Node.js, Express, SQLite, and Phaser.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Створено системою Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',true,false,'search.php','Пошук',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('df/d14/classPet.html','../../','d5/ddd/classPet-members'); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Завантаження...</div>
+<div class="SRStatus" id="Searching">Пошук...</div>
+<div class="SRStatus" id="NoMatches">Нічого не знайдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Клас Pet</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Клас для представлення віртуального улюбленця.  
+ <a href="#details">Детальніше...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Загальнодоступні елементи</h2></td></tr>
+<tr class="memitem:ab42f44c1ae1493dcb645857f259d1f9f" id="r_ab42f44c1ae1493dcb645857f259d1f9f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab42f44c1ae1493dcb645857f259d1f9f">constructor</a> (name, type, age, health, hunger, happiness, energy, cleanliness, coins=0, id=null, ownerId=null)</td></tr>
+<tr class="memdesc:ab42f44c1ae1493dcb645857f259d1f9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор класу <a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a>.  <br /></td></tr>
+<tr class="memitem:a47ae1d74b666bc75388d48e775a17a7d" id="r_a47ae1d74b666bc75388d48e775a17a7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47ae1d74b666bc75388d48e775a17a7d">toJSON</a> ()</td></tr>
+<tr class="memitem:aa44077e9517346a0ca18e9303d9dbad9" id="r_aa44077e9517346a0ca18e9303d9dbad9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa44077e9517346a0ca18e9303d9dbad9">live</a> ()</td></tr>
+<tr class="memdesc:aa44077e9517346a0ca18e9303d9dbad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Симуляція життєвого циклу (викликається за таймером).  <br /></td></tr>
+<tr class="memitem:af8520b654c48151b66bdbe4fbe1b3851" id="r_af8520b654c48151b66bdbe4fbe1b3851"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8520b654c48151b66bdbe4fbe1b3851">feed</a> ()</td></tr>
+<tr class="memdesc:af8520b654c48151b66bdbe4fbe1b3851"><td class="mdescLeft">&#160;</td><td class="mdescRight">Годування улюбленця.  <br /></td></tr>
+<tr class="memitem:abcdf2833d342290848c1ce365ab06470" id="r_abcdf2833d342290848c1ce365ab06470"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcdf2833d342290848c1ce365ab06470">play</a> ()</td></tr>
+<tr class="memdesc:abcdf2833d342290848c1ce365ab06470"><td class="mdescLeft">&#160;</td><td class="mdescRight">Гра з улюбленцем.  <br /></td></tr>
+<tr class="memitem:a5541bc1224af09c10db6fec346ccfdc5" id="r_a5541bc1224af09c10db6fec346ccfdc5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5541bc1224af09c10db6fec346ccfdc5">sleep</a> ()</td></tr>
+<tr class="memdesc:a5541bc1224af09c10db6fec346ccfdc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Сон улюбленця.  <br /></td></tr>
+<tr class="memitem:ac7e9888c6ccf3a9c2e2c997861ce961d" id="r_ac7e9888c6ccf3a9c2e2c997861ce961d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7e9888c6ccf3a9c2e2c997861ce961d">heal</a> ()</td></tr>
+<tr class="memdesc:ac7e9888c6ccf3a9c2e2c997861ce961d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Лікування улюбленця.  <br /></td></tr>
+<tr class="memitem:aedab6ef8f451f73c112682f2e542d69d" id="r_aedab6ef8f451f73c112682f2e542d69d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedab6ef8f451f73c112682f2e542d69d">clean</a> ()</td></tr>
+<tr class="memdesc:aedab6ef8f451f73c112682f2e542d69d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Миття улюбленця.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Загальнодоступні статичні елементи</h2></td></tr>
+<tr class="memitem:aaceddee5e9c0dfcafabdbc4a6da6ae66" id="r_aaceddee5e9c0dfcafabdbc4a6da6ae66"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaceddee5e9c0dfcafabdbc4a6da6ae66">fromJSON</a> (json)</td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Клас для представлення віртуального улюбленця. </p>
+<p>Зберігає поточні показники стану тварини та надає методи для їх зміни (годування, гра, сон, лікування тощо). Також містить метод <a class="el" href="#aa44077e9517346a0ca18e9303d9dbad9" title="Симуляція життєвого циклу (викликається за таймером).">live()</a>, який викликається ігровим циклом для симуляції плину часу. </p>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#_a0">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Опис методів компонент</h2>
+<a id="aedab6ef8f451f73c112682f2e542d69d" name="aedab6ef8f451f73c112682f2e542d69d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedab6ef8f451f73c112682f2e542d69d">&#9670;&#160;</a></span>clean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::clean </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Миття улюбленця. </p>
+<ul>
+<li>Повністю прибирає бруд (cleanliness стає 0)</li>
+<li>Підвищує щастя на 10 пунктів</li>
+<li>Нараховує 20 монет, якщо улюбленець справді був брудним</li>
+</ul>
+<dl class="section return"><dt>Повертає</dt><dd>{void} </dd></dl>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a9">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="ab42f44c1ae1493dcb645857f259d1f9f" name="ab42f44c1ae1493dcb645857f259d1f9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab42f44c1ae1493dcb645857f259d1f9f">&#9670;&#160;</a></span>constructor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::constructor </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>age</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>health</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>hunger</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>happiness</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>energy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>cleanliness</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>coins</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>id</em></span><span class="paramdefsep"> = </span><span class="paramdefval">null</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>ownerId</em></span><span class="paramdefsep"> = </span><span class="paramdefval">null</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Конструктор класу <a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a>. </p>
+<p>Створює новий екземпляр віртуального улюбленця з заданими параметрами.</p>
+<p>@constructor </p><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>name - Ім'я улюбленця </td></tr>
+    <tr><td class="paramname">{string}</td><td>type - Тип улюбленця (наприклад, 'cat', 'dog', 'monkey') </td></tr>
+    <tr><td class="paramname">{number}</td><td>age - Вік улюбленця </td></tr>
+    <tr><td class="paramname">{number}</td><td>health - Рівень здоров'я (0-100) </td></tr>
+    <tr><td class="paramname">{number}</td><td>hunger - Рівень голоду (0-100, де 100 - дуже голодний) </td></tr>
+    <tr><td class="paramname">{number}</td><td>happiness - Рівень щастя (0-100) </td></tr>
+    <tr><td class="paramname">{number}</td><td>energy - Рівень енергії (0-100) </td></tr>
+    <tr><td class="paramname">{number}</td><td>cleanliness - Рівень забруднення (0-100, де 100 - дуже брудний) </td></tr>
+    <tr><td class="paramname">{number}</td><td>coins - Кількість монет у власника (за замовчуванням 0) </td></tr>
+    <tr><td class="paramname">{number}</td><td>id - Унікальний ідентифікатор улюбленця в базі даних (за замовчуванням null) </td></tr>
+    <tr><td class="paramname">{string}</td><td>ownerId - Ідентифікатор власника користувача (за замовчуванням null) </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Унікальний ID улюбленця в базі даних. @type {number|null}</p>
+<p>Ім'я улюбленця. @type {string}</p>
+<p>Тип тварини (cat, dog, monkey тощо). @type {string}</p>
+<p>Вік тварини. @type {number}</p>
+<p>Поточне здоров'я (0-100). @type {number}</p>
+<p>Поточний рівень голоду (0-100). @type {number}</p>
+<p>Поточне щастя (0-100). @type {number}</p>
+<p>Поточна енергія (0-100). @type {number}</p>
+<p>Рівень забруднення (0-100). @type {number}</p>
+<p>ID власника улюбленця. @type {string|null}</p>
+<p>Баланс монет власника. @type {number}</p>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a1">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="af8520b654c48151b66bdbe4fbe1b3851" name="af8520b654c48151b66bdbe4fbe1b3851"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8520b654c48151b66bdbe4fbe1b3851">&#9670;&#160;</a></span>feed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::feed </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Годування улюбленця. </p>
+<ul>
+<li>Зменшує голод на 15 пунктів</li>
+<li>Підвищує здоров'я на 5 пунктів</li>
+<li>Нараховує 15 монет, якщо улюбленець був голодний і став повністю ситим</li>
+</ul>
+<dl class="section return"><dt>Повертає</dt><dd>{void} </dd></dl>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a5">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="aaceddee5e9c0dfcafabdbc4a6da6ae66" name="aaceddee5e9c0dfcafabdbc4a6da6ae66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaceddee5e9c0dfcafabdbc4a6da6ae66">&#9670;&#160;</a></span>fromJSON()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::fromJSON </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>json</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a2">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="ac7e9888c6ccf3a9c2e2c997861ce961d" name="ac7e9888c6ccf3a9c2e2c997861ce961d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7e9888c6ccf3a9c2e2c997861ce961d">&#9670;&#160;</a></span>heal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::heal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Лікування улюбленця. </p>
+<ul>
+<li>Відновлює 25 пунктів здоров'я</li>
+<li>Зменшує щастя на 10 пунктів (ліки несмачні)</li>
+</ul>
+<dl class="section return"><dt>Повертає</dt><dd>{void} </dd></dl>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a8">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="aa44077e9517346a0ca18e9303d9dbad9" name="aa44077e9517346a0ca18e9303d9dbad9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa44077e9517346a0ca18e9303d9dbad9">&#9670;&#160;</a></span>live()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::live </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Симуляція життєвого циклу (викликається за таймером). </p>
+<p>Метод відповідає за природні зміни станів з часом:</p><ul>
+<li>Збільшується голод і рівень бруду</li>
+<li>Зменшується щастя</li>
+<li>Якщо показники критичні (сильний голод, бруд, нещастя), зменшується здоров'я</li>
+</ul>
+<dl class="section note"><dt>Нотатки</dt><dd>Здоров'я не може впасти нижче 1 (безсмертя). </dd></dl>
+<dl class="section return"><dt>Повертає</dt><dd>{void} </dd></dl>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a4">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="abcdf2833d342290848c1ce365ab06470" name="abcdf2833d342290848c1ce365ab06470"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcdf2833d342290848c1ce365ab06470">&#9670;&#160;</a></span>play()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::play </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Гра з улюбленцем. </p>
+<ul>
+<li>Підвищує щастя на 20 пунктів</li>
+<li>Витрачає 10 пунктів енергії</li>
+<li>Збільшує голод на 10 пунктів</li>
+</ul>
+<dl class="section return"><dt>Повертає</dt><dd>{void} </dd></dl>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a6">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a5541bc1224af09c10db6fec346ccfdc5" name="a5541bc1224af09c10db6fec346ccfdc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5541bc1224af09c10db6fec346ccfdc5">&#9670;&#160;</a></span>sleep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::sleep </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Сон улюбленця. </p>
+<ul>
+<li>Відновлює 30 пунктів енергії</li>
+<li>Збільшує голод на 15 пунктів (час йде)</li>
+</ul>
+<dl class="section return"><dt>Повертає</dt><dd>{void} </dd></dl>
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a7">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a47ae1d74b666bc75388d48e775a17a7d" name="a47ae1d74b666bc75388d48e775a17a7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47ae1d74b666bc75388d48e775a17a7d">&#9670;&#160;</a></span>toJSON()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Pet::toJSON </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Приклади</dt><dd><a class="el" href="../../dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html#a3">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</a>.</dd>
+</dl>
+
+</div>
+</div>
+<hr/>Документація цього класу була створена з файлу:<ul>
+<li>backend/models/<a class="el" href="../../d2/d10/pet_8js.html">pet.js</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="../../df/d14/classPet.html">Pet</a></li>
+    <li class="footer">Створено системою <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

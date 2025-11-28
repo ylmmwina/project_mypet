@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MyPet Tamagotchi Project (OOP): C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../favicon.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">MyPet Tamagotchi Project (OOP)
+   </div>
+   <div id="projectbrief">Fullstack Tamagotchi application using Node.js, Express, SQLite, and Phaser.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Створено системою Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',true,false,'search.php','Пошук',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('dc/dd8/C_1_2Users_2karina_2WebstormProjects_2project_mypet_2backend_2models_2pet_8js-example.html','../../',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Завантаження...</div>
+<div class="SRStatus" id="Searching">Пошук...</div>
+<div class="SRStatus" id="NoMatches">Нічого не знайдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">C:/Users/karina/WebstormProjects/project_mypet/backend/models/pet.js</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Створює екземпляр <a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a> з JSON-об'єкта.</p>
+<p>Створює екземпляр <a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a> з JSON-об'єкта.Використовується для відновлення об'єкта після отримання даних з бази даних або API.</p>
+<dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{object}</td><td>json - Об'єкт з даними улюбленця </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{<a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a>} Новий екземпляр класу <a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a></dd></dl>
+<p>const petData = { name: "Fluffy", type: "cat", age: 2, ... }; const pet = Pet.fromJSON(petData);</p>
+<div class="fragment"><div class="line"></div>
+<div class="line"></div>
+<div class="line">export <span class="keywordflow">default</span> <span class="keyword">class </span><a id="_a0" name="_a0"></a><a class="code hl_class" href="../../df/d14/classPet.html">Pet</a> {</div>
+<div class="line">    <a id="a1" name="a1"></a><a class="code hl_function" href="../../df/d14/classPet.html#ab42f44c1ae1493dcb645857f259d1f9f">constructor</a>(name, type, age, health, hunger, happiness, energy, cleanliness, coins = 0, <span class="keywordtype">id</span> = <span class="keyword">null</span>, ownerId = <span class="keyword">null</span>) {</div>
+<div class="line">        this.<span class="keywordtype">id</span> = id;</div>
+<div class="line"></div>
+<div class="line">        this.name = name;</div>
+<div class="line"></div>
+<div class="line">        this.type = type;</div>
+<div class="line"></div>
+<div class="line">        this.age = age;</div>
+<div class="line"></div>
+<div class="line">        this.health = health;</div>
+<div class="line"></div>
+<div class="line">        this.hunger = hunger;</div>
+<div class="line"></div>
+<div class="line">        this.happiness = happiness;</div>
+<div class="line"></div>
+<div class="line">        this.energy = energy;</div>
+<div class="line"></div>
+<div class="line">        this.cleanliness = cleanliness;</div>
+<div class="line"></div>
+<div class="line">        this.ownerId = ownerId;</div>
+<div class="line"></div>
+<div class="line">        this.coins = coins;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <span class="keyword">static</span> <a id="a2" name="a2"></a><a class="code hl_function" href="../../df/d14/classPet.html#aaceddee5e9c0dfcafabdbc4a6da6ae66">fromJSON</a>(json) {</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code hl_class" href="../../df/d14/classPet.html">Pet</a>(</div>
+<div class="line">            json.name,</div>
+<div class="line">            json.type,</div>
+<div class="line">            json.age,</div>
+<div class="line">            json.health,</div>
+<div class="line">            json.hunger,</div>
+<div class="line">            json.happiness,</div>
+<div class="line">            json.energy,</div>
+<div class="line">            json.cleanliness,</div>
+<div class="line">            json.coins,</div>
+<div class="line">            json.id,</div>
+<div class="line">            json.ownerId</div>
+<div class="line">        );</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a3" name="a3"></a><a class="code hl_function" href="../../df/d14/classPet.html#a47ae1d74b666bc75388d48e775a17a7d">toJSON</a>() {</div>
+<div class="line">        <span class="keywordflow">return</span> {</div>
+<div class="line">            id: this.id,</div>
+<div class="line">            name: this.name,</div>
+<div class="line">            type: this.type,</div>
+<div class="line">            age: this.age,</div>
+<div class="line">            health: this.health,</div>
+<div class="line">            hunger: this.hunger,</div>
+<div class="line">            happiness: this.happiness,</div>
+<div class="line">            energy: this.energy,</div>
+<div class="line">            cleanliness: this.cleanliness,</div>
+<div class="line">            ownerId: this.ownerId,</div>
+<div class="line">            coins: this.coins</div>
+<div class="line">        };</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a4" name="a4"></a><a class="code hl_function" href="../../df/d14/classPet.html#aa44077e9517346a0ca18e9303d9dbad9">live</a>() {</div>
+<div class="line">        <span class="comment">// Стандартне погіршення</span></div>
+<div class="line">        this.hunger += 1;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger &gt; 100) this.hunger = 100;</div>
+<div class="line"> </div>
+<div class="line">        this.happiness -= 1;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.happiness &lt; 0) this.happiness = 0;</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Логіка бруду</span></div>
+<div class="line">        this.cleanliness += 1;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.cleanliness &gt; 100) this.cleanliness = 100;</div>
+<div class="line"> </div>
+<div class="line">        <span class="comment">// Шкода здоров&#39;ю</span></div>
+<div class="line">        let healthDamage = 0;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger &gt;= 80) healthDamage = 1;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger &gt;= 95) healthDamage = 3;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger === 100) healthDamage = 5;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (healthDamage === 0 &amp;&amp; this.happiness === 0) {</div>
+<div class="line">            healthDamage = 1;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">if</span> (this.cleanliness === 100) {</div>
+<div class="line">            healthDamage += 1;</div>
+<div class="line">        }</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (healthDamage &gt; 0) {</div>
+<div class="line">            this.health -= healthDamage;</div>
+<div class="line">        }</div>
+<div class="line">        <span class="comment">// Запобігаємо смерті (мінімум 1 HP)</span></div>
+<div class="line">        <span class="keywordflow">if</span> (this.health &lt; 1) this.health = 1;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a5" name="a5"></a><a class="code hl_function" href="../../df/d14/classPet.html#af8520b654c48151b66bdbe4fbe1b3851">feed</a>() {</div>
+<div class="line">        <span class="comment">// Запам&#39;ятовуємо, чи був він голодний</span></div>
+<div class="line">        <span class="keyword">const</span> wasHungry = this.hunger &gt; 0;</div>
+<div class="line">        this.hunger -= 15;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger &lt; 0) this.hunger = 0;</div>
+<div class="line">        this.health += 5;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.health &gt; 100) this.health = 100;</div>
+<div class="line">        <span class="comment">// Даємо монети ТІЛЬКИ якщо він був голодний і ми його ПОВНІСТЮ нагодували</span></div>
+<div class="line">        <span class="keywordflow">if</span> (wasHungry &amp;&amp; this.hunger === 0) {</div>
+<div class="line">            this.coins += 15; <span class="comment">// Нагорода</span></div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a6" name="a6"></a><a class="code hl_function" href="../../df/d14/classPet.html#abcdf2833d342290848c1ce365ab06470">play</a>() {</div>
+<div class="line">        this.happiness += 20;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.happiness &gt; 100) this.happiness = 100;</div>
+<div class="line">        this.energy -= 10;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.energy &lt; 0) this.energy = 0;</div>
+<div class="line">        this.hunger += 10;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger &gt; 100) this.hunger = 100;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a7" name="a7"></a><a class="code hl_function" href="../../df/d14/classPet.html#a5541bc1224af09c10db6fec346ccfdc5">sleep</a>() {</div>
+<div class="line">        this.energy += 30;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.energy &gt; 100) this.energy = 100;</div>
+<div class="line">        this.hunger += 15;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.hunger &gt; 100) this.hunger = 100;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a8" name="a8"></a><a class="code hl_function" href="../../df/d14/classPet.html#ac7e9888c6ccf3a9c2e2c997861ce961d">heal</a>() {</div>
+<div class="line">        this.health += 25;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.health &gt; 100) this.health = 100;</div>
+<div class="line">        this.happiness -= 10;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.happiness &lt; 0) this.happiness = 0;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    <a id="a9" name="a9"></a><a class="code hl_function" href="../../df/d14/classPet.html#aedab6ef8f451f73c112682f2e542d69d">clean</a>() {</div>
+<div class="line">        <span class="comment">// Запам&#39;ятовуємо, чи був він брудний</span></div>
+<div class="line">        <span class="keyword">const</span> wasDirty = this.cleanliness &gt; 0;</div>
+<div class="line">        this.cleanliness = 0;</div>
+<div class="line">        this.happiness += 10;</div>
+<div class="line">        <span class="keywordflow">if</span> (this.happiness &gt; 100) this.happiness = 100;</div>
+<div class="line">        <span class="comment">// Нагорода тільки якщо справді помили</span></div>
+<div class="line">        <span class="keywordflow">if</span> (wasDirty) {</div>
+<div class="line">            this.coins += 20; <span class="comment">// Нагорода</span></div>
+<div class="line">        }</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassPet_html"><div class="ttname"><a href="../../df/d14/classPet.html">Pet</a></div><div class="ttdoc">Клас для представлення віртуального улюбленця.</div><div class="ttdef"><b>Definition</b> pet.js:18</div></div>
+<div class="ttc" id="aclassPet_html_a47ae1d74b666bc75388d48e775a17a7d"><div class="ttname"><a href="../../df/d14/classPet.html#a47ae1d74b666bc75388d48e775a17a7d">Pet::toJSON</a></div><div class="ttdeci">toJSON()</div><div class="ttdef"><b>Definition</b> pet.js:146</div></div>
+<div class="ttc" id="aclassPet_html_a5541bc1224af09c10db6fec346ccfdc5"><div class="ttname"><a href="../../df/d14/classPet.html#a5541bc1224af09c10db6fec346ccfdc5">Pet::sleep</a></div><div class="ttdeci">sleep()</div><div class="ttdoc">Сон улюбленця.</div><div class="ttdef"><b>Definition</b> pet.js:253</div></div>
+<div class="ttc" id="aclassPet_html_aa44077e9517346a0ca18e9303d9dbad9"><div class="ttname"><a href="../../df/d14/classPet.html#aa44077e9517346a0ca18e9303d9dbad9">Pet::live</a></div><div class="ttdeci">live()</div><div class="ttdoc">Симуляція життєвого циклу (викликається за таймером).</div><div class="ttdef"><b>Definition</b> pet.js:173</div></div>
+<div class="ttc" id="aclassPet_html_aaceddee5e9c0dfcafabdbc4a6da6ae66"><div class="ttname"><a href="../../df/d14/classPet.html#aaceddee5e9c0dfcafabdbc4a6da6ae66">Pet::fromJSON</a></div><div class="ttdeci">static fromJSON(json)</div><div class="ttdef"><b>Definition</b> pet.js:118</div></div>
+<div class="ttc" id="aclassPet_html_ab42f44c1ae1493dcb645857f259d1f9f"><div class="ttname"><a href="../../df/d14/classPet.html#ab42f44c1ae1493dcb645857f259d1f9f">Pet::constructor</a></div><div class="ttdeci">constructor(name, type, age, health, hunger, happiness, energy, cleanliness, coins=0, id=null, ownerId=null)</div><div class="ttdoc">Конструктор класу Pet.</div><div class="ttdef"><b>Definition</b> pet.js:36</div></div>
+<div class="ttc" id="aclassPet_html_abcdf2833d342290848c1ce365ab06470"><div class="ttname"><a href="../../df/d14/classPet.html#abcdf2833d342290848c1ce365ab06470">Pet::play</a></div><div class="ttdeci">play()</div><div class="ttdoc">Гра з улюбленцем.</div><div class="ttdef"><b>Definition</b> pet.js:236</div></div>
+<div class="ttc" id="aclassPet_html_ac7e9888c6ccf3a9c2e2c997861ce961d"><div class="ttname"><a href="../../df/d14/classPet.html#ac7e9888c6ccf3a9c2e2c997861ce961d">Pet::heal</a></div><div class="ttdeci">heal()</div><div class="ttdoc">Лікування улюбленця.</div><div class="ttdef"><b>Definition</b> pet.js:268</div></div>
+<div class="ttc" id="aclassPet_html_aedab6ef8f451f73c112682f2e542d69d"><div class="ttname"><a href="../../df/d14/classPet.html#aedab6ef8f451f73c112682f2e542d69d">Pet::clean</a></div><div class="ttdeci">clean()</div><div class="ttdoc">Миття улюбленця.</div><div class="ttdef"><b>Definition</b> pet.js:284</div></div>
+<div class="ttc" id="aclassPet_html_af8520b654c48151b66bdbe4fbe1b3851"><div class="ttname"><a href="../../df/d14/classPet.html#af8520b654c48151b66bdbe4fbe1b3851">Pet::feed</a></div><div class="ttdeci">feed()</div><div class="ttdoc">Годування улюбленця.</div><div class="ttdef"><b>Definition</b> pet.js:214</div></div>
+</div><!-- fragment --> </div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Створено системою <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>

@@ -1,4 +1,22 @@
 var searchData=
 [
-  ['obstacle_2ejs_0',['Obstacle.js',['../d4/d92/_obstacle_8js.html',1,'']]]
+  ['game_0',['game',['../d3/d98/game_8js.html#a5645c9140209534a38545dbe5dec038d',1,'game:&#160;game.js'],['../db/d42/main_8js.html#ad47020f167c0d6086ae8f5f30e1ceed7',1,'game:&#160;main.js']]],
+  ['game_2ejs_1',['game.js',['../d3/d98/game_8js.html',1,'']]],
+  ['gameover_2',['gameOver',['../d5/d9e/classSceneManager.html#a5d1efef07e4666e8cbc69f9924ae4237',1,'SceneManager']]],
+  ['gameoverscene_3',['GameOverScene',['../d0/d0f/classGameOverScene.html',1,'']]],
+  ['gameoverscene_2ejs_4',['GameOverScene.js',['../d4/ddd/GameOverScene_8js.html',1,'']]],
+  ['gamescene_5',['GameScene',['../db/d9f/classGameScene.html',1,'']]],
+  ['gamescene_2ejs_6',['GameScene.js',['../d1/d3d/GameScene_8js.html',1,'']]],
+  ['gamewrapper_7',['gameWrapper',['../d3/d59/script_8js.html#adb388cfb5e5383c742841587e84f0145',1,'script.js']]],
+  ['generatechunk_8',['generateChunk',['../db/d9f/classGameScene.html#a394fb348158efdeffd8d045d800a35a3',1,'GameScene']]],
+  ['getallpetsbyownerid_9',['getAllPetsByOwnerId',['../da/dd5/database_8js.html#a2e468681826c9c40b6b4b9aee2f78af5',1,'database.js']]],
+  ['getassetsmap_10',['getAssetsMap',['../df/d35/classAssetsManager.html#a10c81de96f44c5915666f37fd622c90b',1,'AssetsManager']]],
+  ['getinventoryforpet_11',['getInventoryForPet',['../da/dd5/database_8js.html#a169e518e649780306da43febcc37c9c1',1,'database.js']]],
+  ['getinventoryitem_12',['getInventoryItem',['../da/dd5/database_8js.html#afbacac2c70d0cbe142cc7f056298039f',1,'database.js']]],
+  ['getpetbyid_13',['getPetById',['../da/dd5/database_8js.html#aeeffd62d565061f178f1e5f0a3d6c224',1,'database.js']]],
+  ['getpetbyownerid_14',['getPetByOwnerId',['../da/dd5/database_8js.html#a14e5e0472ccbc46799a0fe2960004c3f',1,'database.js']]],
+  ['getpetbyowneridandpetid_15',['getPetByOwnerIdAndPetId',['../da/dd5/database_8js.html#ab92a965df85fb00068fa08763ee7ce6e',1,'database.js']]],
+  ['getpetidbyownerid_16',['getPetIdByOwnerId',['../da/dd5/database_8js.html#a31e4d4acf1a4d9e252599cdde85dfd4b',1,'database.js']]],
+  ['getpurchasehistory_17',['getPurchaseHistory',['../da/dd5/database_8js.html#ae36820b1d98d4eb088d74b1a5007444f',1,'database.js']]],
+  ['getscore_18',['getScore',['../d6/d2b/classScoreboard.html#aa3b8617bce40232e41fc2dfaa857bfda',1,'Scoreboard']]]
 ];

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.15.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>MyPet Tamagotchi Project (OOP): Файл backend/shop/shopItems.js</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<script type="text/javascript" src="../../clipboard.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<script type="text/javascript" src="../../cookie.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="../../favicon.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">MyPet Tamagotchi Project (OOP)
+   </div>
+   <div id="projectbrief">Fullstack Tamagotchi application using Node.js, Express, SQLite, and Phaser.</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Створено системою Doxygen 1.15.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',true,false,'search.php','Пошук',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('d9/d4f/shopItems_8js.html','../../',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Завантаження...</div>
+<div class="SRStatus" id="Searching">Пошук...</div>
+<div class="SRStatus" id="NoMatches">Нічого не знайдено</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Файл shopItems.js</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Конфігурація товарів та логіка їх впливу.  
+<a href="#details">Детальніше...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Функції</h2></td></tr>
+<tr class="memitem:a01b202eb0ada2d63fc34f16ae11a169f" id="r_a01b202eb0ada2d63fc34f16ae11a169f"><td class="memItemLeft" align="right" valign="top">function export&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a01b202eb0ada2d63fc34f16ae11a169f">applyItemEffects</a> (pet, item)</td></tr>
+<tr class="memdesc:a01b202eb0ada2d63fc34f16ae11a169f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Застосувати ефекти предмета до улюбленця.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Змінні</h2></td></tr>
+<tr class="memitem:ac923c70fe92f3e62c3b1eb8186c9d4a4" id="r_ac923c70fe92f3e62c3b1eb8186c9d4a4"><td class="memItemLeft" align="right" valign="top">export const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac923c70fe92f3e62c3b1eb8186c9d4a4">clamp</a></td></tr>
+<tr class="memdesc:ac923c70fe92f3e62c3b1eb8186c9d4a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Обмежує числове значення заданим діапазоном.  <br /></td></tr>
+<tr class="memitem:a6bc6759146d116bbd0652d8f72e2ded7" id="r_a6bc6759146d116bbd0652d8f72e2ded7"><td class="memItemLeft" align="right" valign="top">export const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6bc6759146d116bbd0652d8f72e2ded7">shopItems</a></td></tr>
+<tr class="memitem:a159ab542fcae299948e1e0f28b25435d" id="r_a159ab542fcae299948e1e0f28b25435d"><td class="memItemLeft" align="right" valign="top">export const&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a159ab542fcae299948e1e0f28b25435d">findShopItem</a></td></tr>
+<tr class="memdesc:a159ab542fcae299948e1e0f28b25435d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Знайти товар за його ID.  <br /></td></tr>
+</table>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Детальний опис</h2>
+<div class="textblock"><p>Конфігурація товарів та логіка їх впливу. </p>
+<ul>
+<li>Цей файл містить базу даних доступних для покупки предметів, а також логіку застосування їх ефектів на улюбленців з урахуванням особливостей кожного типу тварини (поліморфізм). </li>
+</ul>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Опис функцій</h2>
+<a id="a01b202eb0ada2d63fc34f16ae11a169f" name="a01b202eb0ada2d63fc34f16ae11a169f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01b202eb0ada2d63fc34f16ae11a169f">&#9670;&#160;</a></span>applyItemEffects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function export applyItemEffects </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pet</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>item</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Застосувати ефекти предмета до улюбленця. </p>
+<ul>
+<li>Ця функція реалізує складну логіку взаємодії предметів з різними типами тварин. Наприклад, мавпи отримують бонуси від бананів, а коти можуть вередувати.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{Object}</td><td>pet - Об'єкт улюбленця (екземпляр класу <a class="el" href="../../df/d14/classPet.html" title="Клас для представлення віртуального улюбленця.">Pet</a>). </td></tr>
+    <tr><td class="paramname">{Object}</td><td>item - Об'єкт предмета з shopItems. </td></tr>
+  </table>
+  </dd>
+</dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Опис змінних</h2>
+<a id="ac923c70fe92f3e62c3b1eb8186c9d4a4" name="ac923c70fe92f3e62c3b1eb8186c9d4a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac923c70fe92f3e62c3b1eb8186c9d4a4">&#9670;&#160;</a></span>clamp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">export const clamp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= (value, min, max) =&gt;</div>
+<div class="line">    Math.min(max, Math.max(min, value))</div>
+</div><!-- fragment -->
+<p>Обмежує числове значення заданим діапазоном. </p>
+<ul>
+<li>Використовується для того, щоб показники (здоров'я, голод тощо) не виходили за межі 0-100.</li>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{number}</td><td>value - Вхідне значення. </td></tr>
+    <tr><td class="paramname">{number}</td><td>min - Мінімальна межа. </td></tr>
+    <tr><td class="paramname">{number}</td><td>max - Максимальна межа. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{number} Значення в межах [min, max]. </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a159ab542fcae299948e1e0f28b25435d" name="a159ab542fcae299948e1e0f28b25435d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a159ab542fcae299948e1e0f28b25435d">&#9670;&#160;</a></span>findShopItem</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">export const findShopItem</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Початкові значення</b><div class="fragment"><div class="line">= (itemId) =&gt;</div>
+<div class="line">    <a class="code hl_variable" href="#a6bc6759146d116bbd0652d8f72e2ded7">shopItems</a>.find((item) =&gt; item.id === itemId)</div>
+<div class="ttc" id="ashopItems_8js_html_a6bc6759146d116bbd0652d8f72e2ded7"><div class="ttname"><a href="#a6bc6759146d116bbd0652d8f72e2ded7">shopItems</a></div><div class="ttdeci">export const shopItems</div><div class="ttdef"><b>Definition</b> shopItems.js:31</div></div>
+</div><!-- fragment -->
+<p>Знайти товар за його ID. </p>
+<ul>
+<li><dl class="params"><dt>Аргументи</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">{string}</td><td>itemId - Ідентифікатор товару. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Повертає</dt><dd>{Object|undefined} Об'єкт товару або undefined, якщо не знайдено. </dd></dl>
+</li>
+</ul>
+
+</div>
+</div>
+<a id="a6bc6759146d116bbd0652d8f72e2ded7" name="a6bc6759146d116bbd0652d8f72e2ded7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bc6759146d116bbd0652d8f72e2ded7">&#9670;&#160;</a></span>shopItems</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">export const shopItems</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="../../dir_8c739bbef76d64b22d6b0911c526dd76.html">backend</a></li><li class="navelem"><a href="../../dir_3b31b915daa9a99bc0e12a7727bfbaf2.html">shop</a></li><li class="navelem"><a href="../../d9/d4f/shopItems_8js.html">shopItems.js</a></li>
+    <li class="footer">Створено системою <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.15.0 </li>
+  </ul>
+</div>
+</body>
+</html>
