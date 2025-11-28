@@ -1,0 +1,47 @@
+name: Doxygen Documentation
+
+# Цей робочий процес запускається при кожному push у гілку main (або master)
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '**.js'
+      - 'Doxyfile'
+
+# Дозволяємо цьому workflow створювати pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # Потрібен повний (deep) fetch історії для коректної роботи
+          fetch-depth: 0
+
+      - name: Install Doxygen
+        run: sudo apt-get install -y doxygen graphviz
+
+      - name: Build Doxygen Documentation
+        run: doxygen Doxyfile
+
+      # Використовуємо стандартний action для публікації на GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Папка, яку ми згенерували (Doxygen створює docs/html)
+          path: 'docs/html'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
