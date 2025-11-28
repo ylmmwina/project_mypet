@@ -1,13 +1,11 @@
 import Pet from "../models/pet.js";
 import { findShopItem, applyItemEffects } from "../shop/shopItems.js";
 import {
-    getPetByOwnerId,
-    getPetIdByOwnerId,
     getInventoryForPet,
     getInventoryItem,
     consumeInventoryItem,
     savePet,
-    getPetByOwnerIdAndPetId
+    getPetByOwnerIdAndPetId // Імпортуємо правильну функцію
 } from "../utils/database.js";
 
 export default function registerInventoryRoutes(app, db) {
@@ -17,8 +15,21 @@ export default function registerInventoryRoutes(app, db) {
         const ownerId = req.ownerId;
         const petId = req.query.petId;
 
+        if (!petId) {
+            return res.status(400).json({ error: "PET_ID_REQUIRED", message: "petId query param required" });
+        }
+
         try {
-            // TODO: Перевірити чи належить пет до ownerId
+            // 1. Перевіряємо, чи належить цей petId цьому власнику (TODO виконано ✅)
+            const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
+            if (!petData) {
+                return res.status(404).json({
+                    error: "PET_NOT_FOUND",
+                    message: "Pet not found or access denied"
+                });
+            }
+
+            // 2. Якщо перевірка пройшла, беремо інвентар
             const rows = await getInventoryForPet(db, petId);
 
             // Додаємо опис товару з shopItems
@@ -56,29 +67,23 @@ export default function registerInventoryRoutes(app, db) {
         }
 
         if (!petId) {
-            return res.status(500).json({
+            return res.status(400).json({
                 error: "PET_ID_REQUIRED",
                 message: "You must provide petId"
             });
         }
 
         try {
+            // Перевіряємо власника і отримуємо пета
             const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
             if (!petData) {
                 return res.status(404).json({
                     error: "PET_NOT_FOUND",
-                    message: "Create a pet first"
+                    message: "Pet not found or access denied"
                 });
             }
 
             const pet = Pet.fromJSON(petData);
-
-            // if (pet.health <= 0) {
-            //     return res.status(400).json({
-            //         error: "PET_DEAD",
-            //         message: "Your pet is dead. You cannot use items."
-            //     });
-            // }
 
             const item = findShopItem(itemId);
             if (!item) {
@@ -97,10 +102,13 @@ export default function registerInventoryRoutes(app, db) {
                 });
             }
 
+            // Застосовуємо ефекти
             applyItemEffects(pet, item);
 
+            // Зберігаємо пета
             await savePet(db, pet);
 
+            // Списуємо предмет
             const now = new Date().toISOString();
             const remainingQuantity = await consumeInventoryItem(db, petId, itemId, now);
 
