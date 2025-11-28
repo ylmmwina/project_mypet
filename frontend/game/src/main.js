@@ -2,17 +2,17 @@
 import { StartScene } from './scenes/StartScene.js';
 import { GameScene } from './scenes/GameScene.js';
 import { GameOverScene } from './scenes/GameOverScene.js';
+import { UIScene } from './scenes/UIScene.js'; // Додав на всяк випадок
 
-// Конфігурація гри
 const config = {
     type: Phaser.AUTO,
-    width: 1280, // Використовуємо HD роздільну здатність
+    width: 1280,
     height: 720,
-    parent: 'phaser-game', // ID контейнера
+    parent: 'phaser-game',
     backgroundColor: '#000000',
     scale: {
-        mode: Phaser.Scale.FIT, // Розтягувати, зберігаючи пропорції
-        autoCenter: Phaser.Scale.CENTER_BOTH // Центрувати
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
     physics: {
         default: 'arcade',
@@ -21,30 +21,26 @@ const config = {
             debug: false
         }
     },
-    scene: [StartScene, GameScene, GameOverScene]
+    scene: [StartScene, GameScene, UIScene, GameOverScene]
 };
 
-// Глобальна змінна для гри
 let game = null;
 
-// --- ФУНКЦІЯ ЗАПУСКУ ---
-// Ми робимо її глобальною, щоб script.js міг її викликати
-window.launchGame = () => {
-    // Якщо гра вже існує, просто повертаємось (або відновлюємо її)
-    if (game) {
-        return;
-    }
+// Приймаємо petType як аргумент!
+window.launchGame = (petType = 'cat') => {
+    if (game) return;
 
-    // Створюємо гру ТІЛЬКИ зараз
     game = new Phaser.Game(config);
-    window.gameInstance = game; // Для дебагу
+
+    // Зберігаємо тип тварини в глобальному реєстрі гри
+    game.registry.set('petType', petType);
+
+    window.gameInstance = game;
 };
 
-// --- ФУНКЦІЯ ЗНИЩЕННЯ ---
-// Щоб очистити пам'ять, коли виходимо
 window.destroyGame = () => {
     if (game) {
-        game.destroy(true); // true = видалити також і Canvas
+        game.destroy(true);
         game = null;
         window.gameInstance = null;
     }
