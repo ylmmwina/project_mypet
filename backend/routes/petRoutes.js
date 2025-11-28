@@ -2,8 +2,8 @@ import Pet from "../models/pet.js";
 
 export default function registerPetRoutes(app, db, io) {
 
-    async function updatePet(ownerId, actionCallback) {
-        const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+    async function updatePet(ownerId, petId, actionCallback) {
+        const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ? AND id = ?", ownerId, petId);
         if (!petData) throw new Error("Pet not found for this owner.");
 
         const pet = Pet.fromJSON(petData);
@@ -14,10 +14,10 @@ export default function registerPetRoutes(app, db, io) {
             `UPDATE Pets SET 
                 health = ?, hunger = ?, happiness = ?, 
                 energy = ?, cleanliness = ?, age = ?, coins = ?
-             WHERE ownerId = ?`,
+             WHERE ownerId = ? AND id = ?`,
             pet.health, pet.hunger, pet.happiness,
             pet.energy, pet.cleanliness, pet.age, pet.coins,
-            ownerId
+            ownerId, petId
         );
 
         return pet.toJSON();
@@ -25,8 +25,16 @@ export default function registerPetRoutes(app, db, io) {
 
     app.get("/pet", async (req, res) => {
         const ownerId = req.ownerId;
-        const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+        const petId = req.query.id;
+        const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ? AND id = ?", ownerId, petId);
         if (petData) res.send(petData); else res.send({});
+    });
+
+    app.get("/pets", async (req, res) => {
+        const ownerId = req.ownerId;
+        const pets = await db.all("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+        console.log(pets)
+        res.send(pets || []); 
     });
 
     app.post("/create-pet", async (req, res) => {
@@ -36,10 +44,11 @@ export default function registerPetRoutes(app, db, io) {
         if (!validTypes.includes(type)) return res.status(400).send({ error: "Invalid type." });
 
         try {
-            await db.run("INSERT OR IGNORE INTO Pets (ownerId, name, type) VALUES (?, ?, ?)", ownerId, name, type);
-            const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ?", ownerId);
+            await db.run("INSERT INTO Pets (ownerId, name, type, createdAt) VALUES (?, ?, ?, ?)", ownerId, name, type, Date.now());
+            const petData = await db.get("SELECT * FROM Pets WHERE ownerId = ? ORDER BY createdAt DESC", ownerId);
             res.send(petData);
         } catch (error) {
+            console.log(error)
             res.status(500).send({ error: "Creation failed" });
         }
     });
@@ -48,14 +57,14 @@ export default function registerPetRoutes(app, db, io) {
     app.post("/pet/finish-game", async (req, res) => {
         const ownerId = req.ownerId;
         // Очікуємо, що фронтенд надішле, скільки монет зібрав гравець
-        const { score, coinsEarned } = req.body;
+        const { score, coinsEarned, petId } = req.body;
 
         if (score === undefined || coinsEarned === undefined) {
             return res.status(400).send({ error: "Score and coinsEarned are required" });
         }
 
         try {
-            const updatedPet = await updatePet(ownerId, (pet) => {
+            const updatedPet = await updatePet(ownerId, petId, (pet) => {
                 // 1. Додаємо зароблені в грі монети
                 pet.coins += Math.floor(coinsEarned);
 
@@ -84,8 +93,10 @@ export default function registerPetRoutes(app, db, io) {
     // --- Звичайні дії ---
     const handlePetAction = (actionCallback) => async (req, res) => {
         const ownerId = req.ownerId;
+        const petId = req.body.petId;
+        if (!petId) return res.status(400).send({ error: "Pet ID is required" });
         try {
-            const updatedPet = await updatePet(ownerId, actionCallback);
+            const updatedPet = await updatePet(ownerId, petId, actionCallback);
             res.send(updatedPet);
         } catch (error) {
             res.status(400).send({ error: error.message });

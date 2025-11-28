@@ -6,7 +6,8 @@ import {
     getInventoryForPet,
     getInventoryItem,
     consumeInventoryItem,
-    savePet
+    savePet,
+    getPetByOwnerIdAndPetId
 } from "../utils/database.js";
 
 export default function registerInventoryRoutes(app, db) {
@@ -14,16 +15,10 @@ export default function registerInventoryRoutes(app, db) {
     // Отримати інвентар поточного улюбленця
     app.get("/inventory", async (req, res) => {
         const ownerId = req.ownerId;
+        const petId = req.query.petId;
 
         try {
-            const petId = await getPetIdByOwnerId(db, ownerId);
-            if (!petId) {
-                return res.status(404).json({
-                    error: "PET_NOT_FOUND",
-                    message: "Create a pet first"
-                });
-            }
-
+            // TODO: Перевірити чи належить пет до ownerId
             const rows = await getInventoryForPet(db, petId);
 
             // Додаємо опис товару з shopItems
@@ -51,7 +46,7 @@ export default function registerInventoryRoutes(app, db) {
     // Використати предмет з інвентаря
     app.post("/inventory/use", async (req, res) => {
         const ownerId = req.ownerId;
-        const { itemId } = req.body;
+        const { itemId, petId } = req.body;
 
         if (!itemId) {
             return res.status(400).json({
@@ -60,8 +55,15 @@ export default function registerInventoryRoutes(app, db) {
             });
         }
 
+        if (!petId) {
+            return res.status(500).json({
+                error: "PET_ID_REQUIRED",
+                message: "You must provide petId"
+            });
+        }
+
         try {
-            const petData = await getPetByOwnerId(db, ownerId);
+            const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
             if (!petData) {
                 return res.status(404).json({
                     error: "PET_NOT_FOUND",
@@ -71,20 +73,12 @@ export default function registerInventoryRoutes(app, db) {
 
             const pet = Pet.fromJSON(petData);
 
-            if (pet.health <= 0) {
-                return res.status(400).json({
-                    error: "PET_DEAD",
-                    message: "Your pet is dead. You cannot use items."
-                });
-            }
-
-            const petId = pet.id;
-            if (!petId) {
-                return res.status(500).json({
-                    error: "PET_ID_MISSING",
-                    message: "Pet record has no id"
-                });
-            }
+            // if (pet.health <= 0) {
+            //     return res.status(400).json({
+            //         error: "PET_DEAD",
+            //         message: "Your pet is dead. You cannot use items."
+            //     });
+            // }
 
             const item = findShopItem(itemId);
             if (!item) {

@@ -1,12 +1,12 @@
 import { shopItems, findShopItem } from "../shop/shopItems.js";
 import Pet from "../models/pet.js";
 import {
-    getPetByOwnerId,
     getPetIdByOwnerId,
     savePet,
     addInventoryItem,
     addPurchaseHistoryEntry,
-    getPurchaseHistory
+    getPurchaseHistory,
+    getPetByOwnerIdAndPetId
 } from "../utils/database.js";
 
 export default function registerShopRoutes(app, db) {
@@ -19,7 +19,7 @@ export default function registerShopRoutes(app, db) {
     // Купівля товару → додати в інвентар
     app.post("/shop/buy", async (req, res) => {
         const ownerId = req.ownerId;
-        const { itemId } = req.body;
+        const { itemId, petId } = req.body;
 
         if (!itemId) {
             return res.status(400).json({
@@ -38,7 +38,7 @@ export default function registerShopRoutes(app, db) {
 
         try {
             // отримуємо тваринку за ownerId
-            const petData = await getPetByOwnerId(db, ownerId);
+            const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
             if (!petData) {
                 return res.status(404).json({
                     error: "PET_NOT_FOUND",
@@ -49,12 +49,12 @@ export default function registerShopRoutes(app, db) {
             const pet = Pet.fromJSON(petData);
 
             // перевірки стану
-            if (pet.health <= 0) {
-                return res.status(400).json({
-                    error: "PET_DEAD",
-                    message: "Your pet is dead. Shop is unavailable."
-                });
-            }
+            // if (pet.health <= 0) {
+            //     return res.status(400).json({
+            //         error: "PET_DEAD",
+            //         message: "Your pet is dead. Shop is unavailable."
+            //     });
+            // }
 
             if (pet.coins < item.price) {
                 return res.status(400).json({
@@ -68,16 +68,13 @@ export default function registerShopRoutes(app, db) {
 
             // зберігаємо оновленого пета
             await savePet(db, pet);
-
-            // дізнаємось petId
-            const petId = await getPetIdByOwnerId(db, ownerId);
-            const now = new Date().toISOString();
+            
 
             // додаємо товар до інвентаря
-            await addInventoryItem(db, petId, item.id, now);
+            await addInventoryItem(db, petId, item.id);
 
             // логування покупки
-            await addPurchaseHistoryEntry(db, petId, item.id, item.price, now);
+            await addPurchaseHistoryEntry(db, petId, item.id, item.price);
 
             // повертаємо оновленого пета
             res.json(pet.toJSON());

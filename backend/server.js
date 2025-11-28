@@ -36,6 +36,7 @@ async function startServer() {
     //"Middleware" для ID Гравця (Cookie)
     app.use((req, res, next) => {
         const ownerId = req.cookies.ownerId;
+        console.log(req.originalUrl, req.body)
         if (ownerId) {
             req.ownerId = ownerId;
             next();
