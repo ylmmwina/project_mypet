@@ -100,6 +100,8 @@ export const findShopItem = (itemId) =>
 export function applyItemEffects(pet, item) {
     const effects = { ...item.effects }; // копія, щоб можна було змінювати
 
+    pet.addXp(15);
+
     // МАВПА — обожнює банани
     if (pet.type === "monkey") {
         if (item.id === "banana_snack") {
