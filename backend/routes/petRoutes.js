@@ -129,6 +129,7 @@ export default function registerPetRoutes(app, db, io) {
                 if (pet.energy < 0) pet.energy = 0;
                 pet.hunger += 15;
                 if (pet.hunger > 100) pet.hunger = 100;
+                pet.addXp(score / 10);
             });
             res.send(updatedPet);
         } catch (error) {
