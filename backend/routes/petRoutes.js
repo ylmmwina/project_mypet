@@ -38,11 +38,11 @@ export default function registerPetRoutes(app, db, io) {
         await db.run(
             `UPDATE Pets SET
                              health = ?, hunger = ?, happiness = ?,
-                             energy = ?, cleanliness = ?, age = ?, coins = ?
+                             energy = ?, cleanliness = ?, age = ?, coins = ?, xp = ?, level = ?
              WHERE id = ?`,
             pet.health, pet.hunger, pet.happiness,
             pet.energy, pet.cleanliness, pet.age, pet.coins,
-            pet.id
+            pet.xp, pet.level, pet.id
         );
 
         return pet.toJSON();
@@ -129,6 +129,7 @@ export default function registerPetRoutes(app, db, io) {
                 if (pet.energy < 0) pet.energy = 0;
                 pet.hunger += 15;
                 if (pet.hunger > 100) pet.hunger = 100;
+                pet.addXp(score / 10);
             });
             res.send(updatedPet);
         } catch (error) {

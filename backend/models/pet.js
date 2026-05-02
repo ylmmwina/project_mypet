@@ -32,8 +32,10 @@ export default class Pet {
      * @param {number} coins - Кількість монет у власника (за замовчуванням 0)
      * @param {number} id - Унікальний ідентифікатор улюбленця в базі даних (за замовчуванням null)
      * @param {string} ownerId - Ідентифікатор власника користувача (за замовчуванням null)
+     * @param {number} xp - Кількість досвіду (за замовчуванням 0)
+     * @param {number} level - Поточний рівень (за замовчуванням 1)
      */
-    constructor(name, type, age, health, hunger, happiness, energy, cleanliness, coins = 0, id = null, ownerId = null) {
+    constructor(name, type, age, health, hunger, happiness, energy, cleanliness, coins = 0, id = null, ownerId = null, xp = 0, level = 1) {
         /**
          * Унікальний ID улюбленця в базі даних.
          * @type {number|null}
@@ -99,6 +101,18 @@ export default class Pet {
          * @type {number}
          */
         this.coins = coins;
+
+        /**
+         * Поточний досвід улюбленця.
+         * @type {number}
+         */
+        this.xp = xp;
+
+        /**
+         * Поточний рівень улюбленця.
+         * @type {number}
+         */
+        this.level = level;
     }
 
     /**
@@ -110,10 +124,6 @@ export default class Pet {
      * @static
      * @param {object} json - Об'єкт з даними улюбленця
      * @returns {Pet} Новий екземпляр класу Pet
-     *
-     * @example
-     * const petData = { name: "Fluffy", type: "cat", age: 2, ... };
-     * const pet = Pet.fromJSON(petData);
      */
     static fromJSON(json) {
         return new Pet(
@@ -127,7 +137,9 @@ export default class Pet {
             json.cleanliness,
             json.coins,
             json.id,
-            json.ownerId
+            json.ownerId,
+            json.xp,
+            json.level 
         );
     }
 
@@ -137,11 +149,6 @@ export default class Pet {
      * Використовується перед збереженням у базу даних або відправкою на клієнт.
      *
      * @returns {object} Об'єкт з властивостями улюбленця
-     *
-     * @example
-     * const pet = new Pet("Fluffy", "cat", 2, ...);
-     * const jsonData = pet.toJSON();
-     * // jsonData = { id: 1, name: "Fluffy", type: "cat", ... }
      */
     toJSON() {
         return {
@@ -155,8 +162,29 @@ export default class Pet {
             energy: this.energy,
             cleanliness: this.cleanliness,
             ownerId: this.ownerId,
-            coins: this.coins
+            coins: this.coins,
+            xp: this.xp, 
+            level: this.level 
         };
+    }
+
+    /**
+     * Додає досвід (XP) улюбленцю та перевіряє умову підвищення рівня.
+     * 
+     * Якщо накопичений досвід перевищує або дорівнює необхідному для наступного рівня,
+     * рівень улюбленця підвищується, а залишок XP переноситься.
+     * 
+     * @param {number} amount - Кількість досвіду (XP), яку треба додати.
+     */
+    addXp(amount) {
+        this.xp += amount;
+        const xpNeededForNextLevel = this.level * 100; 
+
+        if (this.xp >= xpNeededForNextLevel) {
+            this.level += 1;
+            this.xp -= xpNeededForNextLevel;
+            console.log(`🌟 Ура! ${this.name} досяг ${this.level} рівня!`);
+        }
     }
 
     /**
@@ -222,6 +250,7 @@ export default class Pet {
         if (wasHungry && this.hunger === 0) {
             this.coins += 15; // Нагорода
         }
+        this.addXp(15); // Нараховуємо XP за годування
     }
 
     /**
@@ -240,6 +269,8 @@ export default class Pet {
         if (this.energy < 0) this.energy = 0;
         this.hunger += 10;
         if (this.hunger > 100) this.hunger = 100;
+
+        this.addXp(20); // Нараховуємо XP за гру
     }
 
     /**
@@ -255,6 +286,8 @@ export default class Pet {
         if (this.energy > 100) this.energy = 100;
         this.hunger += 15;
         if (this.hunger > 100) this.hunger = 100;
+
+        this.addXp(10); // Нараховуємо трохи XP за відпочинок
     }
 
     /**
@@ -270,6 +303,8 @@ export default class Pet {
         if (this.health > 100) this.health = 100;
         this.happiness -= 10;
         if (this.happiness < 0) this.happiness = 0;
+
+        this.addXp(5); // Трохи XP за лікування
     }
 
     /**
@@ -290,6 +325,9 @@ export default class Pet {
         // Нагорода тільки якщо справді помили
         if (wasDirty) {
             this.coins += 20; // Нагорода
+            this.addXp(25); // Багато XP за миття, якщо був брудний
+        } else {
+            this.addXp(5); // Трохи XP, якщо миємо і так чистого
         }
     }
 }

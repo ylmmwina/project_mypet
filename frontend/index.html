@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="uk">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,141 +18,137 @@
     <script src="//cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.js"></script>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
+
 <body>
 
-<div class="game-container">
+    <div class="game-container">
 
-    <div id="sleep-overlay"></div>
+        <div id="sleep-overlay"></div>
 
-    <div id="pixel-notification" class="notification-box hidden">
-        <p id="notification-text"></p>
-    </div>
-
-    <div id="screen-menu" class="screen">
-        <img src="assets/favicon.png" class="logo-main" alt="Logo">
-
-        <h1>MyPet</h1>
-
-        <p>Твої улюбленці:</p>
-        <div id="pets-list" class="pets-list-container">
-            <p class="loading-text">Завантаження...</p>
+        <div id="pixel-notification" class="notification-box hidden">
+            <p id="notification-text"></p>
         </div>
-        <button id="btn-to-create" class="btn-start action-btn-wide">➕ Новий</button>
-    </div>
 
-    <div id="screen-create" class="screen hidden">
-        <h1>Новий друг</h1>
-        <form id="create-form">
-            <input type="text" id="pet-name" placeholder="Ім'я" required maxlength="10">
-            <div class="pet-selection">
-                <label>
-                    <input type="radio" name="pet-type" value="cat" checked>
-                    <img src="assets/cat_normal.png" class="pet-preview">
-                </label>
-                <label>
-                    <input type="radio" name="pet-type" value="dog">
-                    <img src="assets/dog_normal.png" class="pet-preview">
-                </label>
-                <label>
-                    <input type="radio" name="pet-type" value="monkey">
-                    <img src="assets/monkey_normal.png" class="pet-preview">
-                </label>
+        <div id="screen-auth" class="screen">
+            <img src="assets/favicon.png" class="logo-main" alt="Logo">
+            <h1>MyPet</h1>
+            <p>Увійди, щоб грати!</p>
+
+            <div id="login-section" class="auth-inputs">
+                <input type="email" id="login-email" placeholder="Твій Email">
+                <input type="password" id="login-password" placeholder="Пароль">
+                <button class="btn-start action-btn-wide" onclick="handleLogin()">Увійти</button>
+                <p>Новачок? <a href="#" onclick="toggleAuth('register')">Реєстрація</a></p>
             </div>
-            <button type="submit" class="btn-start">Створити</button>
-            <button type="button" id="btn-cancel-create" class="btn-secondary">Назад</button>
-        </form>
-    </div>
 
-    <div id="screen-game" class="screen hidden" style="justify-content: space-between;">
-        <div class="top-bar">
-            <button id="btn-back-menu" class="img-btn">
-                <img src="assets/button_exit.png" alt="Exit">
-            </button>
-            <div class="stats-mini">
-                <img src="assets/coin.png" class="icon-small">
-                <span id="stat-coins">0</span>
+            <div id="register-section" class="auth-inputs hidden">
+                <input type="text" id="reg-username" placeholder="Нікнейм">
+                <input type="email" id="reg-email" placeholder="Твій Email">
+                <input type="password" id="reg-password" placeholder="Пароль">
+                <button class="btn-start action-btn-wide" onclick="handleRegister()">Створити</button>
+                <p>Вже граєш? <a href="#" onclick="toggleAuth('login')">Увійти</a></p>
             </div>
         </div>
 
-        <div class="pet-area">
-            <div id="thought-cloud" class="cloud-container hidden">
-                <img id="cloud-img" src="assets/cloud_eat.png" alt="Need">
+        <div id="screen-menu" class="screen hidden">
+            <img src="assets/favicon.png" class="logo-main" alt="Logo">
+            <h1>MyPet</h1>
+
+            <p>Твої улюбленці:</p>
+            <div id="pets-list" class="pets-list-container">
+                <p class="loading-text">Завантаження...</p>
             </div>
-            <img id="pet-sprite" src="assets/cat_normal.png" class="pet-render">
-            <h2 id="display-name" class="pet-name-label">Name</h2>
+            <button id="btn-to-create" class="btn-start action-btn-wide">➕ Новий</button>
         </div>
 
-        <div class="actions-panel">
-            <div class="care-buttons">
-                <div class="action-group">
-                    <span class="stat-value" id="val-hunger">100%</span>
-                    <button id="btn-feed" class="img-btn action-btn">
-                        <img src="assets/button_eat.png" alt="Eat">
-                    </button>
+        <div id="screen-create" class="screen hidden">
+            <h1>Новий друг</h1>
+            <form id="create-form">
+                <input type="text" id="pet-name" placeholder="Ім'я" required maxlength="10" class="custom-input">
+                <div class="pet-selection">
+                    <label><input type="radio" name="pet-type" value="cat" checked><img src="assets/cat_normal.png"
+                            class="pet-preview"></label>
+                    <label><input type="radio" name="pet-type" value="dog"><img src="assets/dog_normal.png"
+                            class="pet-preview"></label>
+                    <label><input type="radio" name="pet-type" value="monkey"><img src="assets/monkey_normal.png"
+                            class="pet-preview"></label>
                 </div>
-                <div class="action-group">
-                    <span class="stat-value" id="val-happiness">100%</span>
-                    <button id="btn-play-game" class="img-btn action-btn">
-                        <img src="assets/button_play.png" alt="Play">
-                    </button>
-                </div>
-                <div class="action-group">
-                    <span class="stat-value" id="val-energy">100%</span>
-                    <button id="btn-sleep" class="img-btn action-btn">
-                        <img src="assets/button_sleep.png" alt="Sleep">
-                    </button>
-                </div>
-                <div class="action-group">
-                    <span class="stat-value" id="val-health">100%</span>
-                    <button id="btn-heal" class="img-btn action-btn">
-                        <img src="assets/button_heal.png" alt="Heal">
-                    </button>
-                </div>
-                <div class="action-group">
-                    <span class="stat-value" id="val-cleanliness">100%</span>
-                    <button id="btn-clean" class="img-btn action-btn">
-                        <img src="assets/button_wash.png" alt="Clean">
-                    </button>
+                <button type="submit" class="btn-start">Створити</button>
+                <button type="button" id="btn-cancel-create" class="btn-secondary">Назад</button>
+            </form>
+        </div>
+
+        <div id="screen-game" class="screen hidden" style="justify-content: space-between;">
+            <div class="top-bar">
+                <button id="btn-back-menu" class="img-btn"><img src="assets/button_exit.png" alt="Exit"></button>
+                <div class="stats-mini">
+                    <img src="assets/coin.png" class="icon-small">
+                    <span id="stat-coins">0</span>
                 </div>
             </div>
-            <div class="extra-buttons">
-                <button id="btn-shop" class="img-btn extra-btn">
-                    <img src="assets/shop_icon.png" alt="Shop">
-                </button>
-                <button id="btn-inventory" class="img-btn extra-btn">
-                    <img src="assets/inventory_icon.png" alt="Inventory">
-                </button>
+
+            <div class="pet-area">
+                <div id="thought-cloud" class="cloud-container hidden">
+                    <img id="cloud-img" src="assets/cloud_eat.png" alt="Need">
+                </div>
+                <img id="pet-sprite" src="assets/cat_normal.png" class="pet-render">
+                <h2 id="display-name" class="pet-name-label">Name</h2>
+
+                <div class="level-container">
+                    <div class="level-text">Рівень: <span id="pet-level">1</span></div>
+                    <div class="level-progress-bar">
+                        <div id="xp-progress-bar" class="xp-bar-fill"></div>
+                        <div id="xp-text" class="xp-text-style">0 / 100 XP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions-panel">
+                <div class="care-buttons">
+                    <div class="action-group"><span class="stat-value" id="val-hunger">100%</span><button id="btn-feed"
+                            class="img-btn action-btn"><img src="assets/button_eat.png"></button></div>
+                    <div class="action-group"><span class="stat-value" id="val-happiness">100%</span><button
+                            id="btn-play-game" class="img-btn action-btn"><img src="assets/button_play.png"></button>
+                    </div>
+                    <div class="action-group"><span class="stat-value" id="val-energy">100%</span><button id="btn-sleep"
+                            class="img-btn action-btn"><img src="assets/button_sleep.png"></button></div>
+                    <div class="action-group"><span class="stat-value" id="val-health">100%</span><button id="btn-heal"
+                            class="img-btn action-btn"><img src="assets/button_heal.png"></button></div>
+                    <div class="action-group"><span class="stat-value" id="val-cleanliness">100%</span><button
+                            id="btn-clean" class="img-btn action-btn"><img src="assets/button_wash.png"></button></div>
+                </div>
+                <div class="extra-buttons">
+                    <button id="btn-shop" class="img-btn extra-btn"><img src="assets/shop_icon.png"></button>
+                    <button id="btn-inventory" class="img-btn extra-btn"><img src="assets/inventory_icon.png"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-shop" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Магазин</h2><button class="close-btn" onclick="closeModal('modal-shop')">X</button>
+                </div>
+                <div id="shop-items-container" class="items-grid"></div>
+            </div>
+        </div>
+        <div id="modal-inventory" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="inv-title">Рюкзак</h2><button class="close-btn"
+                        onclick="closeModal('modal-inventory')">X</button>
+                </div>
+                <div id="inventory-items-container" class="items-grid"></div>
             </div>
         </div>
     </div>
 
-    <div id="modal-shop" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Магазин</h2>
-                <button class="close-btn" onclick="closeModal('modal-shop')">X</button>
-            </div>
-            <div id="shop-items-container" class="items-grid"></div>
-        </div>
-    </div>
+    <div id="phaser-game" style="display: none;"></div>
+    <button id="btn-force-exit" class="exit-game-btn" style="display: none;">❌ ВИХІД</button>
 
-    <div id="modal-inventory" class="modal-overlay hidden">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="inv-title">Рюкзак</h2>
-                <button class="close-btn" onclick="closeModal('modal-inventory')">X</button>
-            </div>
-            <div id="inventory-items-container" class="items-grid"></div>
-        </div>
-    </div>
-
-</div>
-
-<div id="phaser-game" style="display: none;"></div>
-<button id="btn-force-exit" class="exit-game-btn" style="display: none;">❌ ВИХІД</button>
-
-<script src="game/src/main.js" type="module"></script>
-<script src="script.js"></script>
+    <script src="game/src/main.js" type="module"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>
