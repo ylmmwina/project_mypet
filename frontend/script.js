@@ -208,7 +208,9 @@ async function apiRequest(endpoint, method = "GET", body = null) {
     const res = await fetch(`${API_URL}${endpoint}`, options);
     let errData;
     try { errData = await res.json(); } catch (e) { errData = { message: res.statusText }; }
-    if (!res.ok) throw new Error(errData.message || "Помилка сервера");
+    if (!res.ok) {
+        throw new Error(errData.message || errData.error || "Помилка сервера");
+    }
     return errData;
 }
 
@@ -356,12 +358,20 @@ document.getElementById("btn-sleep").onclick = async () => {
     showActionLocation("sleep");
     sleepOverlay.classList.add("active");
     triggerHappyState('sleep');
+
     try {
         currentPet = await apiRequest('/pet/sleep', "POST", { petId: currentPet.id });
-    } catch(e) { console.error(e); }
+        updateUI(currentPet);
+    } catch(e) {
+        showNotification(e.message, "error");
+        console.error(e);
+    }
+
     setTimeout(() => {
         sleepOverlay.classList.remove("active");
         setPetLocation("location-home");
+        happyTimer = null;
+        updateUI(currentPet);
         triggerHappyState('happy');
     }, 8000);
 };
@@ -483,27 +493,50 @@ window.closeGame = () => {
     setPetLocation("location-home");
     gameWrapper.style.display = "none";
     document.getElementById("btn-force-exit").style.display = "none";
-    if (window.destroyGame) window.destroyGame();
+
+    if (window.destroyGame) {
+        window.destroyGame();
+    }
+
     screenGame.classList.remove("hidden");
-    isSavingGame = false;
+
     if (currentPet) {
-        apiRequest('/pets').then(data => {
-            const found = Array.isArray(data) ? data.find(p => p.id === currentPet.id) : data;
-            if (found) { currentPet = found; updateUI(found); }
-        }).catch(console.error);
+        apiRequest('/pets')
+            .then(data => {
+                const found = Array.isArray(data)
+                    ? data.find(p => p.id === currentPet.id)
+                    : data;
+
+                if (found) {
+                    currentPet = found;
+                    updateUI(found);
+                }
+            })
+            .catch(console.error);
     }
 };
 
 window.finishGameAndSendResults = async (score, coins) => {
     if (isSavingGame) return;
     isSavingGame = true;
+
     try {
-        const updatedPet = await apiRequest('/pet/finish-game', "POST", { score, coinsEarned: coins, petId: currentPet.id });
-        showNotification(`Гру завершено! +${coins} монет.`, "success");
+        const updatedPet = await apiRequest('/pet/finish-game', "POST", {
+            score,
+            coinsEarned: coins,
+            petId: currentPet.id
+        });
+
         currentPet = updatedPet;
         updateUI(updatedPet);
-    } catch (e) { showNotification("Помилка: " + e.message, "error"); }
-    finally { window.closeGame(); }
+        showNotification(`Гру завершено! +${coins} монет.`, "success");
+    } catch (e) {
+        showNotification(e.message, "error");
+        console.error(e);
+    } finally {
+        isSavingGame = false;
+        window.closeGame();
+    }
 };
 
 document.getElementById("btn-force-exit").onclick = window.closeGame;
