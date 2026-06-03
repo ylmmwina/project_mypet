@@ -673,3 +673,93 @@ p { font-size: 24px; color: #555; }
 .thought-cloud {
     z-index: 5;
 }
+
+/* Compact game layout after adding XP and location backgrounds */
+
+#screen-game {
+    padding: 8px !important;
+}
+
+#screen-game .top-bar {
+    height: 64px;
+    padding: 0 12px;
+}
+
+#screen-game #btn-back-menu {
+    width: 54px;
+    height: 54px;
+}
+
+#screen-game .stats-mini {
+    font-size: 28px;
+}
+
+#screen-game .pet-area {
+    flex: 1 1 auto;
+    min-height: 0;
+    justify-content: center;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+#screen-game .pet-render {
+    width: 210px;
+    height: 210px;
+}
+
+#screen-game .pet-name-label {
+    font-size: 34px;
+    margin-top: 0;
+    line-height: 1;
+}
+
+#screen-game .level-container {
+    width: 78%;
+    margin-top: 2px;
+}
+
+#screen-game .level-text {
+    font-size: 20px;
+    line-height: 1;
+}
+
+#screen-game .level-progress-bar {
+    height: 20px;
+}
+
+#screen-game .xp-text-style {
+    font-size: 12px;
+}
+
+#screen-game .actions-panel {
+    flex-shrink: 0;
+    padding: 7px 10px;
+    gap: 6px;
+}
+
+#screen-game .stat-value {
+    font-size: 9px;
+    margin-bottom: 4px;
+}
+
+#screen-game .action-group {
+    width: 56px;
+}
+
+#screen-game .action-btn {
+    width: 56px;
+    height: 56px;
+}
+
+#screen-game .extra-buttons {
+    display: flex !important;
+    justify-content: center;
+    gap: 36px;
+    padding-top: 6px;
+    border-top: 2px dashed #ccc;
+}
+
+#screen-game .extra-btn {
+    width: 42px;
+    height: 42px;
+}
