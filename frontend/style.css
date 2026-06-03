@@ -522,6 +522,7 @@ p { font-size: 24px; color: #555; }
 
 .pet-area.location-home {
     background:
+            url("assets/locations/home.png"),
             linear-gradient(180deg, rgba(255, 247, 214, 0.95), rgba(242, 218, 173, 0.95)),
             repeating-linear-gradient(
                     90deg,
@@ -541,6 +542,7 @@ p { font-size: 24px; color: #555; }
 
 .pet-area.location-kitchen {
     background:
+            url("assets/locations/kitchen.png"),
             linear-gradient(180deg, rgba(255, 238, 202, 0.96), rgba(255, 196, 120, 0.96)),
             repeating-linear-gradient(
                     0deg,
@@ -560,6 +562,7 @@ p { font-size: 24px; color: #555; }
 
 .pet-area.location-bedroom {
     background:
+            url("assets/locations/bedroom.png"),
             linear-gradient(180deg, rgba(42, 48, 94, 0.96), rgba(18, 24, 54, 0.96)),
             radial-gradient(circle at 80% 20%, rgba(255, 255, 180, 0.9) 0, rgba(255, 255, 180, 0.9) 18px, transparent 19px);
     box-shadow: inset 0 -18px 0 rgba(22, 17, 48, 0.55);
@@ -575,6 +578,7 @@ p { font-size: 24px; color: #555; }
 
 .pet-area.location-park {
     background:
+            url("assets/locations/park.png"),
             linear-gradient(180deg, rgba(140, 210, 255, 0.96) 0%, rgba(160, 225, 160, 0.96) 55%, rgba(87, 160, 80, 0.96) 100%);
     box-shadow: inset 0 -18px 0 rgba(62, 122, 55, 0.45);
 }
@@ -588,6 +592,7 @@ p { font-size: 24px; color: #555; }
 
 .pet-area.location-bathroom {
     background:
+            url("assets/locations/bathroom.png"),
             linear-gradient(180deg, rgba(210, 245, 255, 0.96), rgba(130, 210, 230, 0.96)),
             repeating-linear-gradient(
                     45deg,
@@ -608,6 +613,7 @@ p { font-size: 24px; color: #555; }
 
 .pet-area.location-clinic {
     background:
+            url("assets/locations/clinic.png"),
             linear-gradient(180deg, rgba(245, 255, 250, 0.96), rgba(210, 245, 230, 0.96));
     box-shadow: inset 0 -18px 0 rgba(90, 170, 140, 0.35);
 }
