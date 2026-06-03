@@ -665,3 +665,11 @@ p { font-size: 24px; color: #555; }
 .pet-area.location-clinic {
     background-image: url("assets/locations/clinic.png") !important;
 }
+
+.pet-area {
+    overflow: visible !important;
+}
+
+.thought-cloud {
+    z-index: 5;
+}

@@ -118,7 +118,7 @@ function showActionLocation(action) {
     if (action !== "sleep" && action !== "play") {
         setTimeout(() => {
             setPetLocation("location-home");
-        }, 2500);
+        }, 4000);
     }
 }
 
@@ -423,8 +423,8 @@ async function openInventory(filterFood = false) {
             const img = itemIcons[entry.itemId] || "inventory_icon.png";
             el.innerHTML = `<img src="assets/${img}"><div class="item-price">x${entry.quantity}</div><button class="use-btn">Вжити</button>`;
             el.querySelector("button").onclick = () => {
-                useItem(entry.itemId);
                 if (filterFood) closeModal('modal-inventory');
+                useItem(entry.itemId);
             };
             invContainer.appendChild(el);
         });
@@ -433,21 +433,26 @@ async function openInventory(filterFood = false) {
 
 async function useItem(itemId, actionLocation = null) {
     try {
+        const data = await apiRequest('/inventory/use', "POST", { itemId, petId: currentPet.id });
+
+        currentPet = data.pet;
+        updateUI(data.pet);
+
         if (actionLocation) {
             showActionLocation(actionLocation);
         } else if (FOOD_ITEM_IDS.includes(itemId)) {
             showActionLocation("feed");
         }
 
-        const data = await apiRequest('/inventory/use', "POST", { itemId, petId: currentPet.id });
-        currentPet = data.pet;
-        updateUI(data.pet);
         triggerHappyState('happy');
         showNotification("Використано!", "success");
+
         if (!modalInventory.classList.contains("hidden")) {
             openInventory(document.getElementById("inv-title").textContent === "Вибери їжу");
         }
-    } catch(e) { showNotification(e.message, "error"); }
+    } catch(e) {
+        showNotification(e.message, "error");
+    }
 }
 
 /** @brief Керує тимчасовими станами спрайта. */
