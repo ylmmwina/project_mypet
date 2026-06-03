@@ -381,11 +381,11 @@ p { font-size: 24px; color: #555; }
     margin: 15px 0;
 }
 
-.pet-selection label { 
+.pet-selection label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer; 
+    cursor: pointer;
 }
 
 .pet-preview {
@@ -493,4 +493,273 @@ p { font-size: 24px; color: #555; }
 
 .delete-btn:active {
     transform: scale(0.9);
+}
+
+/* Pet action locations */
+
+.pet-area {
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+.pet-area::before {
+    content: none;
+}
+
+.pet-area > * {
+    position: relative;
+    z-index: 1;
+}
+
+.pet-area.location-home,
+.pet-area.location-kitchen,
+.pet-area.location-bedroom,
+.pet-area.location-park,
+.pet-area.location-bathroom,
+.pet-area.location-clinic {
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: center center, center center, center center;
+    background-size: contain, 100% 100%, 100% 100%;
+}
+
+.pet-area.location-home {
+    background:
+            url("assets/locations/home.png"),
+            linear-gradient(180deg, rgba(255, 247, 214, 0.95), rgba(242, 218, 173, 0.95)),
+            repeating-linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.18) 0,
+                    rgba(255, 255, 255, 0.18) 12px,
+                    transparent 12px,
+                    transparent 24px
+            );
+    box-shadow: inset 0 -18px 0 rgba(139, 94, 52, 0.25);
+}
+
+.pet-area.location-home::before {
+    background:
+            radial-gradient(circle at 20% 28%, rgba(255, 255, 255, 0.8) 0, rgba(255, 255, 255, 0.8) 10px, transparent 11px),
+            radial-gradient(circle at 74% 26%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.6) 8px, transparent 9px);
+}
+
+.pet-area.location-kitchen {
+    background:
+            url("assets/locations/kitchen.png"),
+            linear-gradient(180deg, rgba(255, 238, 202, 0.96), rgba(255, 196, 120, 0.96)),
+            repeating-linear-gradient(
+                    0deg,
+                    rgba(255, 255, 255, 0.20) 0,
+                    rgba(255, 255, 255, 0.20) 10px,
+                    transparent 10px,
+                    transparent 20px
+            );
+    box-shadow: inset 0 -18px 0 rgba(180, 104, 42, 0.35);
+}
+
+.pet-area.location-kitchen::before {
+    background:
+            linear-gradient(90deg, rgba(150, 80, 40, 0.35) 0, rgba(150, 80, 40, 0.35) 30%, transparent 30%, transparent 100%),
+            radial-gradient(circle at 80% 25%, rgba(255, 240, 180, 0.8) 0, rgba(255, 240, 180, 0.8) 16px, transparent 17px);
+}
+
+.pet-area.location-bedroom {
+    background:
+            url("assets/locations/bedroom.png"),
+            linear-gradient(180deg, rgba(42, 48, 94, 0.96), rgba(18, 24, 54, 0.96)),
+            radial-gradient(circle at 80% 20%, rgba(255, 255, 180, 0.9) 0, rgba(255, 255, 180, 0.9) 18px, transparent 19px);
+    box-shadow: inset 0 -18px 0 rgba(22, 17, 48, 0.55);
+}
+
+.pet-area.location-bedroom::before {
+    background:
+            radial-gradient(circle at 22% 20%, rgba(255, 255, 255, 0.75) 0, rgba(255, 255, 255, 0.75) 2px, transparent 3px),
+            radial-gradient(circle at 44% 28%, rgba(255, 255, 255, 0.65) 0, rgba(255, 255, 255, 0.65) 2px, transparent 3px),
+            radial-gradient(circle at 64% 18%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 2px, transparent 3px),
+            radial-gradient(circle at 83% 38%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.6) 2px, transparent 3px);
+}
+
+.pet-area.location-park {
+    background:
+            url("assets/locations/park.png"),
+            linear-gradient(180deg, rgba(140, 210, 255, 0.96) 0%, rgba(160, 225, 160, 0.96) 55%, rgba(87, 160, 80, 0.96) 100%);
+    box-shadow: inset 0 -18px 0 rgba(62, 122, 55, 0.45);
+}
+
+.pet-area.location-park::before {
+    background:
+            radial-gradient(circle at 18% 28%, rgba(255, 248, 150, 0.9) 0, rgba(255, 248, 150, 0.9) 18px, transparent 19px),
+            radial-gradient(circle at 82% 64%, rgba(50, 120, 50, 0.5) 0, rgba(50, 120, 50, 0.5) 24px, transparent 25px),
+            radial-gradient(circle at 68% 70%, rgba(40, 105, 40, 0.45) 0, rgba(40, 105, 40, 0.45) 20px, transparent 21px);
+}
+
+.pet-area.location-bathroom {
+    background:
+            url("assets/locations/bathroom.png"),
+            linear-gradient(180deg, rgba(210, 245, 255, 0.96), rgba(130, 210, 230, 0.96)),
+            repeating-linear-gradient(
+                    45deg,
+                    rgba(255, 255, 255, 0.28) 0,
+                    rgba(255, 255, 255, 0.28) 8px,
+                    transparent 8px,
+                    transparent 16px
+            );
+    box-shadow: inset 0 -18px 0 rgba(55, 145, 175, 0.35);
+}
+
+.pet-area.location-bathroom::before {
+    background:
+            radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 8px, transparent 9px),
+            radial-gradient(circle at 28% 38%, rgba(255, 255, 255, 0.55) 0, rgba(255, 255, 255, 0.55) 6px, transparent 7px),
+            radial-gradient(circle at 76% 32%, rgba(255, 255, 255, 0.65) 0, rgba(255, 255, 255, 0.65) 10px, transparent 11px);
+}
+
+.pet-area.location-clinic {
+    background:
+            url("assets/locations/clinic.png"),
+            linear-gradient(180deg, rgba(245, 255, 250, 0.96), rgba(210, 245, 230, 0.96));
+    box-shadow: inset 0 -18px 0 rgba(90, 170, 140, 0.35);
+}
+
+.pet-area.location-clinic::before {
+    background:
+            linear-gradient(90deg, transparent 0, transparent 45%, rgba(255, 80, 80, 0.65) 45%, rgba(255, 80, 80, 0.65) 55%, transparent 55%, transparent 100%),
+            linear-gradient(0deg, transparent 0, transparent 45%, rgba(255, 80, 80, 0.65) 45%, rgba(255, 80, 80, 0.65) 55%, transparent 55%, transparent 100%);
+    transform: scale(0.18);
+    opacity: 0.55;
+}
+
+/* Final override for pet location image rendering */
+
+.pet-area.location-home,
+.pet-area.location-kitchen,
+.pet-area.location-bedroom,
+.pet-area.location-park,
+.pet-area.location-bathroom,
+.pet-area.location-clinic {
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 100% 100% !important;
+}
+
+.pet-area.location-home {
+    background-image: url("assets/locations/home.png") !important;
+}
+
+.pet-area.location-kitchen {
+    background-image: url("assets/locations/kitchen.png") !important;
+}
+
+.pet-area.location-bedroom {
+    background-image: url("assets/locations/bedroom.png") !important;
+}
+
+.pet-area.location-park {
+    background-image: url("assets/locations/park.png") !important;
+}
+
+.pet-area.location-bathroom {
+    background-image: url("assets/locations/bathroom.png") !important;
+}
+
+.pet-area.location-clinic {
+    background-image: url("assets/locations/clinic.png") !important;
+}
+
+.pet-area {
+    overflow: visible !important;
+}
+
+.thought-cloud {
+    z-index: 5;
+}
+
+/* Compact game layout after adding XP and location backgrounds */
+
+#screen-game {
+    padding: 8px !important;
+}
+
+#screen-game .top-bar {
+    height: 64px;
+    padding: 0 12px;
+}
+
+#screen-game #btn-back-menu {
+    width: 54px;
+    height: 54px;
+}
+
+#screen-game .stats-mini {
+    font-size: 28px;
+}
+
+#screen-game .pet-area {
+    flex: 1 1 auto;
+    min-height: 0;
+    justify-content: center;
+    padding-top: 4px;
+    padding-bottom: 2px;
+}
+
+#screen-game .pet-render {
+    width: 210px;
+    height: 210px;
+}
+
+#screen-game .pet-name-label {
+    font-size: 34px;
+    margin-top: 0;
+    line-height: 1;
+}
+
+#screen-game .level-container {
+    width: 78%;
+    margin-top: 2px;
+}
+
+#screen-game .level-text {
+    font-size: 20px;
+    line-height: 1;
+}
+
+#screen-game .level-progress-bar {
+    height: 20px;
+}
+
+#screen-game .xp-text-style {
+    font-size: 12px;
+}
+
+#screen-game .actions-panel {
+    flex-shrink: 0;
+    padding: 7px 10px;
+    gap: 6px;
+}
+
+#screen-game .stat-value {
+    font-size: 9px;
+    margin-bottom: 4px;
+}
+
+#screen-game .action-group {
+    width: 56px;
+}
+
+#screen-game .action-btn {
+    width: 56px;
+    height: 56px;
+}
+
+#screen-game .extra-buttons {
+    display: flex !important;
+    justify-content: center;
+    gap: 36px;
+    padding-top: 6px;
+    border-top: 2px dashed #ccc;
+}
+
+#screen-game .extra-btn {
+    width: 42px;
+    height: 42px;
 }

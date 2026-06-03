@@ -109,6 +109,21 @@ export async function setupDatabase() {
         );
     `);
 
+    const petColumns = await db.all("PRAGMA table_info(Pets)");
+    const petColumnNames = petColumns.map((column) => column.name);
+
+    if (!petColumnNames.includes("xp")) {
+        await db.exec("ALTER TABLE Pets ADD COLUMN xp INTEGER DEFAULT 0");
+    }
+
+    if (!petColumnNames.includes("level")) {
+        await db.exec("ALTER TABLE Pets ADD COLUMN level INTEGER DEFAULT 1");
+    }
+
+    if (!petColumnNames.includes("coins")) {
+        await db.exec("ALTER TABLE Pets ADD COLUMN coins INTEGER DEFAULT 0");
+    }
+
     console.log("✅ База даних SQLite готова (з підтримкою акаунтів, друзів та XP).");
     return db;
 }
