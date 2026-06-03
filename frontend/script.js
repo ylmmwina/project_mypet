@@ -1,7 +1,7 @@
 /**
  * @file script.js
  * @brief Основний файл клієнтської логіки (Frontend).
- * 
+ *
  * Керує відображенням інтерфейсу, обробляє авторизацію користувачів,
  * взаємодіє з бекенд API через REST та WebSockets, а також
  * реалізує ігрову логіку догляду за улюбленцем та міні-гру Phaser.
@@ -55,8 +55,28 @@ const invContainer = document.getElementById("inventory-items-container");
 
 const notificationBox = document.getElementById("pixel-notification");
 const notificationText = document.getElementById("notification-text");
+const petArea = document.querySelector(".pet-area");
 
-// СИСТЕМА ЕКРАНІВ ТА АВТОРИЗАЦІЯ 
+const LOCATION_CLASSES = [
+    "location-home",
+    "location-kitchen",
+    "location-bedroom",
+    "location-park",
+    "location-bathroom",
+    "location-clinic"
+];
+
+const ACTION_LOCATIONS = {
+    feed: "location-kitchen",
+    sleep: "location-bedroom",
+    play: "location-park",
+    clean: "location-bathroom",
+    heal: "location-clinic"
+};
+
+const FOOD_ITEM_IDS = ["basic_food", "premium_food", "banana_snack"];
+
+// СИСТЕМА ЕКРАНІВ ТА АВТОРИЗАЦІЯ
 
 /**
  * @brief Відображає кастомне піксельне сповіщення.
@@ -76,6 +96,33 @@ function showNotification(message, type = 'info') {
 }
 
 /**
+ * @brief Змінює локацію ігрової зони улюбленця.
+ * @param {string} locationClass - CSS-клас локації.
+ */
+function setPetLocation(locationClass = "location-home") {
+    if (!petArea) return;
+
+    petArea.classList.remove(...LOCATION_CLASSES);
+    petArea.classList.add(locationClass);
+}
+
+/**
+ * @brief Показує локацію, пов'язану з дією користувача.
+ * @param {string} action - Назва дії: feed, sleep, play, clean або heal.
+ */
+function showActionLocation(action) {
+    const locationClass = ACTION_LOCATIONS[action] || "location-home";
+
+    setPetLocation(locationClass);
+
+    if (action !== "sleep" && action !== "play") {
+        setTimeout(() => {
+            setPetLocation("location-home");
+        }, 2500);
+    }
+}
+
+/**
  * @brief Перемикає відображення головних екранів.
  * @param {HTMLElement} screenToShow - Екран, який потрібно показати.
  */
@@ -86,7 +133,7 @@ function showScreen(screenToShow) {
     if (gameWrapper) gameWrapper.style.display = "none";
     const forceExit = document.getElementById("btn-force-exit");
     if (forceExit) forceExit.style.display = "none";
-    
+
     if (screenToShow) screenToShow.classList.remove("hidden");
 }
 
@@ -113,14 +160,14 @@ window.handleLogin = async () => {
     try {
         // Чекаємо відповіді від сервера
         const response = await apiRequest('/login', 'POST', { email, password: pass });
-        
+
         showNotification("Успішний вхід!", "success");
-        
+
         // Очищаємо старі дані перед завантаженням нових
         myPets = [];
         currentPet = null;
 
-        await loadPetsList(); 
+        await loadPetsList();
         showScreen(screenMenu);
     } catch (error) {
         showNotification(error.message, "error"); // Тут вилетить "Невірні дані"
@@ -138,7 +185,7 @@ window.handleRegister = async () => {
     try {
         await apiRequest('/register', 'POST', { username, email, password: pass });
         showNotification("Реєстрація успішна! Тепер увійди.", "success");
-        toggleAuth('login'); 
+        toggleAuth('login');
     } catch (error) {
         showNotification(error.message, "error");
     }
@@ -169,7 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
     showScreen(screenAuth); // Починаємо з авторизації
 });
 
-// РОБОТА З УЛЮБЛЕНЦЯМИ 
+// РОБОТА З УЛЮБЛЕНЦЯМИ
 
 /** @brief Завантажує список улюбленців. */
 async function loadPetsList() {
@@ -240,6 +287,7 @@ createForm.addEventListener("submit", async (e) => {
 function startGame(pet) {
     currentPet = pet;
     showScreen(screenGame);
+    setPetLocation("location-home");
     updateUI(pet);
     startLiveUpdates();
 }
@@ -291,12 +339,13 @@ function updateUI(pet) {
     } else { thoughtCloud.classList.add("hidden"); }
 }
 
-// ДІЇ ТА МАГАЗИН 
+// ДІЇ ТА МАГАЗИН
 
 document.getElementById("btn-feed").onclick = () => openInventory(true);
 
 document.getElementById("btn-play-game").onclick = () => {
     if (!currentPet) return;
+    showActionLocation("play");
     screenGame.classList.add("hidden");
     gameWrapper.style.display = "flex";
     document.getElementById("btn-force-exit").style.display = "block";
@@ -304,6 +353,7 @@ document.getElementById("btn-play-game").onclick = () => {
 };
 
 document.getElementById("btn-sleep").onclick = async () => {
+    showActionLocation("sleep");
     sleepOverlay.classList.add("active");
     triggerHappyState('sleep');
     try {
@@ -311,18 +361,19 @@ document.getElementById("btn-sleep").onclick = async () => {
     } catch(e) { console.error(e); }
     setTimeout(() => {
         sleepOverlay.classList.remove("active");
+        setPetLocation("location-home");
         triggerHappyState('happy');
     }, 8000);
 };
 
-document.getElementById("btn-heal").onclick = () => useSpecificItem("medkit_small", "лікування");
-document.getElementById("btn-clean").onclick = () => useSpecificItem("soap_basic", "миття");
+document.getElementById("btn-heal").onclick = () => useSpecificItem("medkit_small", "лікування", "heal");
+document.getElementById("btn-clean").onclick = () => useSpecificItem("soap_basic", "миття", "clean");
 
-async function useSpecificItem(itemId, actionName) {
+async function useSpecificItem(itemId, actionName, actionLocation = null) {
     try {
         const items = await apiRequest(`/inventory?petId=${currentPet.id}`);
         const hasItem = items.find(i => i.itemId === itemId && i.quantity > 0);
-        if (hasItem) useItem(itemId);
+        if (hasItem) useItem(itemId, actionLocation);
         else { showNotification(`Треба купити ${actionName}!`, "error"); openShop(); }
     } catch(e) { console.error(e); }
 }
@@ -380,8 +431,14 @@ async function openInventory(filterFood = false) {
     } catch(e) { console.error(e); }
 }
 
-async function useItem(itemId) {
+async function useItem(itemId, actionLocation = null) {
     try {
+        if (actionLocation) {
+            showActionLocation(actionLocation);
+        } else if (FOOD_ITEM_IDS.includes(itemId)) {
+            showActionLocation("feed");
+        }
+
         const data = await apiRequest('/inventory/use', "POST", { itemId, petId: currentPet.id });
         currentPet = data.pet;
         updateUI(data.pet);
@@ -405,7 +462,7 @@ function triggerHappyState(overrideState) {
 
 document.getElementById("btn-back-menu").onclick = () => loadPetsList();
 
-// SOCKETS ТА PHASER 
+// SOCKETS ТА PHASER
 
 const socket = io(API_URL);
 function startLiveUpdates() { if(currentPet?.ownerId) socket.emit('register', currentPet.ownerId); }
@@ -418,6 +475,7 @@ socket.on('pet-update', (updatedPet) => {
 });
 
 window.closeGame = () => {
+    setPetLocation("location-home");
     gameWrapper.style.display = "none";
     document.getElementById("btn-force-exit").style.display = "none";
     if (window.destroyGame) window.destroyGame();
