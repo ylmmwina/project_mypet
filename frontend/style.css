@@ -501,23 +501,26 @@ p { font-size: 24px; color: #555; }
     position: relative;
     overflow: hidden;
     transition: background 0.4s ease, box-shadow 0.4s ease;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .pet-area::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.35;
-    z-index: 0;
+    content: none;
 }
 
 .pet-area > * {
     position: relative;
     z-index: 1;
+}
+
+.pet-area.location-home,
+.pet-area.location-kitchen,
+.pet-area.location-bedroom,
+.pet-area.location-park,
+.pet-area.location-bathroom,
+.pet-area.location-clinic {
+    background-repeat: no-repeat, no-repeat, no-repeat;
+    background-position: center center, center center, center center;
+    background-size: contain, 100% 100%, 100% 100%;
 }
 
 .pet-area.location-home {
@@ -624,4 +627,41 @@ p { font-size: 24px; color: #555; }
             linear-gradient(0deg, transparent 0, transparent 45%, rgba(255, 80, 80, 0.65) 45%, rgba(255, 80, 80, 0.65) 55%, transparent 55%, transparent 100%);
     transform: scale(0.18);
     opacity: 0.55;
+}
+
+/* Final override for pet location image rendering */
+
+.pet-area.location-home,
+.pet-area.location-kitchen,
+.pet-area.location-bedroom,
+.pet-area.location-park,
+.pet-area.location-bathroom,
+.pet-area.location-clinic {
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 100% 100% !important;
+}
+
+.pet-area.location-home {
+    background-image: url("assets/locations/home.png") !important;
+}
+
+.pet-area.location-kitchen {
+    background-image: url("assets/locations/kitchen.png") !important;
+}
+
+.pet-area.location-bedroom {
+    background-image: url("assets/locations/bedroom.png") !important;
+}
+
+.pet-area.location-park {
+    background-image: url("assets/locations/park.png") !important;
+}
+
+.pet-area.location-bathroom {
+    background-image: url("assets/locations/bathroom.png") !important;
+}
+
+.pet-area.location-clinic {
+    background-image: url("assets/locations/clinic.png") !important;
 }
