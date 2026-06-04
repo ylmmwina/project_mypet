@@ -34,42 +34,42 @@ async function createTestDb() {
 
     await db.exec(`
         CREATE TABLE Pets (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ownerId TEXT NOT NULL,
-            name TEXT NOT NULL,
-            type TEXT NOT NULL,
-            age INTEGER DEFAULT 0,
-            health INTEGER DEFAULT 100,
-            hunger INTEGER DEFAULT 0,
-            happiness INTEGER DEFAULT 0,
-            energy INTEGER DEFAULT 0,
-            cleanliness INTEGER DEFAULT 0,
-            coins INTEGER DEFAULT 0,
-            xp INTEGER DEFAULT 0,
-            level INTEGER DEFAULT 1,
-            createdAt INTEGER NOT NULL
+                              id INTEGER PRIMARY KEY AUTOINCREMENT,
+                              ownerId TEXT NOT NULL,
+                              name TEXT NOT NULL,
+                              type TEXT NOT NULL,
+                              age INTEGER DEFAULT 0,
+                              health INTEGER DEFAULT 100,
+                              hunger INTEGER DEFAULT 0,
+                              happiness INTEGER DEFAULT 0,
+                              energy INTEGER DEFAULT 0,
+                              cleanliness INTEGER DEFAULT 0,
+                              coins INTEGER DEFAULT 0,
+                              xp INTEGER DEFAULT 0,
+                              level INTEGER DEFAULT 1,
+                              createdAt INTEGER NOT NULL
         );
     `);
 
     await db.exec(`
         CREATE TABLE Purchases (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            petId INTEGER NOT NULL,
-            itemId TEXT NOT NULL,
-            price INTEGER NOT NULL,
-            createdAt TEXT NOT NULL
+                                   id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                   petId INTEGER NOT NULL,
+                                   itemId TEXT NOT NULL,
+                                   price INTEGER NOT NULL,
+                                   createdAt TEXT NOT NULL
         );
     `);
 
     await db.exec(`
         CREATE TABLE Inventory (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            petId INTEGER NOT NULL,
-            itemId TEXT NOT NULL,
-            quantity INTEGER NOT NULL DEFAULT 0,
-            createdAt TEXT NOT NULL,
-            updatedAt TEXT NOT NULL,
-            UNIQUE(petId, itemId)
+                                   id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                   petId INTEGER NOT NULL,
+                                   itemId TEXT NOT NULL,
+                                   quantity INTEGER NOT NULL DEFAULT 0,
+                                   createdAt TEXT NOT NULL,
+                                   updatedAt TEXT NOT NULL,
+                                   UNIQUE(petId, itemId)
         );
     `);
 
@@ -335,5 +335,66 @@ describe("MyPet API integration tests", () => {
 
         expect(purchase).toBeDefined();
         expect(purchase.price).toBe(25);
+    });
+
+    /**
+     * @test POST /pet/sleep
+     * @brief Перевіряє, що сон відновлює енергію улюбленця.
+     */
+    test("POST /pet/sleep відновлює енергію пета", async () => {
+        await db.run(
+            "UPDATE Pets SET energy = ? WHERE id = ?",
+            30,
+            petId
+        );
+
+        const res = await agent
+            .post("/pet/sleep")
+            .send({ petId })
+            .expect(200);
+
+        const after = await db.get("SELECT * FROM Pets WHERE id = ?", petId);
+
+        expect(after.energy).toBeGreaterThan(30);
+        expect(res.body.energy).toBe(after.energy);
+    });
+
+    /**
+     * @test POST /pet/finish-game
+     * @brief Перевіряє нарахування монет, XP та зміну статистики після міні-гри.
+     */
+    test("POST /pet/finish-game нараховує монети, XP і змінює статистику пета", async () => {
+        await db.run(
+            "UPDATE Pets SET coins = ?, xp = ?, level = ?, happiness = ?, energy = ?, hunger = ? WHERE id = ?",
+            10,
+            0,
+            1,
+            20,
+            80,
+            10,
+            petId
+        );
+
+        const res = await agent
+            .post("/pet/finish-game")
+            .send({
+                petId,
+                score: 50,
+                coinsEarned: 15
+            })
+            .expect(200);
+
+        const after = await db.get("SELECT * FROM Pets WHERE id = ?", petId);
+
+        expect(after.coins).toBe(25);
+        expect(after.xp).toBe(5);
+        expect(after.level).toBe(1);
+        expect(after.happiness).toBe(45);
+        expect(after.energy).toBe(60);
+        expect(after.hunger).toBe(25);
+
+        expect(res.body.coins).toBe(after.coins);
+        expect(res.body.xp).toBe(after.xp);
+        expect(res.body.level).toBe(after.level);
     });
 });
