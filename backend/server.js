@@ -6,11 +6,12 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { 
-    setupDatabase, 
-    verifyUser, 
-    createUser, 
-    getUserByEmail 
+import {
+    setupDatabase,
+    verifyUser,
+    createUser,
+    getUserByEmail,
+    savePet
 } from "./utils/database.js";
 import registerPetRoutes from "./routes/petRoutes.js";
 import cors from "cors";
@@ -33,6 +34,21 @@ async function startServer() {
     const httpServer = createServer(app);
     const io = new Server(httpServer, {
         cors: { origin: "*", methods: ["GET", "POST"] }
+    });
+
+    /**
+     * @brief Реєструє клієнта у Socket.IO кімнаті його користувача.
+     *
+     * Frontend надсилає ownerId після вибору улюбленця.
+     * Сервер використовує цю кімнату, щоб надсилати pet-update
+     * лише потрібному користувачу.
+     */
+    io.on("connection", (socket) => {
+        socket.on("register", (ownerId) => {
+            if (!ownerId) return;
+
+            socket.join(String(ownerId));
+        });
     });
 
     /**
@@ -83,6 +99,31 @@ app.post("/login", async (req, res) => {
 registerPetRoutes(app, db, io);
 registerShopRoutes(app, db);
 registerInventoryRoutes(app, db);
+
+    /**
+     * @brief Запускає серверний ігровий цикл для поступового оновлення стану pets.
+     *
+     * Кожен tick викликає pet.live(), зберігає оновлений стан у БД
+     * і надсилає актуальні дані клієнту через Socket.IO.
+     */
+    setInterval(async () => {
+        try {
+            const pets = await db.all("SELECT * FROM Pets");
+
+            for (const petData of pets) {
+                const pet = Pet.fromJSON(petData);
+                pet.live();
+
+                await savePet(db, pet);
+
+                if (pet.ownerId) {
+                    io.to(String(pet.ownerId)).emit("pet-update", pet.toJSON());
+                }
+            }
+        } catch (error) {
+            console.error("Live update error:", error);
+        }
+    }, 30000);
 
     httpServer.listen(PORT, () => {
         console.log(`✅ Сервер запущено на http://localhost:${PORT}`);
