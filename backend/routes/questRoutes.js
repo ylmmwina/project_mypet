@@ -7,7 +7,8 @@ import { QUEST_ITEMS, getQuestById } from "../quests/questItems.js";
 import {
     createQuestProgress,
     getQuestProgressById,
-    markQuestClaimed
+    markQuestClaimed,
+    updateQuestProgress
 } from "../utils/database.js";
 
 /**
@@ -57,6 +58,75 @@ export default function registerQuestRoutes(app, db) {
 
             return res.status(500).json({
                 error: "Failed to load quests"
+            });
+        }
+    });
+
+    /**
+     * @route POST /quests/progress
+     * @brief Updates quest progress for a selected pet.
+     *
+     * Body:
+     * - petId: selected pet id
+     * - questId: quest id
+     * - progress: new progress value
+     */
+    app.post("/quests/progress", async (req, res) => {
+        try {
+            const { petId, questId, progress } = req.body;
+
+            if (!petId || !questId || progress === undefined) {
+                return res.status(400).json({
+                    error: "petId, questId and progress are required"
+                });
+            }
+
+            const quest = getQuestById(questId);
+
+            if (!quest) {
+                return res.status(404).json({
+                    error: "Quest not found"
+                });
+            }
+
+            const pet = await db.get(
+                "SELECT * FROM Pets WHERE id = ?",
+                petId
+            );
+
+            if (!pet) {
+                return res.status(404).json({
+                    error: "Pet not found"
+                });
+            }
+
+            await createQuestProgress(db, petId, questId);
+
+            const normalizedProgress = Math.max(0, Number(progress));
+            const completed = normalizedProgress >= quest.requiredProgress;
+
+            const updatedProgress = await updateQuestProgress(
+                db,
+                petId,
+                questId,
+                normalizedProgress,
+                completed
+            );
+
+            return res.json({
+                message: "Quest progress updated",
+                questId,
+                progress: {
+                    ...updatedProgress,
+                    completed: Boolean(updatedProgress.completed),
+                    claimed: Boolean(updatedProgress.claimed)
+                }
+            });
+        } catch (error) {
+            console.error("POST /quests/progress error:", error);
+
+            return res.status(500).json({
+                error: "Failed to update quest progress"
             });
         }
     });
