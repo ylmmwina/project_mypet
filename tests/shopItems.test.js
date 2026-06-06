@@ -133,6 +133,18 @@ describe("shopItems utilities", () => {
     });
 
     /**
+     * @test base item rarity
+     * @brief Перевіряє rarity для базових предметів магазину.
+     */
+    test("базові предмети мають очікувану rarity", () => {
+        expect(findShopItem("basic_food").rarity).toBe("common");
+        expect(findShopItem("soap_basic").rarity).toBe("common");
+        expect(findShopItem("banana_snack").rarity).toBe("common");
+        expect(findShopItem("medkit_small").rarity).toBe("common");
+        expect(findShopItem("premium_food").rarity).toBe("rare");
+    });
+
+    /**
      * @test specific rarity
      * @brief Перевіряє конкретні rarity для нових предметів.
      */

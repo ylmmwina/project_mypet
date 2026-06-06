@@ -88,7 +88,7 @@ export const shopItems = [
         id: "medkit_small",
         name: "Аптечка",
         type: "medkit",
-        rarity: "rare",
+        rarity: "common",
         price: 30,
         effects: {
             health: +40,

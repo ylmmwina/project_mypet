@@ -398,18 +398,32 @@ document.getElementById("btn-shop").onclick = openShop;
 async function openShop() {
     modalShop.classList.remove("hidden");
     shopContainer.innerHTML = "Завантаження...";
+
     try {
         const items = await apiRequest('/shop/items');
         shopContainer.innerHTML = "";
+
         items.forEach(item => {
             const el = document.createElement("div");
-            el.className = "item-card";
+            const rarity = item.rarity || "common";
+            el.className = `item-card rarity-${rarity}`;
+
             const img = itemIcons[item.id] || "inventory_icon.png";
-            el.innerHTML = `<img src="assets/${img}"><div class="item-price" style="height:30px;">${item.name}</div><div class="item-price">🪙 ${item.price}</div><button class="buy-btn">Купити</button>`;
+
+            el.innerHTML = `
+                <img class="item-icon" src="assets/${img}" alt="${item.name}">
+                <div class="rarity-badge rarity-badge-${rarity}">${rarity.toUpperCase()}</div>
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">🪙 ${item.price}</div>
+                <button class="buy-btn">Купити</button>
+            `;
+
             el.querySelector("button").onclick = () => buyItem(item.id);
             shopContainer.appendChild(el);
         });
-    } catch(e) { shopContainer.innerHTML = "Помилка"; }
+    } catch(e) {
+        shopContainer.innerHTML = "Помилка";
+    }
 }
 
 async function buyItem(itemId) {
@@ -427,23 +441,44 @@ async function openInventory(filterFood = false) {
     modalInventory.classList.remove("hidden");
     invContainer.innerHTML = "Завантаження...";
     document.getElementById("inv-title").textContent = filterFood ? "Вибери їжу" : "Рюкзак";
+
     try {
         const items = await apiRequest(`/inventory?petId=${currentPet.id}`);
         invContainer.innerHTML = "";
+
         const filtered = filterFood ? items.filter(i => i.item?.type === 'food') : items;
-        if (filtered.length === 0) return invContainer.innerHTML = "<p>Пусто</p>";
+
+        if (filtered.length === 0) {
+            invContainer.innerHTML = "<p>Пусто</p>";
+            return;
+        }
+
         filtered.forEach(entry => {
             const el = document.createElement("div");
-            el.className = "item-card";
+            const rarity = entry.item?.rarity || "common";
+            el.className = `item-card rarity-${rarity}`;
+
             const img = itemIcons[entry.itemId] || "inventory_icon.png";
-            el.innerHTML = `<img src="assets/${img}"><div class="item-price">x${entry.quantity}</div><button class="use-btn">Вжити</button>`;
+            const itemName = entry.item?.name || entry.itemId;
+
+            el.innerHTML = `
+                <img class="item-icon" src="assets/${img}" alt="${itemName}">
+                <div class="rarity-badge rarity-badge-${rarity}">${rarity.toUpperCase()}</div>
+                <div class="item-name">${itemName}</div>
+                <div class="item-price">x${entry.quantity}</div>
+                <button class="use-btn">Вжити</button>
+            `;
+
             el.querySelector("button").onclick = () => {
                 if (filterFood) closeModal('modal-inventory');
                 useItem(entry.itemId);
             };
+
             invContainer.appendChild(el);
         });
-    } catch(e) { console.error(e); }
+    } catch(e) {
+        console.error(e);
+    }
 }
 
 async function useItem(itemId, actionLocation = null) {

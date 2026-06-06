@@ -763,3 +763,103 @@ p { font-size: 24px; color: #555; }
     width: 42px;
     height: 42px;
 }
+
+.shop-items-grid,
+.inventory-items-grid,
+#shop-items-container,
+#inventory-items-container {
+    align-items: stretch;
+}
+
+.item-card {
+    width: 124px;
+    min-height: 176px;
+    padding: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    box-sizing: border-box;
+    background: #f7f7f7;
+    border: 2px solid #333;
+}
+
+.item-card .item-icon {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    flex-shrink: 0;
+}
+
+.item-card .item-name {
+    width: 100%;
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #ff2b6d;
+    font-size: 12px;
+    line-height: 0.9;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.item-card .item-price {
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff2b6d;
+    font-size: 13px;
+    line-height: 1;
+}
+
+.item-card .buy-btn,
+.item-card .use-btn {
+    width: 100%;
+    min-height: 34px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rarity-badge {
+    min-width: 58px;
+    padding: 2px 4px;
+    border: 2px solid #333;
+    text-align: center;
+    font-size: 8px;
+    line-height: 1;
+    color: #222;
+    background: #ffffff;
+}
+
+.rarity-common {
+    border-color: #555;
+}
+
+.rarity-rare {
+    border-color: #2f80ed;
+    box-shadow: 0 0 0 2px rgba(47, 128, 237, 0.18);
+}
+
+.rarity-epic {
+    border-color: #b64cff;
+    box-shadow: 0 0 0 2px rgba(182, 76, 255, 0.22);
+}
+
+.rarity-badge-common {
+    background: #e5e5e5;
+}
+
+.rarity-badge-rare {
+    background: #b9dcff;
+}
+
+.rarity-badge-epic {
+    background: #e5c4ff;
+}
