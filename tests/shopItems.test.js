@@ -1,8 +1,9 @@
 /**
  * @file shopItems.test.js
- * @brief Юніт-тести для перевірки логіки застосування ефектів предметів (applyItemEffects).
- * * Перевіряє коректність роботи функції clamp та найважливіше — поліморфну
- * логіку, де ефекти предметів залежать від типу улюбленця (cat, dog, monkey).
+ * @brief Юніт-тести для перевірки логіки товарів магазину.
+ *
+ * Перевіряє clamp, структуру shopItems, rarity, нові предмети
+ * та логіку застосування ефектів предметів до різних типів улюбленців.
  */
 
 import { describe, test, expect } from "@jest/globals";
@@ -14,7 +15,6 @@ import {
 } from "../backend/shop/shopItems.js";
 import Pet from "../backend/models/pet.js";
 
-// Хелпер для створення пета з дефолтами
 /**
  * @brief Допоміжна функція для створення тестового об'єкта Pet.
  * @param {string} [type='dog'] - Тип улюбленця.
@@ -33,13 +33,15 @@ function createPet(type = "dog", overrides = {}) {
         overrides.cleanliness ?? 50,
         overrides.coins ?? 0,
         overrides.id ?? 1,
-        overrides.ownerId ?? "owner-1"
+        overrides.ownerId ?? "owner-1",
+        overrides.xp ?? 0,
+        overrides.level ?? 1
     );
 }
 
 /**
  * @namespace ShopItemsTestSuite
- * @brief Набір тестів для утиліт та ефектів предметів.
+ * @brief Набір тестів для утиліт, rarity та ефектів предметів.
  */
 describe("shopItems utilities", () => {
     /**
@@ -67,9 +69,9 @@ describe("shopItems utilities", () => {
 
     /**
      * @test shopItems structure
-     * @brief Перевіряє, чи має масив shopItems коректну структуру об'єктів.
+     * @brief Перевіряє базову структуру всіх товарів магазину.
      */
-    test("shopItems містить валідні товари (id, name, type, price, effects)", () => {
+    test("shopItems містить валідні товари", () => {
         expect(Array.isArray(shopItems)).toBe(true);
         expect(shopItems.length).toBeGreaterThan(0);
 
@@ -77,9 +79,69 @@ describe("shopItems utilities", () => {
             expect(typeof item.id).toBe("string");
             expect(typeof item.name).toBe("string");
             expect(typeof item.type).toBe("string");
+            expect(typeof item.rarity).toBe("string");
             expect(typeof item.price).toBe("number");
             expect(typeof item.effects).toBe("object");
         }
+    });
+
+    /**
+     * @test rarity
+     * @brief Перевіряє, що всі товари мають дозволене значення rarity.
+     */
+    test("кожен товар має валідну rarity", () => {
+        const allowedRarities = ["common", "rare", "epic"];
+
+        for (const item of shopItems) {
+            expect(allowedRarities).toContain(item.rarity);
+        }
+    });
+
+    /**
+     * @test new shop items
+     * @brief Перевіряє, що нові предмети фінальної версії існують у магазині.
+     */
+    test("магазин містить нові предмети фінальної версії", () => {
+        const expectedNewItems = [
+            "energy_drink",
+            "vitamin_boost",
+            "bubble_bath",
+            "golden_toy",
+            "royal_treat"
+        ];
+
+        for (const itemId of expectedNewItems) {
+            const item = findShopItem(itemId);
+
+            expect(item).toBeDefined();
+            expect(item.id).toBe(itemId);
+            expect(item.price).toBeGreaterThan(0);
+            expect(item.effects).toBeDefined();
+        }
+    });
+
+    /**
+     * @test rarity distribution
+     * @brief Перевіряє, що в магазині є товари різних рівнів рідкості.
+     */
+    test("магазин містить common, rare та epic предмети", () => {
+        const rarities = shopItems.map((item) => item.rarity);
+
+        expect(rarities).toContain("common");
+        expect(rarities).toContain("rare");
+        expect(rarities).toContain("epic");
+    });
+
+    /**
+     * @test specific rarity
+     * @brief Перевіряє конкретні rarity для нових предметів.
+     */
+    test("нові предмети мають очікувану rarity", () => {
+        expect(findShopItem("energy_drink").rarity).toBe("rare");
+        expect(findShopItem("vitamin_boost").rarity).toBe("rare");
+        expect(findShopItem("bubble_bath").rarity).toBe("rare");
+        expect(findShopItem("golden_toy").rarity).toBe("epic");
+        expect(findShopItem("royal_treat").rarity).toBe("epic");
     });
 
     /**
@@ -99,8 +161,8 @@ describe("shopItems utilities", () => {
             id: "test_item",
             type: "food",
             effects: {
-                health: +10,   // 95 + 10 = 105 -> 100
-                hunger: -30,   // 10 - 30 = -20 -> 0
+                health: +10,
+                hunger: -30,
                 happiness: +20,
                 energy: +20,
                 cleanliness: -50
@@ -117,8 +179,26 @@ describe("shopItems utilities", () => {
     });
 
     /**
+     * @test applyItemEffects - XP
+     * @brief Перевіряє, що використання предмета додає XP.
+     */
+    test("applyItemEffects додає XP після використання предмета", () => {
+        const pet = createPet("dog", {
+            xp: 0,
+            level: 1
+        });
+
+        const item = findShopItem("basic_food");
+
+        applyItemEffects(pet, item);
+
+        expect(pet.xp).toBe(15);
+        expect(pet.level).toBe(1);
+    });
+
+    /**
      * @test applyItemEffects - monkey logic
-     * @brief Перевіряє бонусні ефекти для мавпи (любов до бананового снеку).
+     * @brief Перевіряє бонусні ефекти для мавпи.
      */
     test("applyItemEffects: monkey отримує бонус від banana_snack", () => {
         const pet = createPet("monkey", {
@@ -132,7 +212,6 @@ describe("shopItems utilities", () => {
 
         applyItemEffects(pet, banana);
 
-        // Очікуваний результат: happiness +25, energy +5, hunger -25
         expect(pet.happiness).toBe(75);
         expect(pet.energy).toBe(15);
         expect(pet.hunger).toBe(35);
@@ -140,7 +219,7 @@ describe("shopItems utilities", () => {
 
     /**
      * @test applyItemEffects - dog logic
-     * @brief Перевіряє бонусні ефекти для собаки (енергія від їжі та радість від миття).
+     * @brief Перевіряє бонусні ефекти для собаки.
      */
     test("applyItemEffects: dog отримує +energy від food і +happiness від soap", () => {
         const dogFood = findShopItem("basic_food");
@@ -149,12 +228,10 @@ describe("shopItems utilities", () => {
             hunger: 70
         });
 
-        // Тест 1: Їжа
         applyItemEffects(dog, dogFood);
 
-        // energy: 40 + 5 (dog bonus) = 45
         expect(dog.energy).toBe(45);
-        expect(dog.hunger).toBe(50); // 70 - 20 (base effect)
+        expect(dog.hunger).toBe(50);
 
         const soap = findShopItem("soap_basic");
         const dog2 = createPet("dog", {
@@ -162,16 +239,15 @@ describe("shopItems utilities", () => {
             happiness: 40
         });
 
-        // Тест 2: Мило
         applyItemEffects(dog2, soap);
-        // happiness: 40 + 5 (base effect) + 5 (dog bonus) = 50
-        expect(dog2.cleanliness).toBe(30); // 80 - 50 (base effect)
+
+        expect(dog2.cleanliness).toBe(30);
         expect(dog2.happiness).toBe(50);
     });
 
     /**
      * @test applyItemEffects - cat logic
-     * @brief Перевіряє специфічні ефекти для кота (любов до преміум-їжі та нелюбов до мила).
+     * @brief Перевіряє специфічні ефекти для кота.
      */
     test("applyItemEffects: cat любить premium_food і не любить soap", () => {
         const premium = findShopItem("premium_food");
@@ -181,11 +257,8 @@ describe("shopItems utilities", () => {
             hunger: 80
         });
 
-        // Тест 1: Premium Food (бонус +10 happiness, +5 energy)
         applyItemEffects(cat, premium);
 
-        // happiness: 60 + 5 (base) + 10 (cat bonus) = 75
-        // energy: 10 + 5 (cat bonus) = 15
         expect(cat.happiness).toBe(75);
         expect(cat.energy).toBe(15);
         expect(cat.hunger).toBe(40);
@@ -196,11 +269,75 @@ describe("shopItems utilities", () => {
             happiness: 50
         });
 
-        // Тест 2: Soap (базово +5 happiness, cat penalty -5 happiness)
         applyItemEffects(cat2, soap);
 
-        // happiness: 50 + 5 (base) - 5 (cat penalty) = 50
         expect(cat2.cleanliness).toBe(20);
-        expect(cat2.happiness).toBe(50); // Без змін
+        expect(cat2.happiness).toBe(50);
+    });
+
+    /**
+     * @test new rare items effects
+     * @brief Перевіряє ефекти нових rare-предметів.
+     */
+    test("нові rare предмети коректно змінюють стани пета", () => {
+        const energyPet = createPet("dog", {
+            energy: 30,
+            hunger: 20,
+            happiness: 40
+        });
+
+        applyItemEffects(energyPet, findShopItem("energy_drink"));
+
+        expect(energyPet.energy).toBe(65);
+        expect(energyPet.hunger).toBe(25);
+        expect(energyPet.happiness).toBe(45);
+
+        const vitaminPet = createPet("cat", {
+            health: 60,
+            energy: 20
+        });
+
+        applyItemEffects(vitaminPet, findShopItem("vitamin_boost"));
+
+        expect(vitaminPet.health).toBe(85);
+        expect(vitaminPet.energy).toBe(35);
+
+        const bathPet = createPet("dog", {
+            cleanliness: 90,
+            happiness: 40
+        });
+
+        applyItemEffects(bathPet, findShopItem("bubble_bath"));
+
+        expect(bathPet.cleanliness).toBe(20);
+        expect(bathPet.happiness).toBe(60);
+    });
+
+    /**
+     * @test new epic items effects
+     * @brief Перевіряє ефекти нових epic-предметів.
+     */
+    test("нові epic предмети коректно змінюють стани пета", () => {
+        const toyPet = createPet("dog", {
+            happiness: 40,
+            energy: 50
+        });
+
+        applyItemEffects(toyPet, findShopItem("golden_toy"));
+
+        expect(toyPet.happiness).toBe(90);
+        expect(toyPet.energy).toBe(40);
+
+        const treatPet = createPet("cat", {
+            hunger: 70,
+            happiness: 40,
+            health: 60
+        });
+
+        applyItemEffects(treatPet, findShopItem("royal_treat"));
+
+        expect(treatPet.hunger).toBe(25);
+        expect(treatPet.happiness).toBe(65);
+        expect(treatPet.health).toBe(75);
     });
 });
