@@ -249,6 +249,6 @@ frontend/index.html
 
 | Учасник | Внесок |
 |---------|--------|
-| Даша | Auth, database, XP/level, persistence |
-| Frontend/UI частина | Локації, UI feedback, assets, layout fixes, migration/test fixes |
-| Максим | GitHub Actions CI, alpha API tests, README update, alpha demo checklist |
+| Даша    | Auth, database, XP/level, persistence |
+| Каріна  | Локації, UI feedback, assets, layout fixes, migration/test fixes |
+| Максим  | GitHub Actions CI, alpha API tests, README update, alpha demo checklist |
