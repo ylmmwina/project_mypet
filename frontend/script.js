@@ -26,7 +26,12 @@ const itemIcons = {
     "premium_food": "premium_feed.png",
     "banana_snack": "banana_snack.png",
     "soap_basic": "soap.png",
-    "medkit_small": "medicine.png"
+    "medkit_small": "medicine.png",
+    "energy_drink": "energy_drink.png",
+    "vitamin_boost": "vitamin_boost.png",
+    "bubble_bath": "bubble_bath.png",
+    "golden_toy": "golden_toy.png",
+    "royal_treat": "royal_treat.png"
 };
 
 // --- ЕЛЕМЕНТИ DOM ---
