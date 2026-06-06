@@ -18,6 +18,7 @@ import { open } from "sqlite";
 import registerPetRoutes from "../backend/routes/petRoutes.js";
 import registerShopRoutes from "../backend/routes/shopRoutes.js";
 import registerInventoryRoutes from "../backend/routes/inventoryRoutes.js";
+import registerQuestRoutes from "../backend/routes/questRoutes.js";
 import { shopItems } from "../backend/shop/shopItems.js";
 
 /**
@@ -74,6 +75,20 @@ async function createTestDb() {
         );
     `);
 
+    await db.exec(`
+        CREATE TABLE QuestProgress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            petId INTEGER NOT NULL,
+            questId TEXT NOT NULL,
+            progress INTEGER DEFAULT 0,
+            completed INTEGER DEFAULT 0,
+            claimed INTEGER DEFAULT 0,
+            createdAt TEXT NOT NULL,
+            updatedAt TEXT NOT NULL,
+            UNIQUE(petId, questId)
+        );
+    `);
+
     return db;
 }
 
@@ -103,6 +118,7 @@ async function createTestApp() {
     });
     registerShopRoutes(app, db);
     registerInventoryRoutes(app, db);
+    registerQuestRoutes(app, db);
 
     return { app, db };
 }
@@ -465,5 +481,137 @@ describe("MyPet API integration tests", () => {
         expect(res.body.coins).toBe(after.coins);
         expect(res.body.xp).toBe(after.xp);
         expect(res.body.level).toBe(after.level);
+    });
+
+/**
+ * @test GET /quests
+ * @brief Перевіряє отримання списку квестів з прогресом для улюбленця.
+ */
+test("GET /quests повертає список квестів з прогресом", async () => {
+    const res = await agent
+        .get(`/quests?petId=${petId}`)
+        .expect(200);
+
+    expect(Array.isArray(res.body)).toBe(true);
+    expect(res.body.length).toBeGreaterThan(0);
+
+    const feedQuest = res.body.find((quest) => quest.id === "feed_pet");
+
+    expect(feedQuest).toBeDefined();
+    expect(feedQuest).toHaveProperty("title");
+    expect(feedQuest).toHaveProperty("description");
+    expect(feedQuest).toHaveProperty("requiredProgress");
+    expect(feedQuest).toHaveProperty("rewardCoins");
+    expect(feedQuest).toHaveProperty("rewardXp");
+    expect(feedQuest.progress).toBe(0);
+    expect(feedQuest.completed).toBe(false);
+    expect(feedQuest.claimed).toBe(false);
+});
+
+/**
+ * @test POST /quests/progress
+ * @brief Перевіряє оновлення прогресу квесту.
+ */
+test("POST /quests/progress оновлює прогрес квесту", async () => {
+    const res = await agent
+        .post("/quests/progress")
+        .send({
+            petId,
+            questId: "feed_pet",
+            progress: 1
+        })
+        .expect(200);
+
+    expect(res.body.message).toBe("Quest progress updated");
+    expect(res.body.questId).toBe("feed_pet");
+    expect(res.body.progress.progress).toBe(1);
+    expect(res.body.progress.completed).toBe(true);
+    expect(res.body.progress.claimed).toBe(false);
+
+    const progressRecord = await db.get(
+        "SELECT * FROM QuestProgress WHERE petId = ? AND questId = ?",
+        petId,
+        "feed_pet"
+    );
+
+    expect(progressRecord).toBeDefined();
+    expect(progressRecord.progress).toBe(1);
+    expect(progressRecord.completed).toBe(1);
+    expect(progressRecord.claimed).toBe(0);
+});
+
+/**
+ * @test POST /quests/claim
+ * @brief Перевіряє отримання нагороди за виконаний квест.
+ */
+test("POST /quests/claim видає нагороду за виконаний квест", async () => {
+    await db.run(
+        "UPDATE Pets SET coins = ?, xp = ? WHERE id = ?",
+        0,
+        0,
+        petId
+    );
+
+    const res = await agent
+        .post("/quests/claim")
+        .send({
+            petId,
+            questId: "feed_pet"
+        })
+        .expect(200);
+
+    expect(res.body.message).toBe("Quest reward claimed");
+    expect(res.body.questId).toBe("feed_pet");
+    expect(res.body.rewardCoins).toBe(10);
+    expect(res.body.rewardXp).toBe(10);
+
+    expect(res.body.pet.coins).toBe(10);
+    expect(res.body.pet.xp).toBe(10);
+
+    expect(res.body.progress.claimed).toBe(true);
+
+    const progressRecord = await db.get(
+        "SELECT * FROM QuestProgress WHERE petId = ? AND questId = ?",
+        petId,
+        "feed_pet"
+    );
+
+    expect(progressRecord.claimed).toBe(1);
+});
+
+/**
+ * @test POST /quests/claim
+ * @brief Перевіряє, що не можна забрати нагороду повторно.
+ */
+test("POST /quests/claim не дозволяє повторно забрати нагороду", async () => {
+    const res = await agent
+        .post("/quests/claim")
+        .send({
+            petId,
+            questId: "feed_pet"
+        })
+        .expect(400);
+
+    expect(res.body.error).toBe("Quest reward already claimed");
+});
+
+/**
+ * @test POST /quests/claim
+ * @brief Перевіряє, що не можна забрати нагороду за невиконаний квест.
+ */
+test("POST /quests/claim не дозволяє claim для невиконаного квесту", async () => {
+    await agent
+        .get(`/quests?petId=${petId}`)
+        .expect(200);
+
+    const res = await agent
+        .post("/quests/claim")
+        .send({
+            petId,
+            questId: "sleep_pet"
+        })
+        .expect(400);
+
+    expect(res.body.error).toBe("Quest is not completed yet");
     });
 });
