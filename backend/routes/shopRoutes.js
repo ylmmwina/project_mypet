@@ -5,7 +5,7 @@
  * купувати їх для своїх улюбленців та переглядати історію витрат.
  */
 
-import { shopItems, findShopItem } from "../shop/shopItems.js";
+import { shopItems, findShopItem, getRandomMysteryBoxItem } from "../shop/shopItems.js";
 import Pet from "../models/pet.js";
 import {
     getPetByOwnerIdAndPetId, // Використовуємо це для конкретного пета
@@ -126,6 +126,73 @@ export default function registerShopRoutes(app, db) {
             res.status(500).json({
                 error: "SHOP_UNKNOWN_ERROR",
                 message: "Unexpected error while buying item"
+            });
+        }
+    });
+
+    /**
+     * @brief Купівля Mystery Box.
+     * @route POST /shop/mystery-box
+     *
+     * Списує фіксовану кількість монет і додає випадковий предмет
+     * до інвентарю улюбленця. Шанс випадіння залежить від rarity.
+     *
+     * @param {Object} req - Об'єкт запиту.
+     * @param {number} req.body.petId - ID улюбленця.
+     * @param {string} req.ownerId - ID власника.
+     * @param {Object} res - Об'єкт відповіді.
+     *
+     * @returns {JSON} Оновлений pet, отриманий item та ціна скриньки.
+     */
+    app.post("/shop/mystery-box", async (req, res) => {
+        const ownerId = req.ownerId;
+        const { petId } = req.body;
+        const boxPrice = 25;
+
+        if (!petId) {
+            return res.status(400).json({
+                error: "PET_ID_REQUIRED",
+                message: "You must provide petId"
+            });
+        }
+
+        try {
+            const petData = await getPetByOwnerIdAndPetId(db, ownerId, petId);
+
+            if (!petData) {
+                return res.status(404).json({
+                    error: "PET_NOT_FOUND",
+                    message: "Pet not found or access denied"
+                });
+            }
+
+            const pet = Pet.fromJSON(petData);
+
+            if (pet.coins < boxPrice) {
+                return res.status(400).json({
+                    error: "NOT_ENOUGH_COINS",
+                    message: "Not enough coins to buy Mystery Box"
+                });
+            }
+
+            const rewardItem = getRandomMysteryBoxItem();
+
+            pet.coins -= boxPrice;
+
+            await savePet(db, pet);
+            await addInventoryItem(db, petId, rewardItem.id);
+            await addPurchaseHistoryEntry(db, petId, `mystery_box:${rewardItem.id}`, boxPrice);
+
+            res.json({
+                pet: pet.toJSON(),
+                item: rewardItem,
+                price: boxPrice
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                error: "MYSTERY_BOX_ERROR",
+                message: "Unexpected error while buying Mystery Box"
             });
         }
     });

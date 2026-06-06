@@ -26,7 +26,12 @@ const itemIcons = {
     "premium_food": "premium_feed.png",
     "banana_snack": "banana_snack.png",
     "soap_basic": "soap.png",
-    "medkit_small": "medicine.png"
+    "medkit_small": "medicine.png",
+    "energy_drink": "energy_drink.png",
+    "vitamin_boost": "vitamin_boost.png",
+    "bubble_bath": "bubble_bath.png",
+    "golden_toy": "golden_toy.png",
+    "royal_treat": "royal_treat.png"
 };
 
 // --- ЕЛЕМЕНТИ DOM ---
@@ -75,6 +80,7 @@ const ACTION_LOCATIONS = {
 };
 
 const FOOD_ITEM_IDS = ["basic_food", "premium_food", "banana_snack"];
+const MYSTERY_BOX_PRICE = 25;
 
 // СИСТЕМА ЕКРАНІВ ТА АВТОРИЗАЦІЯ
 
@@ -393,18 +399,46 @@ document.getElementById("btn-shop").onclick = openShop;
 async function openShop() {
     modalShop.classList.remove("hidden");
     shopContainer.innerHTML = "Завантаження...";
+
     try {
         const items = await apiRequest('/shop/items');
         shopContainer.innerHTML = "";
+
+        const mysteryBox = document.createElement("div");
+        mysteryBox.className = "item-card mystery-box-card rarity-epic";
+        mysteryBox.innerHTML = `
+            <img class="item-icon" src="assets/mystery_box.png" alt="Mystery Box">
+            <div class="rarity-badge rarity-badge-epic">RANDOM</div>
+            <div class="item-name">Mystery Box</div>
+            <div class="item-description">Common 65% / Rare 25% / Epic 10%</div>
+            <div class="item-price">🪙 ${MYSTERY_BOX_PRICE}</div>
+            <button class="buy-btn">Відкрити</button>
+        `;
+
+        mysteryBox.querySelector("button").onclick = buyMysteryBox;
+        shopContainer.appendChild(mysteryBox);
+
         items.forEach(item => {
             const el = document.createElement("div");
-            el.className = "item-card";
+            const rarity = item.rarity || "common";
+            el.className = `item-card rarity-${rarity}`;
+
             const img = itemIcons[item.id] || "inventory_icon.png";
-            el.innerHTML = `<img src="assets/${img}"><div class="item-price" style="height:30px;">${item.name}</div><div class="item-price">🪙 ${item.price}</div><button class="buy-btn">Купити</button>`;
+
+            el.innerHTML = `
+                <img class="item-icon" src="assets/${img}" alt="${item.name}">
+                <div class="rarity-badge rarity-badge-${rarity}">${rarity.toUpperCase()}</div>
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">🪙 ${item.price}</div>
+                <button class="buy-btn">Купити</button>
+            `;
+
             el.querySelector("button").onclick = () => buyItem(item.id);
             shopContainer.appendChild(el);
         });
-    } catch(e) { shopContainer.innerHTML = "Помилка"; }
+    } catch(e) {
+        shopContainer.innerHTML = "Помилка";
+    }
 }
 
 async function buyItem(itemId) {
@@ -416,29 +450,72 @@ async function buyItem(itemId) {
     } catch(e) { showNotification(e.message, "error"); }
 }
 
+/**
+ * @brief Купує Mystery Box і додає випадковий предмет в інвентар.
+ */
+async function buyMysteryBox() {
+    try {
+        const data = await apiRequest('/shop/mystery-box', "POST", {
+            petId: currentPet.id
+        });
+
+        currentPet = data.pet;
+        updateUI(data.pet);
+
+        const itemName = data.item?.name || "предмет";
+        const rarity = data.item?.rarity || "common";
+
+        showNotification(`Mystery Box: ${itemName} (${rarity})`, "success");
+        openShop();
+    } catch(e) {
+        showNotification(e.message, "error");
+    }
+}
+
 document.getElementById("btn-inventory").onclick = () => openInventory(false);
 
 async function openInventory(filterFood = false) {
     modalInventory.classList.remove("hidden");
     invContainer.innerHTML = "Завантаження...";
     document.getElementById("inv-title").textContent = filterFood ? "Вибери їжу" : "Рюкзак";
+
     try {
         const items = await apiRequest(`/inventory?petId=${currentPet.id}`);
         invContainer.innerHTML = "";
+
         const filtered = filterFood ? items.filter(i => i.item?.type === 'food') : items;
-        if (filtered.length === 0) return invContainer.innerHTML = "<p>Пусто</p>";
+
+        if (filtered.length === 0) {
+            invContainer.innerHTML = "<p>Пусто</p>";
+            return;
+        }
+
         filtered.forEach(entry => {
             const el = document.createElement("div");
-            el.className = "item-card";
+            const rarity = entry.item?.rarity || "common";
+            el.className = `item-card rarity-${rarity}`;
+
             const img = itemIcons[entry.itemId] || "inventory_icon.png";
-            el.innerHTML = `<img src="assets/${img}"><div class="item-price">x${entry.quantity}</div><button class="use-btn">Вжити</button>`;
+            const itemName = entry.item?.name || entry.itemId;
+
+            el.innerHTML = `
+                <img class="item-icon" src="assets/${img}" alt="${itemName}">
+                <div class="rarity-badge rarity-badge-${rarity}">${rarity.toUpperCase()}</div>
+                <div class="item-name">${itemName}</div>
+                <div class="item-price">x${entry.quantity}</div>
+                <button class="use-btn">Вжити</button>
+            `;
+
             el.querySelector("button").onclick = () => {
                 if (filterFood) closeModal('modal-inventory');
                 useItem(entry.itemId);
             };
+
             invContainer.appendChild(el);
         });
-    } catch(e) { console.error(e); }
+    } catch(e) {
+        console.error(e);
+    }
 }
 
 async function useItem(itemId, actionLocation = null) {

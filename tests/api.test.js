@@ -18,6 +18,7 @@ import { open } from "sqlite";
 import registerPetRoutes from "../backend/routes/petRoutes.js";
 import registerShopRoutes from "../backend/routes/shopRoutes.js";
 import registerInventoryRoutes from "../backend/routes/inventoryRoutes.js";
+import { shopItems } from "../backend/shop/shopItems.js";
 
 /**
  * @brief Створює та ініціалізує in-memory базу даних SQLite для тестування.
@@ -209,6 +210,74 @@ describe("MyPet API integration tests", () => {
 
         expect(inv).toBeDefined();
         expect(inv.quantity).toBe(1);
+    });
+
+    /**
+     * @test POST /shop/mystery-box
+     * @brief Перевіряє, що Mystery Box не купується без достатньої кількості монет.
+     */
+    test("POST /shop/mystery-box повертає помилку, якщо монет недостатньо", async () => {
+        await db.run(
+            "UPDATE Pets SET coins = ? WHERE id = ?",
+            0,
+            petId
+        );
+
+        const res = await agent
+            .post("/shop/mystery-box")
+            .send({ petId })
+            .expect(400);
+
+        expect(res.body).toHaveProperty("error");
+        expect(res.body.error).toBe("NOT_ENOUGH_COINS");
+    });
+
+    /**
+     * @test POST /shop/mystery-box
+     * @brief Перевіряє купівлю Mystery Box, списання монет і додавання випадкового предмета.
+     */
+    test("POST /shop/mystery-box купує випадковий предмет за rarity-механікою", async () => {
+        await db.run(
+            "UPDATE Pets SET coins = ? WHERE id = ?",
+            100,
+            petId
+        );
+
+        const res = await agent
+            .post("/shop/mystery-box")
+            .send({ petId })
+            .expect(200);
+
+        expect(res.body).toHaveProperty("pet");
+        expect(res.body).toHaveProperty("item");
+        expect(res.body).toHaveProperty("price");
+
+        expect(res.body.price).toBe(25);
+        expect(res.body.pet.coins).toBe(75);
+
+        const itemIds = shopItems.map((item) => item.id);
+        const allowedRarities = ["common", "rare", "epic"];
+
+        expect(itemIds).toContain(res.body.item.id);
+        expect(allowedRarities).toContain(res.body.item.rarity);
+
+        const inventoryItem = await db.get(
+            "SELECT * FROM Inventory WHERE petId = ? AND itemId = ?",
+            petId,
+            res.body.item.id
+        );
+
+        expect(inventoryItem).toBeDefined();
+        expect(inventoryItem.quantity).toBeGreaterThanOrEqual(1);
+
+        const purchase = await db.get(
+            "SELECT * FROM Purchases WHERE petId = ? AND itemId = ?",
+            petId,
+            `mystery_box:${res.body.item.id}`
+        );
+
+        expect(purchase).toBeDefined();
+        expect(purchase.price).toBe(25);
     });
 
     /**
