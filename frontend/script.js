@@ -407,7 +407,7 @@ async function openShop() {
         const mysteryBox = document.createElement("div");
         mysteryBox.className = "item-card mystery-box-card rarity-epic";
         mysteryBox.innerHTML = `
-            <img class="item-icon" src="assets/inventory_icon.png" alt="Mystery Box">
+            <img class="item-icon" src="assets/mystery_box.png" alt="Mystery Box">
             <div class="rarity-badge rarity-badge-epic">RANDOM</div>
             <div class="item-name">Mystery Box</div>
             <div class="item-description">Common 65% / Rare 25% / Epic 10%</div>
