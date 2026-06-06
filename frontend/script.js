@@ -80,6 +80,7 @@ const ACTION_LOCATIONS = {
 };
 
 const FOOD_ITEM_IDS = ["basic_food", "premium_food", "banana_snack"];
+const MYSTERY_BOX_PRICE = 25;
 
 // СИСТЕМА ЕКРАНІВ ТА АВТОРИЗАЦІЯ
 
@@ -403,6 +404,20 @@ async function openShop() {
         const items = await apiRequest('/shop/items');
         shopContainer.innerHTML = "";
 
+        const mysteryBox = document.createElement("div");
+        mysteryBox.className = "item-card mystery-box-card rarity-epic";
+        mysteryBox.innerHTML = `
+            <img class="item-icon" src="assets/inventory_icon.png" alt="Mystery Box">
+            <div class="rarity-badge rarity-badge-epic">RANDOM</div>
+            <div class="item-name">Mystery Box</div>
+            <div class="item-description">Common 65% / Rare 25% / Epic 10%</div>
+            <div class="item-price">🪙 ${MYSTERY_BOX_PRICE}</div>
+            <button class="buy-btn">Відкрити</button>
+        `;
+
+        mysteryBox.querySelector("button").onclick = buyMysteryBox;
+        shopContainer.appendChild(mysteryBox);
+
         items.forEach(item => {
             const el = document.createElement("div");
             const rarity = item.rarity || "common";
@@ -433,6 +448,28 @@ async function buyItem(itemId) {
         updateUI(data);
         showNotification("Куплено!", "success");
     } catch(e) { showNotification(e.message, "error"); }
+}
+
+/**
+ * @brief Купує Mystery Box і додає випадковий предмет в інвентар.
+ */
+async function buyMysteryBox() {
+    try {
+        const data = await apiRequest('/shop/mystery-box', "POST", {
+            petId: currentPet.id
+        });
+
+        currentPet = data.pet;
+        updateUI(data.pet);
+
+        const itemName = data.item?.name || "предмет";
+        const rarity = data.item?.rarity || "common";
+
+        showNotification(`Mystery Box: ${itemName} (${rarity})`, "success");
+        openShop();
+    } catch(e) {
+        showNotification(e.message, "error");
+    }
 }
 
 document.getElementById("btn-inventory").onclick = () => openInventory(false);

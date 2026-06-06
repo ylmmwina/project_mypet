@@ -165,6 +165,54 @@ export const findShopItem = (itemId) =>
     shopItems.find((item) => item.id === itemId);
 
 /**
+ * @brief Шанси випадіння предметів зі скриньки.
+ *
+ * Значення зберігаються у відсотках.
+ *
+ * @type {Object}
+ */
+export const mysteryBoxRarityChances = {
+    common: 65,
+    rare: 25,
+    epic: 10
+};
+
+/**
+ * @brief Випадково обирає rarity для Mystery Box.
+ *
+ * @returns {string} Рідкість предмета: common, rare або epic.
+ */
+export function rollMysteryBoxRarity() {
+    const roll = Math.random() * 100;
+
+    if (roll < mysteryBoxRarityChances.common) {
+        return "common";
+    }
+
+    if (roll < mysteryBoxRarityChances.common + mysteryBoxRarityChances.rare) {
+        return "rare";
+    }
+
+    return "epic";
+}
+
+/**
+ * @brief Випадково обирає предмет для Mystery Box з урахуванням rarity.
+ *
+ * @returns {Object} Випадковий предмет магазину.
+ */
+export function getRandomMysteryBoxItem() {
+    const rarity = rollMysteryBoxRarity();
+    const itemsByRarity = shopItems.filter((item) => item.rarity === rarity);
+
+    if (itemsByRarity.length === 0) {
+        return shopItems[Math.floor(Math.random() * shopItems.length)];
+    }
+
+    return itemsByRarity[Math.floor(Math.random() * itemsByRarity.length)];
+}
+
+/**
  * @brief Застосовує ефекти предмета до улюбленця.
  *
  * Функція враховує базові ефекти предмета та додаткові особливості
