@@ -20,6 +20,7 @@ import crypto from "crypto";
 import Pet from "./models/pet.js";
 import registerShopRoutes from "./routes/shopRoutes.js";
 import registerInventoryRoutes from "./routes/inventoryRoutes.js";
+import registerQuestRoutes from "./routes/questRoutes.js";
 
 async function startServer() {
     const db = await setupDatabase();
@@ -99,6 +100,7 @@ app.post("/login", async (req, res) => {
 registerPetRoutes(app, db, io);
 registerShopRoutes(app, db);
 registerInventoryRoutes(app, db);
+registerQuestRoutes(app, db);
 
     /**
      * @brief Запускає серверний ігровий цикл для поступового оновлення стану pets.

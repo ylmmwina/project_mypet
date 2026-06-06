@@ -109,6 +109,22 @@ export async function setupDatabase() {
         );
     `);
 
+    // Таблиця прогресу квестів
+    await db.exec(`
+        CREATE TABLE IF NOT EXISTS QuestProgress (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            petId INTEGER NOT NULL,
+            questId TEXT NOT NULL,
+            progress INTEGER DEFAULT 0,
+            completed INTEGER DEFAULT 0,
+            claimed INTEGER DEFAULT 0,
+            createdAt TEXT NOT NULL,
+            updatedAt TEXT NOT NULL,
+            UNIQUE(petId, questId),
+            FOREIGN KEY (petId) REFERENCES Pets(id) ON DELETE CASCADE
+        );
+    `);
+
     const petColumns = await db.all("PRAGMA table_info(Pets)");
     const petColumnNames = petColumns.map((column) => column.name);
 
@@ -422,4 +438,108 @@ export async function deletePet(db, petId, ownerId) {
     await db.run("DELETE FROM Inventory WHERE petId = ?", petId);
     await db.run("DELETE FROM Purchases WHERE petId = ?", petId);
     await db.run("DELETE FROM Pets WHERE id = ?", petId);
+}
+
+// CRUD ДЛЯ КВЕСТІВ
+
+/**
+ * @brief Отримати прогрес усіх квестів для улюбленця.
+ * @param {Object} db - Підключення до БД.
+ * @param {number} petId - ID улюбленця.
+ * @returns {Promise<Array>} Список записів прогресу квестів.
+ */
+export async function getQuestProgressForPet(db, petId) {
+    return await db.all(
+        "SELECT * FROM QuestProgress WHERE petId = ?",
+        petId
+    );
+}
+
+/**
+ * @brief Отримати прогрес конкретного квесту для улюбленця.
+ * @param {Object} db - Підключення до БД.
+ * @param {number} petId - ID улюбленця.
+ * @param {string} questId - ID квесту.
+ * @returns {Promise<Object|undefined>} Запис прогресу квесту або undefined.
+ */
+export async function getQuestProgressById(db, petId, questId) {
+    return await db.get(
+        "SELECT * FROM QuestProgress WHERE petId = ? AND questId = ?",
+        petId,
+        questId
+    );
+}
+
+/**
+ * @brief Створити початковий запис прогресу квесту.
+ * @param {Object} db - Підключення до БД.
+ * @param {number} petId - ID улюбленця.
+ * @param {string} questId - ID квесту.
+ * @returns {Promise<Object>} Створений або вже існуючий запис прогресу.
+ */
+export async function createQuestProgress(db, petId, questId) {
+    const now = new Date().toISOString();
+
+    await db.run(
+        `INSERT OR IGNORE INTO QuestProgress 
+            (petId, questId, progress, completed, claimed, createdAt, updatedAt)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        petId,
+        questId,
+        0,
+        0,
+        0,
+        now,
+        now
+    );
+
+    return await getQuestProgressById(db, petId, questId);
+}
+
+/**
+ * @brief Оновити прогрес квесту.
+ * @param {Object} db - Підключення до БД.
+ * @param {number} petId - ID улюбленця.
+ * @param {string} questId - ID квесту.
+ * @param {number} progress - Нове значення прогресу.
+ * @param {boolean} completed - Чи виконаний квест.
+ * @returns {Promise<Object>} Оновлений запис прогресу.
+ */
+export async function updateQuestProgress(db, petId, questId, progress, completed) {
+    const now = new Date().toISOString();
+
+    await db.run(
+        `UPDATE QuestProgress 
+         SET progress = ?, completed = ?, updatedAt = ?
+         WHERE petId = ? AND questId = ?`,
+        progress,
+        completed ? 1 : 0,
+        now,
+        petId,
+        questId
+    );
+
+    return await getQuestProgressById(db, petId, questId);
+}
+
+/**
+ * @brief Позначити нагороду за квест як отриману.
+ * @param {Object} db - Підключення до БД.
+ * @param {number} petId - ID улюбленця.
+ * @param {string} questId - ID квесту.
+ * @returns {Promise<Object>} Оновлений запис прогресу.
+ */
+export async function markQuestClaimed(db, petId, questId) {
+    const now = new Date().toISOString();
+
+    await db.run(
+        `UPDATE QuestProgress 
+         SET claimed = 1, updatedAt = ?
+         WHERE petId = ? AND questId = ?`,
+        now,
+        petId,
+        questId
+    );
+
+    return await getQuestProgressById(db, petId, questId);
 }
