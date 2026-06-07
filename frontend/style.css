@@ -881,3 +881,58 @@ p { font-size: 24px; color: #555; }
     line-height: 1.1;
     text-align: center;
 }
+
+/* СТИЛІ ДЛЯ КВЕСТІВ */
+.quests-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    overflow-y: auto; 
+    padding: 10px; 
+}
+
+.quest-card { 
+    border: 3px solid #333; 
+    padding: 10px; 
+    background: #fff9c4; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+}
+
+.quest-info {
+    width: 70%;
+}
+
+.quest-info h3 { 
+    color: #d81b60; 
+    font-size: 24px;
+    margin-bottom: 5px; 
+}
+
+.quest-info p { 
+    font-size: 16px; 
+    color: #333;
+    margin-bottom: 5px; 
+}
+
+.quest-reward { 
+    font-size: 16px; 
+    color: #4caf50; 
+    font-weight: bold;
+}
+
+.quest-action button { 
+    background: #4caf50; 
+    color: white; 
+    padding: 8px 12px; 
+    border: 2px solid #000; 
+    cursor: pointer; 
+    font-size: 18px;
+}
+
+.quest-action button:disabled { 
+    background: #ccc; 
+    color: #666;
+    cursor: not-allowed; 
+}

@@ -554,6 +554,72 @@ function triggerHappyState(overrideState) {
 
 document.getElementById("btn-back-menu").onclick = () => loadPetsList();
 
+// СИСТЕМА КВЕСТІВ
+
+const modalQuests = document.getElementById("modal-quests");
+const questsContainer = document.getElementById("quests-container");
+
+document.getElementById("btn-quests").onclick = openQuests;
+
+async function openQuests() {
+    modalQuests.classList.remove("hidden");
+    questsContainer.innerHTML = "<p>Завантаження квестів...</p>";
+
+    try {
+        const quests = await apiRequest(`/quests?petId=${currentPet.id}`);
+        questsContainer.innerHTML = "";
+
+        if (quests.length === 0) {
+            questsContainer.innerHTML = "<p>Немає доступних квестів.</p>";
+            return;
+        }
+
+        quests.forEach(q => {
+            const el = document.createElement("div");
+            el.className = "quest-card";
+
+            let btnHtml = "";
+            if (q.claimed) {
+                btnHtml = `<button disabled>Отримано</button>`;
+            } else if (q.completed) {
+                btnHtml = `<button onclick="claimQuest('${q.id}')">Забрати</button>`;
+            } else {
+                btnHtml = `<button disabled>${q.progress}/${q.requiredProgress}</button>`;
+            }
+
+            el.innerHTML = `
+                <div class="quest-info">
+                    <h3>${q.title}</h3>
+                    <p>${q.description}</p>
+                    <span class="quest-reward">🪙 ${q.rewardCoins} | 🌟 ${q.rewardXp} XP</span>
+                </div>
+                <div class="quest-action">${btnHtml}</div>
+            `;
+            questsContainer.appendChild(el);
+        });
+    } catch (e) {
+        questsContainer.innerHTML = "<p style='color:red'>Помилка завантаження квестів</p>";
+        console.error(e);
+    }
+}
+
+window.claimQuest = async (questId) => {
+    try {
+        const res = await apiRequest('/quests/claim', 'POST', { 
+            petId: currentPet.id, 
+            questId: questId 
+        });
+        
+        currentPet = res.pet; 
+        updateUI(res.pet);    
+        
+        showNotification(`Нагороду отримано! +${res.rewardCoins} монет`, 'success');
+        openQuests(); 
+    } catch (e) {
+        showNotification(e.message, 'error');
+    }
+};
+
 // SOCKETS ТА PHASER
 
 const socket = io(API_URL);

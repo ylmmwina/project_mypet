@@ -118,10 +118,11 @@
                             id="btn-clean" class="img-btn action-btn"><img src="assets/button_wash.png"></button></div>
                 </div>
                 <div class="extra-buttons">
-                    <button id="btn-shop" class="img-btn extra-btn"><img src="assets/shop_icon.png"></button>
-                    <button id="btn-inventory" class="img-btn extra-btn"><img src="assets/inventory_icon.png"></button>
-                </div>
+    <button id="btn-shop" class="img-btn extra-btn"><img src="assets/shop_icon.png"></button>
+    <button id="btn-quests" class="img-btn extra-btn"><img src="assets/quest_icon.png"></button>
+    <button id="btn-inventory" class="img-btn extra-btn"><img src="assets/inventory_icon.png"></button>
             </div>
+         </div>
         </div>
 
         <div id="modal-shop" class="modal-overlay hidden">
@@ -139,6 +140,14 @@
                         onclick="closeModal('modal-inventory')">X</button>
                 </div>
                 <div id="inventory-items-container" class="items-grid"></div>
+            </div>
+        </div>
+        <div id="modal-quests" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Квести</h2><button class="close-btn" onclick="closeModal('modal-quests')">X</button>
+                </div>
+                <div id="quests-container" class="quests-list"></div>
             </div>
         </div>
     </div>
