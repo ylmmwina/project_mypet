@@ -298,6 +298,7 @@ function startGame(pet) {
     setPetLocation("location-home");
     updateUI(pet);
     startLiveUpdates();
+    initQuestsTracking();
 }
 
 /** @brief Оновлює інтерфейс (Показники, XP, Рівень). */
@@ -368,6 +369,7 @@ document.getElementById("btn-sleep").onclick = async () => {
     try {
         currentPet = await apiRequest('/pet/sleep', "POST", { petId: currentPet.id });
         updateUI(currentPet);
+        checkNewCompletedQuests();
     } catch(e) {
         showNotification(e.message, "error");
         console.error(e);
@@ -447,6 +449,7 @@ async function buyItem(itemId) {
         currentPet = data;
         updateUI(data);
         showNotification("Куплено!", "success");
+        checkNewCompletedQuests();
     } catch(e) { showNotification(e.message, "error"); }
 }
 
@@ -466,6 +469,7 @@ async function buyMysteryBox() {
         const rarity = data.item?.rarity || "common";
 
         showNotification(`Mystery Box: ${itemName} (${rarity})`, "success");
+        checkNewCompletedQuests();
         openShop();
     } catch(e) {
         showNotification(e.message, "error");
@@ -533,6 +537,7 @@ async function useItem(itemId, actionLocation = null) {
 
         triggerHappyState('happy');
         showNotification("Використано!", "success");
+        checkNewCompletedQuests();
 
         if (!modalInventory.classList.contains("hidden")) {
             openInventory(document.getElementById("inv-title").textContent === "Вибери їжу");
@@ -553,6 +558,128 @@ function triggerHappyState(overrideState) {
 }
 
 document.getElementById("btn-back-menu").onclick = () => loadPetsList();
+
+// СИСТЕМА КВЕСТІВ
+
+const modalQuests = document.getElementById("modal-quests");
+const questsContainer = document.getElementById("quests-container");
+
+document.getElementById("btn-quests").onclick = openQuests;
+
+async function openQuests() {
+    modalQuests.classList.remove("hidden");
+    questsContainer.innerHTML = "<p>Завантаження квестів...</p>";
+
+    try {
+        const quests = await apiRequest(`/quests?petId=${currentPet.id}`);
+        questsContainer.innerHTML = "";
+
+        if (quests.length === 0) {
+            questsContainer.innerHTML = "<p>Немає доступних квестів.</p>";
+            return;
+        }
+
+        quests.forEach(q => {
+            const el = document.createElement("div");
+            el.className = "quest-card";
+
+            let btnHtml = "";
+            if (q.claimed) {
+                btnHtml = `<button disabled>Отримано</button>`;
+            } else if (q.completed) {
+                btnHtml = `<button onclick="claimQuest('${q.id}')">Забрати</button>`;
+            } else {
+                btnHtml = `<button disabled>${q.progress}/${q.requiredProgress}</button>`;
+            }
+
+            el.innerHTML = `
+                <div class="quest-info">
+                    <h3>${q.title}</h3>
+                    <p>${q.description}</p>
+                    <span class="quest-reward">🪙 ${q.rewardCoins} | 🌟 ${q.rewardXp} XP</span>
+                </div>
+                <div class="quest-action">${btnHtml}</div>
+            `;
+            questsContainer.appendChild(el);
+        });
+    } catch (e) {
+        questsContainer.innerHTML = "<p style='color:red'>Помилка завантаження квестів</p>";
+        console.error(e);
+    }
+}
+
+// ТРЕКІНГ СПОВІЩЕНЬ ПРО КВЕСТИ 
+let knownCompletedQuests = new Set();
+
+async function initQuestsTracking() {
+    if (!currentPet) return;
+    knownCompletedQuests.clear();
+    try {
+        const quests = await apiRequest(`/quests?petId=${currentPet.id}`);
+        quests.forEach(q => {
+            if (q.completed) knownCompletedQuests.add(q.id);
+        });
+    } catch (e) { console.error("Помилка ініціалізації квестів", e); }
+}
+
+async function checkNewCompletedQuests() {
+    if (!currentPet) return;
+    try {
+        const quests = await apiRequest(`/quests?petId=${currentPet.id}`);
+        let newCompletedCount = 0;
+
+        quests.forEach(q => {
+            if (q.completed && !knownCompletedQuests.has(q.id)) {
+                knownCompletedQuests.add(q.id);
+                newCompletedCount++;
+                showNotification(`🎯 Квест виконано: ${q.title}!`, 'success');
+            }
+        });
+
+        // ПЕРЕВІРКА НА ВСІ КВЕСТИ:
+       
+        if (newCompletedCount > 0 && knownCompletedQuests.size === quests.length) {
+            
+            setTimeout(() => {
+                showNotification(`🏆 ВАУ! Ти виконав усі ${quests.length} квестів!`, 'success');
+            }, 3000); 
+        }
+
+    } catch (e) { console.error("Помилка перевірки квестів", e); }
+}
+
+window.claimQuest = async (questId) => {
+    try {
+        const res = await apiRequest('/quests/claim', 'POST', { 
+            petId: currentPet.id, 
+            questId: questId 
+        });
+        
+        currentPet = res.pet; 
+        updateUI(res.pet);    
+        
+        showNotification(`Нагороду отримано! +${res.rewardCoins} монет`, 'success');
+        openQuests(); 
+    } catch (e) {
+        showNotification(e.message, 'error');
+    }
+};
+
+window.resetQuests = async () => {
+
+    if (!confirm("Хочеш скинути всі виконані квести і пройти їх знову?")) return;
+
+    try {
+        await apiRequest('/quests/reset', 'POST', { petId: currentPet.id });
+        
+        knownCompletedQuests.clear(); 
+        
+        showNotification("Квести оновлено!", "success");
+        openQuests(); 
+    } catch (e) {
+        showNotification(e.message, "error");
+    }
+};
 
 // SOCKETS ТА PHASER
 
@@ -607,6 +734,7 @@ window.finishGameAndSendResults = async (score, coins) => {
         currentPet = updatedPet;
         updateUI(updatedPet);
         showNotification(`Гру завершено! +${coins} монет.`, "success");
+        checkNewCompletedQuests();
     } catch (e) {
         showNotification(e.message, "error");
         console.error(e);
