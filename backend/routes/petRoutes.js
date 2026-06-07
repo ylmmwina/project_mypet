@@ -7,6 +7,7 @@
 
 import Pet from "../models/pet.js";
 import { getAllPetsByOwnerId, getPetById, deletePet } from "../utils/database.js";
+import { trackQuestProgress } from "../quests/questTracker.js";
 
 /**
  * @brief Реєструє маршрути улюбленців у додатку Express.
@@ -131,6 +132,7 @@ export default function registerPetRoutes(app, db, io) {
                 if (pet.hunger > 100) pet.hunger = 100;
                 pet.addXp(score / 10);
             });
+            await trackQuestProgress(db, petId, "play_game");
             res.send(updatedPet);
         } catch (error) {
             res.status(400).send({ error: error.message });
@@ -140,13 +142,19 @@ export default function registerPetRoutes(app, db, io) {
     /**
      * @brief Middleware для обробки стандартних дій (feed, play тощо).
      * @param {Function} actionCallback - Метод класу Pet.
+     * @param {string} [actionName] - Назва цільової дії для квестів.
      */
-    const handlePetAction = (actionCallback) => async (req, res) => {
+    const handlePetAction = (actionCallback, actionName) => async (req, res) => {
         const ownerId = req.ownerId;
         const { petId } = req.body;
 
         try {
             const updatedPet = await updatePetAction(ownerId, petId, actionCallback);
+            
+            if (actionName) {
+                await trackQuestProgress(db, petId, actionName);
+            }
+            
             res.send(updatedPet);
         } catch (error) {
             res.status(400).send({ error: error.message });
@@ -154,11 +162,11 @@ export default function registerPetRoutes(app, db, io) {
     };
 
     /** @brief Погодувати улюбленця (POST /pet/feed) */
-    app.post("/pet/feed", handlePetAction((pet) => pet.feed()));
+    app.post("/pet/feed", handlePetAction((pet) => pet.feed(), "feed_pet"));
     /** @brief Пограти з улюбленцем (POST /pet/play) */
-    app.post("/pet/play", handlePetAction((pet) => pet.play()));
+    app.post("/pet/play", handlePetAction((pet) => pet.play())); 
     /** @brief Вкласти спати (POST /pet/sleep) */
-    app.post("/pet/sleep", handlePetAction((pet) => pet.sleep()));
+    app.post("/pet/sleep", handlePetAction((pet) => pet.sleep(), "sleep_pet"));
     /** @brief Полікувати (POST /pet/heal) */
     app.post("/pet/heal", handlePetAction((pet) => pet.heal()));
     /** @brief Помити (POST /pet/clean) */

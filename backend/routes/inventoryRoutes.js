@@ -14,6 +14,7 @@ import {
     savePet,
     getPetByOwnerIdAndPetId // Імпортуємо правильну функцію
 } from "../utils/database.js";
+import { trackQuestProgress } from "../quests/questTracker.js";
 
 /**
  * @brief Реєструє маршрути, пов'язані з інвентарем, у додатку Express.
@@ -153,6 +154,8 @@ export default function registerInventoryRoutes(app, db) {
             // Списуємо предмет
             const now = new Date().toISOString();
             const remainingQuantity = await consumeInventoryItem(db, petId, itemId, now);
+            
+            await trackQuestProgress(db, petId, "use_item");
 
             res.json({
                 pet: pet.toJSON(),

@@ -14,6 +14,7 @@ import {
     addPurchaseHistoryEntry,
     getPurchaseHistory
 } from "../utils/database.js";
+import { trackQuestProgress } from "../quests/questTracker.js";
 
 /**
  * @brief Реєструє маршрути магазину у додатку Express.
@@ -118,7 +119,9 @@ export default function registerShopRoutes(app, db) {
             // Логування покупки
             await addPurchaseHistoryEntry(db, petId, item.id, item.price);
 
-            // Повертаємо оновленого пета (з новим балансом)
+            await trackQuestProgress(db, petId, "buy_item");
+            
+            // Повертаємо оновленого пета
             res.json(pet.toJSON());
 
         } catch (error) {
@@ -182,6 +185,7 @@ export default function registerShopRoutes(app, db) {
             await savePet(db, pet);
             await addInventoryItem(db, petId, rewardItem.id);
             await addPurchaseHistoryEntry(db, petId, `mystery_box:${rewardItem.id}`, boxPrice);
+            await trackQuestProgress(db, petId, "buy_item");
 
             res.json({
                 pet: pet.toJSON(),
