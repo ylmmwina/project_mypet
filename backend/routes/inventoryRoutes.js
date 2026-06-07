@@ -154,8 +154,20 @@ export default function registerInventoryRoutes(app, db) {
             // Списуємо предмет
             const now = new Date().toISOString();
             const remainingQuantity = await consumeInventoryItem(db, petId, itemId, now);
-            
+
+            // Зараховуємо використання будь-якого предмета
             await trackQuestProgress(db, petId, "use_item");
+
+            // ДОДАЄМО ПЕРЕВІРКУ: якщо предмет має тип 'food', зараховуємо квест годування
+            if (item.type === "food") {
+                await trackQuestProgress(db, petId, "feed_pet");
+            }
+
+            res.json({
+                pet: pet.toJSON(),
+                itemId,
+                remainingQuantity
+            });
 
             res.json({
                 pet: pet.toJSON(),
