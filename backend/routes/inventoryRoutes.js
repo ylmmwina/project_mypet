@@ -169,12 +169,6 @@ export default function registerInventoryRoutes(app, db) {
                 remainingQuantity
             });
 
-            res.json({
-                pet: pet.toJSON(),
-                itemId,
-                remainingQuantity
-            });
-
         } catch (error) {
             console.error(error);
             res.status(500).json({

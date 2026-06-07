@@ -225,4 +225,21 @@ export default function registerQuestRoutes(app, db) {
             });
         }
     });
+    /**
+     * @route POST /quests/reset
+     * @brief Скидає весь прогрес квестів для улюбленця (видаляє записи з БД).
+     */
+    app.post("/quests/reset", async (req, res) => {
+        try {
+            const { petId } = req.body;
+            if (!petId) return res.status(400).json({ error: "petId is required" });
+
+            await db.run("DELETE FROM QuestProgress WHERE petId = ?", petId);
+
+            return res.json({ message: "Quests reset successfully" });
+        } catch (error) {
+            console.error("POST /quests/reset error:", error);
+            return res.status(500).json({ error: "Failed to reset quests" });
+        }
+    });
 }

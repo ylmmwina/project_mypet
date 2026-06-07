@@ -665,6 +665,22 @@ window.claimQuest = async (questId) => {
     }
 };
 
+window.resetQuests = async () => {
+
+    if (!confirm("Хочеш скинути всі виконані квести і пройти їх знову?")) return;
+
+    try {
+        await apiRequest('/quests/reset', 'POST', { petId: currentPet.id });
+        
+        knownCompletedQuests.clear(); 
+        
+        showNotification("Квести оновлено!", "success");
+        openQuests(); 
+    } catch (e) {
+        showNotification(e.message, "error");
+    }
+};
+
 // SOCKETS ТА PHASER
 
 const socket = io(API_URL);

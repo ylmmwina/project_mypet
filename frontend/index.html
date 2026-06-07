@@ -145,7 +145,11 @@
         <div id="modal-quests" class="modal-overlay hidden">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h2>Квести</h2><button class="close-btn" onclick="closeModal('modal-quests')">X</button>
+                    <h2>Квести</h2>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button onclick="resetQuests()" style="background: #2196f3; color: white; border: 2px solid #000; padding: 5px 10px; cursor: pointer; font-family: 'VT323', monospace; font-size: 18px;">🔄 Оновити</button>
+                        <button class="close-btn" onclick="closeModal('modal-quests')">X</button>
+                    </div>
                 </div>
                 <div id="quests-container" class="quests-list"></div>
             </div>
